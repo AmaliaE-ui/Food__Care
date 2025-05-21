@@ -1,4 +1,4 @@
-package ispw.foodcare.controller.guiController;
+package ispw.foodcare.controller.guicontroller;
 
 
 import ispw.foodcare.utils.NavigationManager;

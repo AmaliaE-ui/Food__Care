@@ -12,7 +12,7 @@ module ispw.foodcare {
     requires java.sql;
 
     opens ispw.foodcare to javafx.fxml;
-    opens ispw.foodcare.controller.guiController to javafx.fxml;
+    opens ispw.foodcare.controller.guicontroller to javafx.fxml;
 
     exports ispw.foodcare;
 }

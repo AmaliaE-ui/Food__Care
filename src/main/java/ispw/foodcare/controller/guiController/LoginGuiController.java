@@ -1,7 +1,7 @@
-package ispw.foodcare.controller.guiController;
+package ispw.foodcare.controller.guicontroller;
 
 
-import ispw.foodcare.controller.applicationController.LoginController;
+import ispw.foodcare.controller.applicationcontroller.LoginController;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

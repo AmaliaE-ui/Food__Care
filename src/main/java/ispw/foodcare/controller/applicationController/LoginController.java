@@ -1,4 +1,4 @@
-package ispw.foodcare.controller.applicationController;
+package ispw.foodcare.controller.applicationcontroller;
 
 import ispw.foodcare.bean.LoginBean;
 import ispw.foodcare.dao.LoginDAO;

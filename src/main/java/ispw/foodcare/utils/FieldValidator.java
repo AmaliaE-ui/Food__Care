@@ -6,7 +6,7 @@ public class FieldValidator {
     private FieldValidator(){}
 
     private static final Pattern EMAIL_REGEX = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$");
-    private static final Pattern PHONE_REGEX = Pattern.compile("^[0-9]{7,15}$");
+    private static final Pattern PHONE_REGEX = Pattern.compile("^\\d{7,15}$");
 
     public static boolean isEmpty(String value) {
         return value == null || value.trim().isEmpty();
