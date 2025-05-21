@@ -1,4 +1,4 @@
-module ispw.food_care {
+module ispw.foodcare {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -11,8 +11,8 @@ module ispw.food_care {
     requires com.almasb.fxgl.all;
     requires java.sql;
 
-    opens ispw.food_care to javafx.fxml;
-    opens ispw.food_care.controller.guiController to javafx.fxml;
+    opens ispw.foodcare to javafx.fxml;
+    opens ispw.foodcare.controller.guiController to javafx.fxml;
 
-    exports ispw.food_care;
+    exports ispw.foodcare;
 }

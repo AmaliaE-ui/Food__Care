@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.guiController.RegistrationNutritionistGuiController">
+
+    <left>
+        <VBox alignment="TOP_CENTER" prefWidth="220.0" spacing="20" style="-fx-background-color: #b0c4de;" BorderPane.alignment="CENTER">
+            <Label text="FoodCare" textFill="WHITE">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="36.0" />
+                </font>
+                <VBox.margin>
+                    <Insets top="50.0" />
+                </VBox.margin>
+            </Label>
+            <Line endX="160.0" endY="0.0" startX="0.0" startY="0.0" stroke="WHITE" strokeWidth="3.0" />
+            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" onAction="#handleBackToLogin" prefHeight="27.0" prefWidth="114.0" styleClass="button" text="Indietro">
+                <font>
+                    <Font size="14.0" />
+                </font>
+                <VBox.margin>
+                    <Insets top="400.0" />
+                </VBox.margin>
+            </Button>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="10.0" style="-fx-padding: 40;" BorderPane.alignment="CENTER">
+            <Label text="Registrazione Nutrizionista">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="28.0" />
+                </font>
+            </Label>
+         <ScrollPane fitToWidth="true" prefHeight="426.0" style="-fx-background-color: trasparent;">
+            <content>
+      
+                <GridPane hgap="15" vgap="15">
+                      <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                          <font>
+                              <Font name="System Bold" size="14.0" />
+                          </font>
+                      </Label>
+                    <TextField fx:id="nameTextField" prefHeight="26.0" prefWidth="483.0" promptText="Giulia" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label text="Cognome:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="surnameTextField" promptText="Verdi" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <Label text="Cellulare:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="phoneTextField" promptText="+39 3214567890" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="usernameTextField" promptText="Nome utente" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                    <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="emailTextField" promptText="email@example.com" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <PasswordField fx:id="passwordTextField" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                    <Label text="Conferma Password:" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <PasswordField fx:id="confirmPasswordTextField" promptText="******" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+                    <Label text="Partita IVA:" GridPane.columnIndex="0" GridPane.rowIndex="7">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="pivaTextField" promptText="12345678901" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+                    <Label text="Titolo di studio:" GridPane.columnIndex="0" GridPane.rowIndex="8">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <ChoiceBox fx:id="titoloStudioChoiceBox" prefHeight="26.0" prefWidth="463.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                        <effect>
+                            <Glow />
+                        </effect>
+                    </ChoiceBox>
+
+                    <Label text="Specializzazione:" GridPane.columnIndex="0" GridPane.rowIndex="9">
+                        <font><Font name="System Bold" size="14.0" /></font>
+                    </Label>
+                    <ChoiceBox fx:id="specializzazioneChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+
+                    <Label text="Via:" GridPane.columnIndex="0" GridPane.rowIndex="10">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="viaTextField" promptText="Via Roma 123" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+
+                    <Label text="Civico:" GridPane.columnIndex="0" GridPane.rowIndex="11">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="civicoTextField" promptText="123" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+
+                    <Label text="CAP:" GridPane.columnIndex="0" GridPane.rowIndex="12">
+                        <font>
+                            <Font name="System Bold" size="14.0" />
+                        </font>
+                    </Label>
+                    <TextField fx:id="capTextField" promptText="00100" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+
+                    <Label text="Città:" GridPane.columnIndex="0" GridPane.rowIndex="13">
+                        <font><Font name="System Bold" size="14.0" /></font>
+                    </Label>
+                    <TextField fx:id="cittaTextField" promptText="Roma" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+
+                    <Label text="Provincia:" GridPane.columnIndex="0" GridPane.rowIndex="14">
+                        <font><Font name="System Bold" size="14.0" /></font>
+                    </Label>
+                    <TextField fx:id="provinciaTextField" promptText="RM" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+
+                    <Label text="Regione:" GridPane.columnIndex="0" GridPane.rowIndex="15">
+                        <font><Font name="System Bold" size="14.0" /></font>
+                    </Label>
+                    <TextField fx:id="regioneTextField" promptText="Lazio" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                    </rowConstraints>
+                    <effect>
+                        <Glow />
+                    </effect>
+                </GridPane>
+            </content>
+         </ScrollPane>
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="600.0" spacing="20">
+                <Button fx:id="saveButton" onAction="#handleSaveButton" prefHeight="40.0" prefWidth="196.0" styleClass="button" text="Salva">
+                    <font><Font size="18.0" /></font>
+                </Button>
+                <Label fx:id="errorLabel" alignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="red" />
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
