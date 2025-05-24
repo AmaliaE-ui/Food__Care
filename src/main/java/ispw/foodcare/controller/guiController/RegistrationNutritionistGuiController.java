@@ -2,6 +2,7 @@ package ispw.foodcare.controller.guicontroller;
 
 import ispw.foodcare.bean.AddressBean;
 import ispw.foodcare.bean.NutritionistBean;
+import ispw.foodcare.controller.applicationcontroller.RegistrationController;
 import ispw.foodcare.dao.AddressDAO;
 import ispw.foodcare.model.NutritionistModel;
 import ispw.foodcare.utils.FieldValidator;
@@ -50,8 +51,6 @@ public class RegistrationNutritionistGuiController {
             address.setProvincia(provinciaTextField.getText());
             address.setRegione(regioneTextField.getText());
 
-            int addressId = new AddressDAO().saveAddress(address);
-
             //Costruzione del bean Nutritionist
             NutritionistBean bean = new NutritionistBean();
             bean.setName(nameTextField.getText());
@@ -65,13 +64,15 @@ public class RegistrationNutritionistGuiController {
             bean.setTitoloStudio(titoloStudioChoiceBox.getValue());
             bean.setSpecializzazione(specializzazioneChoiceBox.getValue());
 
-            new NutritionistModel().registerNutritionist(bean, addressId);
+            RegistrationController controller = new RegistrationController();
+            controller.registerNutritionist(bean, address);
 
             errorLabel.setText("-fx-text-fill: green");
             errorLabel.setText("Registrazione avvenuta con successo!");
 
             javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
             delay.setOnFinished(e -> NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login"));
+
         } catch (SQLException e) {
             errorLabel.setText("-fx-text-fill: red");
             errorLabel.setText("Errore: " + e.getMessage());

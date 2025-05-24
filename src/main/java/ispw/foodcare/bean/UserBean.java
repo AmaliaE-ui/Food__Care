@@ -1,6 +1,6 @@
 package ispw.foodcare.bean;
 
-public class UserBean {
+public abstract class UserBean {
     private String name;
     private String surname;
     private String phoneNumber;

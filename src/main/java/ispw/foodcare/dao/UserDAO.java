@@ -5,13 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import ispw.foodcare.bean.UserBean;
+import ispw.foodcare.query.QueryUser;
 
 public class UserDAO {
-    public void saveUser(UserBean bean, String role) throws SQLException {
-        String insertUserSql = "INSERT INTO user (username, password, ruolo, nome, cognome, n_telefono, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
+    public void saveUser(UserBean bean, String role) throws SQLException {
         try (Connection conn = DBManager.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(insertUserSql)) {
+             PreparedStatement stmt = conn.prepareStatement(QueryUser.insert_user)) {
 
             stmt.setString(1, bean.getUsername());
             stmt.setString(2, bean.getPassword());

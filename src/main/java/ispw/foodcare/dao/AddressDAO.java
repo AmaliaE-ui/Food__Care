@@ -1,16 +1,16 @@
 package ispw.foodcare.dao;
 
 import ispw.foodcare.bean.AddressBean;
+import ispw.foodcare.query.QueryAddress;
 
 import java.sql.*;
 
 public class AddressDAO {
 
     public int saveAddress(AddressBean bean) throws SQLException {
-        String sql = "INSERT INTO address (via, civico, cap, citta, provincia, regione) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBManager.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = conn.prepareStatement(QueryAddress.insert_address, Statement.RETURN_GENERATED_KEYS);) {
 
             stmt.setString(1, bean.getVia());
             stmt.setString(2, bean.getCivico());

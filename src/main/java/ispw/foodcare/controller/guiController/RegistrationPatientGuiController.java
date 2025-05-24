@@ -1,6 +1,7 @@
 package ispw.foodcare.controller.guicontroller;
 
 import ispw.foodcare.bean.PatientBean;
+import ispw.foodcare.controller.applicationcontroller.RegistrationController;
 import ispw.foodcare.dao.PatientDAO;
 import ispw.foodcare.dao.UserDAO;
 import ispw.foodcare.utils.NavigationManager;
@@ -46,8 +47,8 @@ public class RegistrationPatientGuiController {
             bean.setBirthDate(birthDatePicker.getValue().toString());
             bean.setGender(genderChoiceBox.getValue());
 
-            new UserDAO().saveUser(bean, "PATIENT");
-            new PatientDAO().savePatient(bean);
+            RegistrationController controller = new RegistrationController();
+            controller.registerPatient(bean);
 
             // Mostra messaggio verde
             errorLabel.setStyle("-fx-text-fill: green;");

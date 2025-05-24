@@ -1,16 +1,15 @@
 package ispw.foodcare.dao;
 
 import ispw.foodcare.bean.NutritionistBean;
+import ispw.foodcare.query.QueryNutrtionist;
 
 import java.sql.*;
 
 public class NutritionistDAO{
 
     public void saveNutritionist(NutritionistBean bean, int addressID) throws SQLException {
-        String insertNutritionistSql = "INSERT INTO nutritionist (username, piva, titolo_studio, indirizzo_studio, specializzazione) VALUES (?, ?, ?, ?, ?)";
-
         try(Connection conn = DBManager.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(insertNutritionistSql)) {
+            PreparedStatement stmt = conn.prepareStatement(QueryNutrtionist.insert_nutritionist)) {
 
             stmt.setString(1, bean.getUsername());
             stmt.setString(2, bean.getPiva());
