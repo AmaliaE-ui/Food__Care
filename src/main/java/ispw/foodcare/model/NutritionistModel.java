@@ -7,6 +7,7 @@ import ispw.foodcare.dao.UserDAO;
 import java.sql.SQLException;
 
 public class NutritionistModel {
+
     private final NutritionistDAO nutritionistDAO = new NutritionistDAO();
     private final UserDAO userDAO = new UserDAO();
 

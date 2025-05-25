@@ -9,7 +9,7 @@ public class NutritionistDAO{
 
     public void saveNutritionist(NutritionistBean bean, int addressID) throws SQLException {
         try(Connection conn = DBManager.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(QueryNutrtionist.insert_nutritionist)) {
+            PreparedStatement stmt = conn.prepareStatement(QueryNutrtionist.INSERT_NUTRITIONIST)) {
 
             stmt.setString(1, bean.getUsername());
             stmt.setString(2, bean.getPiva());

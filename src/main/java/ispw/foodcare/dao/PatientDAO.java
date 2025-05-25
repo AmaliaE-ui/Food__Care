@@ -12,7 +12,7 @@ public class PatientDAO {
 
     public void savePatient(PatientBean patient) throws SQLException {
         try (Connection conn = DBManager.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryPatient.insert_patient)) {
+             PreparedStatement stmt = conn.prepareStatement(QueryPatient.INSERT_PATIENT)) {
 
             stmt.setString(1, patient.getUsername());
             stmt.setDate(2, Date.valueOf(patient.getBirthDate()));

@@ -7,6 +7,7 @@ import ispw.foodcare.dao.AddressDAO;
 import ispw.foodcare.dao.PatientDAO;
 import ispw.foodcare.dao.UserDAO;
 import ispw.foodcare.model.NutritionistModel;
+import ispw.foodcare.model.PatientModel;
 
 import java.sql.SQLException;
 
@@ -18,7 +19,6 @@ public class RegistrationController {
     }
 
     public void registerPatient(PatientBean bean) throws SQLException {
-        new UserDAO().saveUser(bean, "PATIENT");
-        new PatientDAO().savePatient(bean);
+        new PatientModel().registerPatient(bean);
     }
 }

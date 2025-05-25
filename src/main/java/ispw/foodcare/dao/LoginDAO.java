@@ -12,7 +12,7 @@ public class LoginDAO {
 
     public boolean checkCredentials(LoginBean bean) {
         try (Connection conn = DBManager.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryLogin.check_credentials)) {
+             PreparedStatement stmt = conn.prepareStatement(QueryLogin.CHECK_CREDENTIALS)) {
 
             stmt.setString(1, bean.getUsername());
             stmt.setString(2, bean.getPassword());

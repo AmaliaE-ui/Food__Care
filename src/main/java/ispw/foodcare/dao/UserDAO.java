@@ -11,7 +11,7 @@ public class UserDAO {
 
     public void saveUser(UserBean bean, String role) throws SQLException {
         try (Connection conn = DBManager.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryUser.insert_user)) {
+             PreparedStatement stmt = conn.prepareStatement(QueryUser.INSERT_USER)) {
 
             stmt.setString(1, bean.getUsername());
             stmt.setString(2, bean.getPassword());

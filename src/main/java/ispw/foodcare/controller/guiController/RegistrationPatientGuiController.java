@@ -33,8 +33,6 @@ public class RegistrationPatientGuiController {
 
     @FXML
     public void handleSaveButton(ActionEvent event) {
-        if (!validateFields()) return;
-
         try {
             PatientBean bean = new PatientBean();
             bean.setName(nameTextField.getText());
@@ -44,8 +42,18 @@ public class RegistrationPatientGuiController {
             bean.setEmail(emailTextField.getText());
             bean.setPassword(passwordTextField.getText());
             bean.setRole("PATIENT");
-            bean.setBirthDate(birthDatePicker.getValue().toString());
+            if(birthDatePicker.getValue() != null) {
+                bean.setBirthDate(birthDatePicker.getValue().toString());
+            }
             bean.setGender(genderChoiceBox.getValue());
+
+            //Validazione
+            String error = ispw.foodcare.validation.PatientValidator.validate(bean, confPasswordTextField.getText());
+            if (error != null) {
+                errorLabel.setStyle("-fx-text-fill: red;");
+                errorLabel.setText(error);
+                return;
+            }
 
             RegistrationController controller = new RegistrationController();
             controller.registerPatient(bean);
@@ -66,54 +74,6 @@ public class RegistrationPatientGuiController {
             errorLabel.setStyle("-fx-text-fill: red;");
             errorLabel.setText("Formato data non valido. Usa GG/MM/AAAA.");
         }
-    }
-
-    private boolean validateFields() {
-        if (FieldValidator.isEmpty(nameTextField.getText())) {
-            errorLabel.setText("Il nome è obbligatorio.");
-            return false;
-        }
-        if (FieldValidator.isEmpty(surnameTextField.getText())) {
-            errorLabel.setText("Il cognome è obbligatorio.");
-            return false;
-        }
-        if (FieldValidator.isEmpty(usernameTextField.getText())) {
-            errorLabel.setText("Lo username è obbligatorio.");
-            return false;
-        }
-        if (FieldValidator.isEmpty(emailTextField.getText())) {
-            errorLabel.setText("L'email è obbligatoria.");
-            return false;
-        }
-        if (!FieldValidator.isEmailValid(emailTextField.getText())) {
-            errorLabel.setText("Email non valida.");
-            return false;
-        }
-        if (FieldValidator.isEmpty(phoneTextField.getText())) {
-            errorLabel.setText("Il numero di telefono è obbligatorio.");
-            return false;
-        }
-        if (!FieldValidator.isPhoneValid(phoneTextField.getText())) {
-            errorLabel.setText("Numero di telefono non valido.");
-            return false;
-        }
-        if (FieldValidator.isEmpty(passwordTextField.getText()) || FieldValidator.isEmpty(confPasswordTextField.getText())) {
-            errorLabel.setText("Inserisci e conferma la password.");
-            return false;
-        }
-        if (!FieldValidator.doPasswordsMatch(passwordTextField.getText(), confPasswordTextField.getText())) {
-            errorLabel.setText("Le password non corrispondono.");
-            return false;
-        }
-        if (birthDatePicker.getValue() == null) {
-            errorLabel.setText("La data di nascita è obbligatoria.");
-            return false;
-        }
-        if (genderChoiceBox.getValue() == null || genderChoiceBox.getValue().isEmpty()) {
-            errorLabel.setText("Seleziona un genere.");
-            return false;
-        }
-        return true;
     }
 
     @FXML

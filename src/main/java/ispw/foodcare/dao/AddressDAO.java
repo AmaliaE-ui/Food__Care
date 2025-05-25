@@ -10,7 +10,7 @@ public class AddressDAO {
     public int saveAddress(AddressBean bean) throws SQLException {
 
         try (Connection conn = DBManager.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryAddress.insert_address, Statement.RETURN_GENERATED_KEYS);) {
+             PreparedStatement stmt = conn.prepareStatement(QueryAddress.INSERT_ADDRESS, Statement.RETURN_GENERATED_KEYS);) {
 
             stmt.setString(1, bean.getVia());
             stmt.setString(2, bean.getCivico());

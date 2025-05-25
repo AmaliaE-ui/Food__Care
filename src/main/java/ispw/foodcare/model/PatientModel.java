@@ -8,19 +8,12 @@ import ispw.foodcare.dao.UserDAO;
 
 public class PatientModel {
 
-    public void registerPatient(String name, String surname, String phone, String username, String email, String password, String birthDate, String gender) throws SQLException {
-        PatientBean bean = new PatientBean();
-        bean.setName(name);
-        bean.setSurname(surname);
-        bean.setPhoneNumber(phone); //  metodo corretto
-        bean.setUsername(username);
-        bean.setEmail(email);
-        bean.setPassword(password);
-        bean.setBirthDate(birthDate);
-        bean.setGender(gender);
+    private final UserDAO userDAO = new UserDAO();
+    private final PatientDAO patientDAO = new PatientDAO();
 
-        new UserDAO().saveUser(bean, "PATIENT"); //  specifica ruolo
-        new PatientDAO().savePatient(bean);
+    public void registerPatient(PatientBean bean) throws SQLException {
+        userDAO.saveUser(bean, "PATIENT"); //  specifica ruolo
+        patientDAO.savePatient(bean);
     }
 
 
