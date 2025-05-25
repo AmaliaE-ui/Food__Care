@@ -62,7 +62,7 @@ public class RegistrationNutritionistGuiController {
             bean.setSpecializzazione(specializzazioneChoiceBox.getValue());
 
             //Validazione
-            String error = ispw.foodcare.validation.PatientValidator.validate(bean, confirmPasswordTextField.getText());
+            String error = ispw.foodcare.validation.NutritionistValidator.validateNutritionist(bean, address,confirmPasswordTextField.getText());
             if (error != null) {
                 errorLabel.setStyle("-fx-text-fill: red;");
                 errorLabel.setText(error);

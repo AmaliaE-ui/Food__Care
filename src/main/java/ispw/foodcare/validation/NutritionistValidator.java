@@ -6,18 +6,10 @@ import ispw.foodcare.bean.AddressBean;
 
 public class NutritionistValidator {
 
-    public static String validate(NutritionistBean bean, AddressBean address, String confirmPassword) {
-        if (FieldValidator.isEmpty(bean.getName())) return "Il nome è obbligatorio.";
-        if (FieldValidator.isEmpty(bean.getSurname())) return "Il cognome è obbligatorio.";
-        if (FieldValidator.isEmpty(bean.getUsername())) return "Lo username è obbligatorio.";
-        if (FieldValidator.isEmpty(bean.getEmail())) return "L'email è obbligatoria.";
-        if (!FieldValidator.isEmailValid(bean.getEmail())) return "Email non valida.";
-        if (FieldValidator.isEmpty(bean.getPhoneNumber())) return "Il numero di telefono è obbligatorio.";
-        if (!FieldValidator.isPhoneValid(bean.getPhoneNumber())) return "Numero di telefono non valido.";
-        if (FieldValidator.isEmpty(bean.getPassword()) || FieldValidator.isEmpty(confirmPassword))
-            return "Inserisci e conferma la password.";
-        if (!FieldValidator.doPasswordsMatch(bean.getPassword(), confirmPassword))
-            return "Le password non corrispondono.";
+    public static String validateNutritionist(NutritionistBean bean, AddressBean address, String confirmPassword) {
+        String commonCheck = UserValidator.validateBaseUser(bean, confirmPassword);
+        if (commonCheck != null) return commonCheck;
+
         if (FieldValidator.isEmpty(bean.getPiva())) return "La partita IVA è obbligatoria.";
         if (FieldValidator.isEmpty(bean.getTitoloStudio())) return "Il titolo di studio è obbligatorio.";
         if (FieldValidator.isEmpty(bean.getSpecializzazione())) return "La specializzazione è obbligatoria.";
@@ -31,6 +23,6 @@ public class NutritionistValidator {
             return "Tutti i campi dell'indirizzo sono obbligatori.";
         }
 
-        return null; // Validazione superata
+        return null;
     }
 }

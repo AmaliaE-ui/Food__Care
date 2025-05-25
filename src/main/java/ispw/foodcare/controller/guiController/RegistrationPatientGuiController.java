@@ -48,7 +48,7 @@ public class RegistrationPatientGuiController {
             bean.setGender(genderChoiceBox.getValue());
 
             //Validazione
-            String error = ispw.foodcare.validation.PatientValidator.validate(bean, confPasswordTextField.getText());
+            String error = ispw.foodcare.validation.PatientValidator.validatePatient(bean, confPasswordTextField.getText());
             if (error != null) {
                 errorLabel.setStyle("-fx-text-fill: red;");
                 errorLabel.setText(error);
