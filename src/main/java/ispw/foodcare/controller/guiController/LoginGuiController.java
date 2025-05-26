@@ -1,6 +1,7 @@
 package ispw.foodcare.controller.guicontroller;
 
 
+import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.LoginController;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
@@ -28,14 +29,21 @@ public class LoginGuiController {
         String username = usernameTextField.getText();
         String password = passwordPasswordField.getText();
 
+        UserBean user = LoginController.getInstance().authenticateUser(username, password);
 
-        // Validazione credenziali
-        if (LoginController.validateLogin(username, password)) {
-            NavigationManager.switchScene(event, "/ispw/foodcare/nutritionistList.fxml", "FoodCare");
+        if (user != null) {
+            //Salva nella sessione
+            ispw.foodcare.utils.SessionManager.getInstance().login(user);
+
+            //Ottieni path corretto dalla GuiFactory
+            String role = user.getRole();
+            String homePath = ispw.foodcare.utils.factory.GuiFactory.getHomePath(role);
+
+            //Home dinamica
+            NavigationManager.switchScene(event, homePath, "FoodCare - Home");
         } else {
-            loginMessageLabel.setText("Login fallito. Controlla le credenziali.");
+            loginMessageLabel.setText("Login faillito");
         }
-
     }
 
     /*Metodo per la Registrazione*/

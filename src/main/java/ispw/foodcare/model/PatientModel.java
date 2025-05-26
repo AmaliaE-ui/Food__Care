@@ -15,6 +15,4 @@ public class PatientModel {
         userDAO.saveUser(bean, "PATIENT"); //  specifica ruolo
         patientDAO.savePatient(bean);
     }
-
-
 }

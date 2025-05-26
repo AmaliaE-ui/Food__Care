@@ -30,7 +30,7 @@ public class NutritionistValidationTest {
             address.setProvincia("RM");
             address.setRegione("Lazio");
 
-            String result = NutritionistValidator.validate(bean, address, "securePass!");
+            String result = NutritionistValidator.validateNutritionist(bean, address, "securePass!");
             assertNull(result); // validazione superata
         }
 
@@ -55,7 +55,7 @@ public class NutritionistValidationTest {
             address.setProvincia("RM");
             address.setRegione("Lazio");
 
-            String result = NutritionistValidator.validate(bean, address, "securePass!");
+            String result = NutritionistValidator.validateNutritionist(bean, address, "securePass!");
             assertEquals("La specializzazione è obbligatoria.", result);
         }
 
@@ -80,7 +80,7 @@ public class NutritionistValidationTest {
             address.setProvincia("RM");
             address.setRegione("Lazio");
 
-            String result = NutritionistValidator.validate(bean, address, "securePass!");
+            String result = NutritionistValidator.validateNutritionist(bean, address, "securePass!");
             assertEquals("Numero di telefono non valido.", result);
         }
 
@@ -105,7 +105,7 @@ public class NutritionistValidationTest {
             address.setProvincia("RM");
             address.setRegione("Lazio");
 
-            String result = NutritionistValidator.validate(bean, address, "securePass!");
+            String result = NutritionistValidator.validateNutritionist(bean, address, "securePass!");
             assertEquals("Tutti i campi dell'indirizzo sono obbligatori.", result);
         }
 }

@@ -21,7 +21,7 @@ public class PatientValidationTest {
 
         String confirmPassword = "password123";
 
-        String result = PatientValidator.validate(bean, confirmPassword);
+        String result = PatientValidator.validatePatient(bean, confirmPassword);
         assertNull(result); // nessun errore, validazione superata
     }
 
@@ -37,7 +37,7 @@ public class PatientValidationTest {
         bean.setBirthDate("1990-01-01");
         bean.setGender("Maschio");
 
-        String result = PatientValidator.validate(bean, "password123");
+        String result = PatientValidator.validatePatient(bean, "password123");
         assertEquals("Il nome è obbligatorio.", result);
     }
 
@@ -53,7 +53,7 @@ public class PatientValidationTest {
         bean.setBirthDate("1990-01-01");
         bean.setGender("Maschio");
 
-        String result = PatientValidator.validate(bean, "password123");
+        String result = PatientValidator.validatePatient(bean, "password123");
         assertEquals("Email non valida.", result);
     }
 
@@ -69,7 +69,7 @@ public class PatientValidationTest {
         bean.setBirthDate("1990-01-01");
         bean.setGender("Maschio");
 
-        String result = PatientValidator.validate(bean, "altrapassword");
+        String result = PatientValidator.validatePatient(bean, "altrapassword");
         assertEquals("Le password non corrispondono.", result);
     }
 }

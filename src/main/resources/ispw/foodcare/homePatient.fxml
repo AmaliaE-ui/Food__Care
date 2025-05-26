@@ -11,7 +11,8 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.guicontroller.NutritionistListGuiController">
+<?import javafx.scene.layout.AnchorPane?>
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.guicontroller.HomePatientGuiController">
 
     <left>
         <VBox alignment="TOP_CENTER" prefWidth="220.0" spacing="20" style="-fx-background-color: #b0c4de;" BorderPane.alignment="CENTER">
@@ -24,9 +25,9 @@
             </VBox.margin>
             </Label>
             <Line endX="160.0" endY="0.0" startX="0.0" startY="0.0" stroke="WHITE" strokeWidth="3.0" />
-            <Button fx:id="personalAreaButton" prefWidth="180" text="Area personale" />
-            <Button fx:id="appointmentButton" prefWidth="180" text="Appuntamenti" />
-            <Button fx:id="historyButton" prefWidth="180" text="Storico" />
+            <Button fx:id="personalAreaButton" prefWidth="180" text="Area personale" onAction="#handlePersonalArea" />
+            <Button fx:id="appointmentButton" prefWidth="180" text="Appuntamenti" onAction="#handleAppointments"/>
+            <Button fx:id="historyButton" prefWidth="180" text="Storico" onAction="#handleHistory"/>
          <Button fx:id="logoutButton" onAction="#handleLogout" prefWidth="180" text="Log out">
             <VBox.margin>
                <Insets top="250.0" />
@@ -36,7 +37,7 @@
     </left>
 
     <center>
-        <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 20;" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="contentArea" prefWidth="680.0" style="-fx-padding: 20" BorderPane.alignment="CENTER">
             <HBox alignment="CENTER_LEFT" spacing="10">
                 <TextField fx:id="searchTextField" prefHeight="26.0" prefWidth="692.0" promptText="Search..." />
                 <Button fx:id="searchButton" text="🔍" />
@@ -56,6 +57,6 @@
                     <Button fx:id="visualizzaProfiloButton" prefHeight="26.0" prefWidth="244.0" text="Visualizza profilo" />
                 </HBox>
             </VBox>
-        </VBox>
+        </AnchorPane>
     </center>
 </BorderPane>

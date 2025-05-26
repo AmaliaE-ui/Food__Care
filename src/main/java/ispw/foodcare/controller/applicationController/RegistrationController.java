@@ -4,8 +4,6 @@ import ispw.foodcare.bean.AddressBean;
 import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.bean.PatientBean;
 import ispw.foodcare.dao.AddressDAO;
-import ispw.foodcare.dao.PatientDAO;
-import ispw.foodcare.dao.UserDAO;
 import ispw.foodcare.model.NutritionistModel;
 import ispw.foodcare.model.PatientModel;
 

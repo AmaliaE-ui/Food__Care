@@ -3,6 +3,7 @@ package ispw.foodcare.utils;
 import ispw.foodcare.bean.UserBean;
 
 public class SessionManager {
+
     private static SessionManager instance;
     private UserBean currentUser;
 
