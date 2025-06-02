@@ -5,7 +5,7 @@ import ispw.foodcare.query.QueryNutrtionist;
 
 import java.sql.*;
 
-public class NutritionistDAO{
+public class NutritionistDao {
 
     public void saveNutritionist(NutritionistBean bean, int addressID) throws SQLException {
         try(Connection conn = DBManager.getInstance().getConnection();

@@ -1,6 +1,7 @@
 package ispw.foodcare.controller.guicontroller;
 
 
+import ispw.foodcare.Role;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.LoginController;
 import ispw.foodcare.utils.NavigationManager;
@@ -36,7 +37,7 @@ public class LoginGuiController {
             ispw.foodcare.utils.SessionManager.getInstance().login(user);
 
             //Ottieni path corretto dalla GuiFactory
-            String role = user.getRole();
+            Role role = user.getRole();
             String homePath = ispw.foodcare.utils.factory.GuiFactory.getHomePath(role);
 
             //Home dinamica
@@ -51,5 +52,4 @@ public class LoginGuiController {
     private void handleRegistration(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/chooseRole.fxml", "Seleziona ruolo");
     }
-
 }

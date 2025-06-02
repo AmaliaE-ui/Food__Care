@@ -19,18 +19,31 @@ public class HomePatientGuiController extends BaseGuiController{
     @FXML private Button historyButton;
     @FXML private Button logoutButton;
 
-    @FXML private AnchorPane contentArea; // deve esistere nel tuo FXML
+    @FXML private AnchorPane contentArea; // deve esistere nel mio FXML
 
     @FXML
     public void initialize() {
-        loadContent("/ispw/foodcare/Patient/personalAreaPatient.fxml");
+        loadContent("/ispw/foodcare/homePatient.fxml");
     }
 
     private void loadContent(String fxmlPath) {
         try {
+            //var resource = getClass().getResource(fxmlPath);
+            //System.out.println("Caricamento FXML: " + fxmlPath);
+            //System.out.println("Risorsa trovata: " + resource);
+
+            //if (resource == null) {
+              //  System.err.println("❌ FXML non trovato: " + fxmlPath);
+                //return;
+            //}
+
+           // AnchorPane newContent = FXMLLoader.load(resource);
+            //contentArea.getChildren().setAll(newContent);
+
             AnchorPane newContent = FXMLLoader.load(getClass().getResource(fxmlPath));
             contentArea.getChildren().setAll(newContent);
         } catch (IOException e) {
+           // System.err.println("❌ Errore nel caricamento FXML: " + fxmlPath);
             e.printStackTrace();
         }
     }

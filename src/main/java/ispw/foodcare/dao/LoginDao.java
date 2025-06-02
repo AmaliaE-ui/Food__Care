@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LoginDAO {
+public class LoginDao {
 
     public boolean checkCredentials(LoginBean bean) {
         try (Connection conn = DBManager.getInstance().getConnection();

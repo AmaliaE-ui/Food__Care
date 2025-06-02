@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" spacing="10" padding="20">
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" spacing="10" padding="20">
     <Label text="Area Personale - Nutrizionista" style="-fx-font-size: 20px; -fx-font-weight: bold;">
         <font>
             <Font size="18"/>

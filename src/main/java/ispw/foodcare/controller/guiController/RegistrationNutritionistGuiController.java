@@ -1,11 +1,9 @@
 package ispw.foodcare.controller.guicontroller;
 
+import ispw.foodcare.Role;
 import ispw.foodcare.bean.AddressBean;
 import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.controller.applicationcontroller.RegistrationController;
-import ispw.foodcare.dao.AddressDAO;
-import ispw.foodcare.model.NutritionistModel;
-import ispw.foodcare.utils.FieldValidator;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +12,7 @@ import javafx.scene.control.*;
 import java.sql.SQLException;
 
 public class RegistrationNutritionistGuiController {
+
     @FXML
     private void handleBackToLogin(ActionEvent event) {
         ispw.foodcare.utils.NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
@@ -56,10 +55,12 @@ public class RegistrationNutritionistGuiController {
             bean.setUsername(usernameTextField.getText());
             bean.setEmail(emailTextField.getText());
             bean.setPassword(passwordTextField.getText());
-            bean.setRole("NUTRITIONIST");
+            bean.setRole(Role.NUTRITIONIST);
             bean.setPiva(pivaTextField.getText());
             bean.setTitoloStudio(titoloStudioChoiceBox.getValue());
             bean.setSpecializzazione(specializzazioneChoiceBox.getValue());
+
+            bean.setAddress(address);
 
             //Validazione
             String error = ispw.foodcare.validation.NutritionistValidator.validateNutritionist(bean, address,confirmPasswordTextField.getText());
@@ -70,16 +71,16 @@ public class RegistrationNutritionistGuiController {
             }
 
             RegistrationController controller = new RegistrationController();
-            controller.registerNutritionist(bean, address);
+            controller.register(bean);
 
-            errorLabel.setText("-fx-text-fill: green");
+            errorLabel.setStyle("-fx-text-fill: green");
             errorLabel.setText("Registrazione avvenuta con successo!");
 
             javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
             delay.setOnFinished(e -> NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login"));
             delay.play();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             errorLabel.setText("-fx-text-fill: red");
             errorLabel.setText("Errore: " + e.getMessage());
         }

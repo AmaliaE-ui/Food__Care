@@ -8,7 +8,7 @@ import ispw.foodcare.query.QueryPatient;
 
 import java.sql.*;
 
-public class PatientDAO {
+public class PatientDao {
 
     public void savePatient(PatientBean patient) throws SQLException {
         try (Connection conn = DBManager.getInstance().getConnection();

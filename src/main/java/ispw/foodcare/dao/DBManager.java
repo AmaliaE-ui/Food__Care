@@ -21,14 +21,20 @@ public class DBManager {
         }
     }
 
+    //Con questi controlli, ogni volta che chiamo DBManager.getIstance().getConnection(), sono sicura di avere una connessione attiva
     public static DBManager getInstance() throws SQLException {
-        if(instance == null || instance.getConnection() == null){
+        //connection == null - copre i casi in cui la connessione non è mai stata creata
+        if(instance == null || instance.connection == null || instance.connection.isClosed()){
             instance = new DBManager();
         }
         return instance;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
+        //Controlle di no usare una Connection chiusa
+        if(connection == null || connection.isClosed()){
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        }
         return connection;
     }
 }

@@ -5,7 +5,7 @@ import ispw.foodcare.query.QueryAddress;
 
 import java.sql.*;
 
-public class AddressDAO {
+public class AddressDao {
 
     public int saveAddress(AddressBean bean) throws SQLException {
 

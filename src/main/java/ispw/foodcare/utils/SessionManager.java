@@ -1,5 +1,6 @@
 package ispw.foodcare.utils;
 
+import ispw.foodcare.Role;
 import ispw.foodcare.bean.UserBean;
 
 public class SessionManager {
@@ -34,7 +35,7 @@ public class SessionManager {
         return currentUser != null;
     }
 
-    public String getCurrentRole() {
+    public Role getCurrentRole() {
         return isLoggedIn() ? currentUser.getRole() : null;
     }
 

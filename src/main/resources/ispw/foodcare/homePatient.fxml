@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.AnchorPane?>
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.guicontroller.HomePatientGuiController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.guicontroller.HomePatientGuiController">
 
     <left>
         <VBox alignment="TOP_CENTER" prefWidth="220.0" spacing="20" style="-fx-background-color: #b0c4de;" BorderPane.alignment="CENTER">
@@ -38,25 +38,6 @@
 
     <center>
         <AnchorPane fx:id="contentArea" prefWidth="680.0" style="-fx-padding: 20" BorderPane.alignment="CENTER">
-            <HBox alignment="CENTER_LEFT" spacing="10">
-                <TextField fx:id="searchTextField" prefHeight="26.0" prefWidth="692.0" promptText="Search..." />
-                <Button fx:id="searchButton" text="🔍" />
-            </HBox>
-
-            <VBox spacing="15">
-                <HBox fx:id="itemHBox" alignment="CENTER_LEFT" spacing="20" style="-fx-border-color: #ccc; -fx-padding: 10;">
-                    <ImageView fx:id="fotoImageView" fitHeight="100" fitWidth="100" />
-                    <VBox prefHeight="100.0" prefWidth="471.0" spacing="5">
-                        <Label fx:id="nomeCognomeLabel" text="Nome Cognome" />
-                        <Label fx:id="specialzzazioneLabel" text="Specializzazione" />
-                        <Label fx:id="indirizzoLabel" text="Indirizzo" />
-                        <HBox spacing="2">
-                            <Label text="★" /><Label text="★" /><Label fx:id="recensioniLabel" text="★" /><Label text="☆" /><Label text="☆" />
-                        </HBox>
-                    </VBox>
-                    <Button fx:id="visualizzaProfiloButton" prefHeight="26.0" prefWidth="244.0" text="Visualizza profilo" />
-                </HBox>
-            </VBox>
         </AnchorPane>
     </center>
 </BorderPane>

@@ -1,24 +1,60 @@
 package ispw.foodcare;
 
+import ispw.foodcare.model.Session;
+import ispw.foodcare.utils.NavigationManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Main extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/ispw/foodcare/Login/login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 600);
-        stage.setTitle("FoodCare - Login");
-        stage.setScene(scene);
-        stage.show();
+
+        //Avvio scena JavaFX
+        NavigationManager.switchScene(stage, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
 
-
     public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Avvio FoodCare");
+
+        //Selezione la modaltà: Demo (N persistenza) / Non-Demo (S persistenza)
+        System.out.println("Vuoi abilitare la persistenza dei dati? (S/N) ");
+        String enablePersistance = scanner.nextLine().trim().toLowerCase();
+
+        if(enablePersistance.equals("s")){
+
+            Session.getInstance().setRam(false); //Persistenza, Salvo DB o FileSystem
+            System.out.println("Scegli il tipo di persistenza: [1] Database, [2] File System");
+            String type = scanner.nextLine().trim();
+
+            if(type.equals("1")){
+                Session.getInstance().setDB(true); //Salvo in DB
+
+            } else if(type.equals("2")){
+                Session.getInstance().setDB(false); //Salvo in File
+
+            } else {
+                System.out.println("Inserimento non valido");
+                return; //Uscita dal main
+            }
+        } else if(enablePersistance.equals("n")) {
+
+            Session.getInstance().setRam(true);
+        }else {
+
+            System.out.println("Inserimento non valido");
+            return;
+        }
+
+        //Avvia JavaFX
+        System.out.println("Avvio modalità grafica ...");
+        Session.getInstance().setCLI(false);
         launch();
     }
 }

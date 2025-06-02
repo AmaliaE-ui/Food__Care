@@ -1,9 +1,8 @@
 package ispw.foodcare.controller.guicontroller;
 
+import ispw.foodcare.Role;
 import ispw.foodcare.bean.PatientBean;
 import ispw.foodcare.controller.applicationcontroller.RegistrationController;
-import ispw.foodcare.dao.PatientDAO;
-import ispw.foodcare.dao.UserDAO;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +10,6 @@ import javafx.scene.control.*;
 
 import java.sql.SQLException;
 import java.time.format.DateTimeParseException;
-import ispw.foodcare.utils.FieldValidator;
 
 public class RegistrationPatientGuiController {
 
@@ -41,7 +39,7 @@ public class RegistrationPatientGuiController {
             bean.setUsername(usernameTextField.getText());
             bean.setEmail(emailTextField.getText());
             bean.setPassword(passwordTextField.getText());
-            bean.setRole("PATIENT");
+            bean.setRole(Role.PATIENT);
             if(birthDatePicker.getValue() != null) {
                 bean.setBirthDate(birthDatePicker.getValue().toString());
             }
@@ -56,7 +54,7 @@ public class RegistrationPatientGuiController {
             }
 
             RegistrationController controller = new RegistrationController();
-            controller.registerPatient(bean);
+            controller.register(bean);
 
             // Mostra messaggio verde
             errorLabel.setStyle("-fx-text-fill: green;");
@@ -67,12 +65,13 @@ public class RegistrationPatientGuiController {
             delay.setOnFinished(e -> NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login"));
             delay.play();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             errorLabel.setStyle("-fx-text-fill: red;");
-            errorLabel.setText("Errore: " + e.getMessage());
-        }catch (DateTimeParseException e) {
-            errorLabel.setStyle("-fx-text-fill: red;");
-            errorLabel.setText("Formato data non valido. Usa GG/MM/AAAA.");
+            if (e instanceof DateTimeParseException){
+                errorLabel.setText("Formato data non valido. Usa GG/MM/AAAA.");
+            } else {
+                errorLabel.setText("Errore: " + e.getMessage());
+            }
         }
     }
 

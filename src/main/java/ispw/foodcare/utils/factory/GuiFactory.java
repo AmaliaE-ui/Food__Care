@@ -1,11 +1,13 @@
 package ispw.foodcare.utils.factory;
 
+import ispw.foodcare.Role;
+
 public class GuiFactory {
 
-    public static String getHomePath(String role) {
-        return switch (role.toUpperCase()) {
-            case "PATIENT" -> "/ispw/foodcare/homePatient.fxml";
-            case "NUTRITIONIST" -> "/ispw/foodcare/homeNutritionist.fxml";
+    public static String getHomePath(Role role) {
+        return switch (role) {
+            case PATIENT -> "/ispw/foodcare/homePatient.fxml";
+            case NUTRITIONIST -> "/ispw/foodcare/homeNutritionist.fxml";
             default -> throw new IllegalArgumentException("Ruolo non supportato: " + role);
         };
     }

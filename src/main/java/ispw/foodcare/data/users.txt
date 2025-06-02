@@ -1,0 +1,3 @@
+//username,password,ruolo,nome,cognome,email,telefono
+mario,mario,PATIENT,Mario,Rossi,mario.rossi@gmail.com,1234567890
+mari,mari,NUTRITIONIST,Maria,Verdi,mari@gmail.com,0987654321
