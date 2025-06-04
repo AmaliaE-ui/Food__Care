@@ -40,6 +40,8 @@ public class LoginGuiController {
             Role role = user.getRole();
             String homePath = ispw.foodcare.utils.factory.GuiFactory.getHomePath(role);
 
+            System.out.println("FXML location: " + homePath);
+
             //Home dinamica
             NavigationManager.switchScene(event, homePath, "FoodCare - Home");
         } else {

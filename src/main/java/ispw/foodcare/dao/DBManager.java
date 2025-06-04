@@ -8,8 +8,8 @@ public class DBManager {
 
     private static DBManager instance;
     private static final String URL = "jdbc:mysql://localhost:3306/foodcare";
-    private static final String USER = "root";
-    private static final String PASSWORD = "Primolevi1!";
+    private static final String USER = System.getenv("DB_USER");
+    private static final String PASSWORD = System.getenv("DB_PASSWORD");
 
     private Connection connection;
 

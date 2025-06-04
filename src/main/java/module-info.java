@@ -2,6 +2,7 @@ module ispw.foodcare {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires javafx.graphics;
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -13,6 +14,8 @@ module ispw.foodcare {
 
     opens ispw.foodcare to javafx.fxml;
     opens ispw.foodcare.controller.guicontroller to javafx.fxml;
+    opens ispw.foodcare.bean to javafx.fxml;
+
 
     exports ispw.foodcare;
 }

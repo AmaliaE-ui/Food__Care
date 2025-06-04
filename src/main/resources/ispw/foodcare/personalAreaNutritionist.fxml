@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" spacing="10" padding="20">
-    <Label text="Area Personale - Nutrizionista" style="-fx-font-size: 20px; -fx-font-weight: bold;">
-        <font>
-            <Font size="18"/>
-        </font>
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      spacing="10"
+      padding="20">
+    <Label text="Area Personale - Nutrizionista"
+           style="-fx-font-size:20px; -fx-font-weight: bold;">
     </Label>
+    <Label text="TESTO DI ESEMPIO"/>
     <Label text="Nome: Mario Rossi"/>
     <Label text="Email: mario.rossi@email.com"/>
     <Label text="Telefono: +39 123 456 7890"/>

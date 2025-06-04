@@ -81,21 +81,31 @@ public class UserDAOFileSystem implements UserDAOInterface {
     }
 
     private int getNextAddressId() {
-        int id = 1;
+        int maxId = 0;
         File file = new File(ADDRESSES_FILE);
         if (file.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                String last = null;
-                while ((last = reader.readLine()) != null) {}
-                if (last != null) {
-                    id = Integer.parseInt(last.split(",")[0]) + 1;
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] tokens = line.split(",");
+                    if (tokens.length > 0) {
+                        try {
+                            int currentId = Integer.parseInt(tokens[0]); //il metodo Integer.parseInt() genera eccezione se la stringa non è un numero valido
+                            if (currentId > maxId) {
+                                maxId = currentId;
+                            }
+                        } catch (NumberFormatException ignored) {//Non è obbligotario usare ingnored, posso anche mettere 'e'
+                            // Ignora le righe errate. Nel momento in cui la conversione da stringa a intero è andata male
+                        }
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException("Errore nella lettura di addresses.txt", e);
             }
         }
-        return id;
+        return maxId + 1;
     }
+
 
     //Metodo per restituire uno user dopo una ricerca tra quelli esistenti
     @Override
@@ -104,6 +114,10 @@ public class UserDAOFileSystem implements UserDAOInterface {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] tokens = line.split(",");
+                if (tokens.length != 7) {
+                    System.err.println("Riga malformata in users.txt: " + line);
+                    continue;
+                }
                 if (tokens[0].equals(username)) {
                     String password = tokens[1];
                     Role role = Role.valueOf(tokens[2]);
@@ -131,6 +145,10 @@ public class UserDAOFileSystem implements UserDAOInterface {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] tokens = line.split(",");
+                if (tokens.length != 3) {
+                    System.err.println("Riga malformata in patients.txt: " + line);
+                    continue;
+                }
                 if (tokens[0].equals(username)) {
                     return new Patient(username, password, name, surname, email, phone, Role.PATIENT, tokens[1], tokens[2]);
                 }
@@ -147,11 +165,21 @@ public class UserDAOFileSystem implements UserDAOInterface {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] tokens = line.split(",");
+                if (tokens.length != 5) {
+                    System.err.println("Riga malformata in nutritionist.txt: " + line);
+                    continue;
+                }
                 if (tokens[0].equals(username)) {
                     String piva = tokens[1];
                     String titoloStudio = tokens[2];
                     String specializzazione = tokens[3];
-                    int addressId = Integer.parseInt(tokens[4]);
+                    int addressId;
+                    try {
+                        addressId = Integer.parseInt(tokens[4]);
+                    } catch (NumberFormatException e) {
+                        System.err.println("AddressId non valido per username " + username + ": " + tokens[4]);
+                        return null;
+                    }
                     Address address = loadAddressById(addressId);
                     return new Nutritionist(username, password, name, surname, email, phone,
                             Role.NUTRITIONIST, piva, titoloStudio, specializzazione, address);
@@ -169,8 +197,16 @@ public class UserDAOFileSystem implements UserDAOInterface {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] tokens = line.split(",");
-                if (Integer.parseInt(tokens[0]) == id) {
-                    return new Address(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6]);
+                if (tokens.length != 7) {
+                    System.err.println("Riga malformata in address.txt: " + line);
+                    continue;
+                }
+                try {
+                    if (Integer.parseInt(tokens[0]) == id) {
+                        return new Address(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6]);
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("ID non numerico in address.txt: " + tokens[0]);
                 }
             }
         } catch (IOException e) {

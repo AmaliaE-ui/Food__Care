@@ -18,49 +18,48 @@ public class HomePatientGuiController extends BaseGuiController{
     @FXML private Button appointmentButton;
     @FXML private Button historyButton;
     @FXML private Button logoutButton;
+    @FXML private Button homeButton;
 
     @FXML private AnchorPane contentArea; // deve esistere nel mio FXML
 
     @FXML
     public void initialize() {
-        loadContent("/ispw/foodcare/homePatient.fxml");
+        loadContent("/ispw/foodcare/personalAreaNutritionist.fxml");
     }
 
     private void loadContent(String fxmlPath) {
         try {
-            //var resource = getClass().getResource(fxmlPath);
-            //System.out.println("Caricamento FXML: " + fxmlPath);
-            //System.out.println("Risorsa trovata: " + resource);
+            javafx.scene.Node newNode = FXMLLoader.load(getClass().getResource(fxmlPath));
+            contentArea.getChildren().setAll(newNode);
 
-            //if (resource == null) {
-              //  System.err.println("❌ FXML non trovato: " + fxmlPath);
-                //return;
-            //}
+            //Assicura il contenuto si addatti a tutto l'AncorePAne
+            AnchorPane.setTopAnchor(newNode, 0.0);
+            AnchorPane.setBottomAnchor(newNode, 0.0);
+            AnchorPane.setLeftAnchor(newNode, 0.0);
+            AnchorPane.setRightAnchor(newNode, 0.0);
 
-           // AnchorPane newContent = FXMLLoader.load(resource);
-            //contentArea.getChildren().setAll(newContent);
-
-            AnchorPane newContent = FXMLLoader.load(getClass().getResource(fxmlPath));
-            contentArea.getChildren().setAll(newContent);
         } catch (IOException e) {
-           // System.err.println("❌ Errore nel caricamento FXML: " + fxmlPath);
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void handlePersonalArea(ActionEvent event) {
-        loadContent("/ispw/foodcare/Patient/personalAreaPatient.fxml");
+    public void handleHome(ActionEvent event) {
+        loadContent("/ispw/foodcare/homePatient.fxml");
     }
 
     @FXML
-    private void handleAppointments(ActionEvent event) {
-        loadContent("/ispw/foodcare/Patient/appointmentsPatient.fxml");
+    private void handlePersonalArea(ActionEvent event) {
+        //carica dinamicamente solo l'AnchorPane dentro il BorderPane generale che non viene modificato
+        loadContent("/ispw/foodcare/personalAreaPatient.fxml");
     }
+
+    @FXML
+    private void handleAppointments(ActionEvent event) { loadContent("/ispw/foodcare/appointmentsPatient.fxml"); }
 
     @FXML
     private void handleHistory(ActionEvent event) {
-        loadContent("/ispw/foodcare/Patient/historyPatient.fxml");
+        loadContent("/ispw/foodcare/historyPatient.fxml");
     }
 
     @FXML

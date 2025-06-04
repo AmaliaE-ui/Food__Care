@@ -26,8 +26,15 @@ public class HomeNutritionistGuiController extends BaseGuiController{
 
     private void loadContent(String fxmlPath){
         try {
-            AnchorPane newContent = FXMLLoader.load(getClass().getResource(fxmlPath));
-            contentArea.getChildren().setAll(newContent);
+            javafx.scene.Node newNode = FXMLLoader.load(getClass().getResource(fxmlPath));
+            contentArea.getChildren().setAll(newNode);
+
+            //Assicura il contenuto si addatti a tutto l'AncorePAne
+            AnchorPane.setTopAnchor(newNode, 0.0);
+            AnchorPane.setBottomAnchor(newNode, 0.0);
+            AnchorPane.setLeftAnchor(newNode, 0.0);
+            AnchorPane.setRightAnchor(newNode, 0.0);
+
         } catch (IOException e){
             e.printStackTrace();
         }

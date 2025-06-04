@@ -3,15 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ispw.foodcare.controller.guicontroller.HomeNutritionistGuiController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.guicontroller.HomeNutritionistGuiController">
 
     <left>
         <VBox alignment="TOP_CENTER" prefWidth="220.0" spacing="20" style="-fx-background-color: #b0c4de;" BorderPane.alignment="CENTER">
@@ -23,12 +20,12 @@
                     <Insets top="50.0" />
                 </VBox.margin>
             </Label>
-            <Button fx:id="personalAreaButton" prefWidth="180" text="Area personale" onAction="#handlePersonalArea" />
-            <Button fx:id="availabilityButton" prefWidth="180" text="Disponibilità" onAction="#handleAvailability"/>
-            <Button fx:id="appointmentsButton" prefWidth="180" text="Appuntamenti" onAction="#handleAppointments"/>
+            <Button fx:id="personalAreaButton" onAction="#handlePersonalArea" prefWidth="180" text="Area personale" />
+            <Button fx:id="availabilityButton" onAction="#handleAvailability" prefWidth="180" text="Modifica disponibilità" />
+            <Button fx:id="appointmentsButton" onAction="#handleAppointments" prefWidth="180" text="Appuntamenti" />
             <Button fx:id="logoutButton" onAction="#handleLogout" prefWidth="180" text="Log out">
                 <VBox.margin>
-                    <Insets top="250.0" />
+                    <Insets top="100.0" />
                 </VBox.margin>
             </Button>
         </VBox>
