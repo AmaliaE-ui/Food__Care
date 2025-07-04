@@ -10,12 +10,10 @@ module ispw.foodcare {
     requires com.calendarfx.view;
 
     opens ispw.foodcare to javafx.fxml;
-    opens ispw.foodcare.controller.guicontroller to javafx.fxml;
     opens ispw.foodcare.bean to javafx.fxml;
 
 
     exports ispw.foodcare;
     opens ispw.foodcare.dao to javafx.fxml;
-    opens ispw.foodcare.controller.guicontroller to javafx.fxml;
     opens ispw.foodcare.controller.viewcontroller to javafx.fxml;
 }

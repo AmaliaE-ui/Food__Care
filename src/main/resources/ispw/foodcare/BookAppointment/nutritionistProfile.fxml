@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ispw.foodcare.controller.guicontroller.NutritionistProfileGuiController"
+            fx:controller="ispw.foodcare.controller.viewcontroller.NutritionistProfileGuiController"
             style="-fx-background-color: #ffffff; -fx-padding: 20;"
             prefWidth="900.0" prefHeight="600.0">
 

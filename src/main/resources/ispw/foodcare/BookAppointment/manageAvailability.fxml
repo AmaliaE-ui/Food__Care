@@ -5,7 +5,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="ispw.foodcare.controller.guicontroller.ManageAvailabilityGuiController"
+      fx:controller="ispw.foodcare.controller.viewcontroller.ManageAvailabilityGuiController"
       spacing="15" alignment="CENTER" style="-fx-padding: 20.0;">
 
     <Label text="Gestisci Disponibilità" style="-fx-font-size: 18px; -fx-font-weight: bold;" />

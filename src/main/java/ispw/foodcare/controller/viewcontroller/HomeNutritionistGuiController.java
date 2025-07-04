@@ -5,10 +5,12 @@ import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class HomeNutritionistGuiController extends BaseGuiController {
 
@@ -16,28 +18,33 @@ public class HomeNutritionistGuiController extends BaseGuiController {
     @FXML private Button availabilityButton;
     @FXML private Button appointmentsButton;
     @FXML private Button logoutButton;
-
     @FXML private AnchorPane contentArea;
+
+    private static final double ANCHOR_ZERO = 0.0;
 
     @FXML
     public void initialize() {
         loadContent("/ispw/foodcare/personalAreaNutritionist.fxml");
     }
 
-    private void loadContent(String fxmlPath){
+    private void loadContent(String fxmlPath) {
+        Objects.requireNonNull(fxmlPath, "FXML path must not be null");
+
         try {
-            javafx.scene.Node newNode = FXMLLoader.load(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Node newNode = loader.load();
+            setAnchors(newNode);
             contentArea.getChildren().setAll(newNode);
-
-            //Assicura il contenuto si addatti a tutto l'AncorePAne
-            AnchorPane.setTopAnchor(newNode, 0.0);
-            AnchorPane.setBottomAnchor(newNode, 0.0);
-            AnchorPane.setLeftAnchor(newNode, 0.0);
-            AnchorPane.setRightAnchor(newNode, 0.0);
-
-        } catch (IOException e){
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new IllegalStateException("Impossibile caricare il file FXML: " + fxmlPath, e);
         }
+    }
+
+    private void setAnchors(Node node) {
+        AnchorPane.setTopAnchor(node, ANCHOR_ZERO);
+        AnchorPane.setBottomAnchor(node, ANCHOR_ZERO);
+        AnchorPane.setLeftAnchor(node, ANCHOR_ZERO);
+        AnchorPane.setRightAnchor(node, ANCHOR_ZERO);
     }
 
     @FXML
@@ -46,7 +53,8 @@ public class HomeNutritionistGuiController extends BaseGuiController {
     }
 
     @FXML
-    private void handleAvailability(ActionEvent event) { loadContent("/ispw/foodcare/BookAppointment/manageAvailability.fxml");
+    private void handleAvailability(ActionEvent event) {
+        loadContent("/ispw/foodcare/BookAppointment/manageAvailability.fxml");
     }
 
     @FXML

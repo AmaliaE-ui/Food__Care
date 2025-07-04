@@ -6,7 +6,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ispw.foodcare.controller.guicontroller.HomePatientGuiController"
+            fx:controller="ispw.foodcare.controller.viewcontroller.HomePatientGuiController"
             fx:id="rootPane">
 
     <VBox fx:id="nutritionistList" spacing="10.0" layoutX="10.0" layoutY="10.0">

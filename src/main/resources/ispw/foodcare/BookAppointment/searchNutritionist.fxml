@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="680.0" spacing="15" style="-fx-background-color: #f0f8ff; -fx-padding: 20;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.guicontroller.SearchNutritionistGuiController">
+<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="680.0" spacing="15" style="-fx-background-color: #f0f8ff; -fx-padding: 20;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.viewcontroller.SearchNutritionistGuiController">
 
     <HBox spacing="10">
         <TextField fx:id="searchTextField" prefHeight="26.0" prefWidth="530.0" promptText="Inserisci la città..." />
