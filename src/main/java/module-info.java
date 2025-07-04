@@ -16,4 +16,5 @@ module ispw.foodcare {
 
     exports ispw.foodcare;
     opens ispw.foodcare.dao to javafx.fxml;
+    opens ispw.foodcare.controller.guicontroller to javafx.fxml;
 }

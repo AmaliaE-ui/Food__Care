@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class HomePatientGuiController extends BaseGuiController{
+public class HomePatientGuiController extends BaseGuiController {
 
 
     @FXML private Button personalAreaButton;

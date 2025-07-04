@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class HomeNutritionistGuiController extends BaseGuiController{
+public class HomeNutritionistGuiController extends BaseGuiController {
 
     @FXML private Button personalAreaButton;
     @FXML private Button availabilityButton;

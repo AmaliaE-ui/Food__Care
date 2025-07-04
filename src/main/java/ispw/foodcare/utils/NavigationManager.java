@@ -1,6 +1,5 @@
 package ispw.foodcare.utils;
 
-import ispw.foodcare.Main;
 import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.controller.guicontroller.BookAppointmentGuiController;
 import ispw.foodcare.controller.guicontroller.NutritionistProfileGuiController;

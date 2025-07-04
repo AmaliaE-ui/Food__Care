@@ -14,6 +14,9 @@ import java.util.List;
 
 public class SearchNutritionistGuiController {
 
+    private String lastSearchResults = "lastSearchResults";
+    private String lastSearchQuery = "lastSearchQuery";
+
     @FXML private TextField searchTextField;
     @FXML private TableView<NutritionistBean> nutritionistTableView;
     @FXML private TableColumn<NutritionistBean, String> nameColumn;
@@ -37,12 +40,12 @@ public class SearchNutritionistGuiController {
 
         // Ripristino dei dati precedenti da sessione
         ObservableList<NutritionistBean> cachedResults =
-                (ObservableList<NutritionistBean>) Session.getInstance().getAttributes("lastSearchResults");
+                (ObservableList<NutritionistBean>) Session.getInstance().getAttributes(lastSearchResults);
         if (cachedResults != null && !cachedResults.isEmpty()) {
             nutritionistTableView.setItems(cachedResults);
         }
 
-        String previousQuery = (String) Session.getInstance().getAttributes("lastSearchQuery");
+        String previousQuery = (String) Session.getInstance().getAttributes(lastSearchQuery);
         if (previousQuery != null) {
             searchTextField.setText(previousQuery);
         }
@@ -94,8 +97,8 @@ public class SearchNutritionistGuiController {
         if (result.isEmpty()) {
             showAlert("Nessun risultato", "Nessun nutrizionista trovato nella città \"" + city + "\".");
             nutritionistTableView.getItems().clear();
-            Session.getInstance().removeAttribute("lastSearchResults");
-            Session.getInstance().removeAttribute("lastSearchQuery");
+            Session.getInstance().removeAttribute(lastSearchResults);
+            Session.getInstance().removeAttribute(lastSearchQuery);
             return;
         }
 
@@ -103,8 +106,8 @@ public class SearchNutritionistGuiController {
         nutritionistTableView.setItems(data);
 
         // Salva in sessione i dati per ripristino al ritorno
-        Session.getInstance().setAttributes("lastSearchResults", data);
-        Session.getInstance().setAttributes("lastSearchQuery", city);
+        Session.getInstance().setAttributes(lastSearchResults, data);
+        Session.getInstance().setAttributes(lastSearchQuery, city);
     }
 
     /*Alert generico.*/
