@@ -27,7 +27,6 @@ public class PersonalAreaPatientGuiController {
             nameLabel.setText(currentUser.getName() + " " + currentUser.getSurname());
             emailLabel.setText(currentUser.getEmail());
             phoneLabel.setText(currentUser.getPhoneNumber());
-            //dobLabel.setText(currentUser.getBirthDate());
 
             goalsTextArea.setText("Obiettivi da raggiungere:\n" +
                     "Ancora da aggiungere.");

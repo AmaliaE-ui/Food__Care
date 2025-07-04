@@ -33,7 +33,7 @@ public class BookAppointmentController {
         List<Nutritionist> nutritionists = nutritionistDAO.getByCity(city);
         return nutritionists.stream()
                 .map(n -> (NutritionistBean) Converter.userToBean(n))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /*Restituisce gli orari disponbili per il nutrizionista in una specifica data*/
@@ -71,7 +71,7 @@ public class BookAppointmentController {
             bean.setEndTime(a.getEndTime());
             bean.setNutritionistUsername(a.getNutritionistUsername());
             return bean;
-        }).collect(Collectors.toList());
+        }).toList();
     }
 
     //Cancella disponibilità

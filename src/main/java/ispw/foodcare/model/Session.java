@@ -44,11 +44,11 @@ public class Session {
     public UserBean getCurrentUser() { return currentUser; }
     public void setCurrentUser(UserBean currentUser) { this.currentUser = currentUser; }
     public boolean isCLI() { return isCLI; }
-    public void setCLI(boolean CLI) { isCLI = CLI; }
+    public void setCLI(boolean cli) { isCLI = cli; }
     public boolean isDB() { return isDB; }
-    public void setDB(boolean DB) { isDB = DB; }
+    public void setDB(boolean db) { isDB = db; }
     public boolean isRam() { return isRam; }
-    public void setRam(boolean Ram) { isRam = Ram; }
+    public void setRam(boolean ram) { isRam = ram; }
 
     public UserDAO getUserDAO(){ return userDAO; }
     public void setUserDAO(UserDAO userDAO){ this.userDAO = userDAO; }
