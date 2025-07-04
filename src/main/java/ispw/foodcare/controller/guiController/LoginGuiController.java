@@ -3,7 +3,7 @@ package ispw.foodcare.controller.guicontroller;
 
 import ispw.foodcare.Role;
 import ispw.foodcare.bean.UserBean;
-import ispw.foodcare.controller.applicationcontroller.LoginController;
+import ispw.foodcare.bean.applicationcontroller.LoginController;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

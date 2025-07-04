@@ -1,7 +1,7 @@
 package ispw.foodcare.controller.guicontroller;
 
 import ispw.foodcare.bean.NutritionistBean;
-import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
+import ispw.foodcare.bean.applicationcontroller.BookAppointmentController;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.beans.property.SimpleStringProperty;

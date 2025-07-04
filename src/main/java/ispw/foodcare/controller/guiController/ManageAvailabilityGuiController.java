@@ -1,7 +1,7 @@
 package ispw.foodcare.controller.guicontroller;
 
 import ispw.foodcare.bean.AvailabilityBean;
-import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
+import ispw.foodcare.bean.applicationcontroller.BookAppointmentController;
 import ispw.foodcare.model.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

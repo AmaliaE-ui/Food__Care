@@ -1,4 +1,4 @@
-package ispw.foodcare.controller.applicationcontroller;
+package ispw.foodcare.bean.applicationcontroller;
 
 import ispw.foodcare.dao.UserDAO;
 import ispw.foodcare.exeption.AccountAlreadyExistsException;
