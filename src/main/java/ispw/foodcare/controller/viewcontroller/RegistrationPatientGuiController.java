@@ -1,4 +1,4 @@
-package ispw.foodcare.controller.guicontroller;
+package ispw.foodcare.controller.viewcontroller;
 
 import ispw.foodcare.Role;
 import ispw.foodcare.bean.PatientBean;
@@ -80,6 +80,6 @@ public class RegistrationPatientGuiController {
 
     @FXML
     private void handleBackToLogin(ActionEvent event) {
-        ispw.foodcare.utils.NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
+        NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
 }

@@ -1,4 +1,4 @@
-package ispw.foodcare.controller.guicontroller;
+package ispw.foodcare.controller.viewcontroller;
 
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;

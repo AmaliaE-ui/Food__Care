@@ -1,17 +1,17 @@
-package ispw.foodcare.controller.guicontroller;
+package ispw.foodcare.controller.viewcontroller;
 
 
 import ispw.foodcare.Role;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.LoginController;
+import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.Button;
-import ispw.foodcare.model.Session;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 
 public class LoginGuiController {

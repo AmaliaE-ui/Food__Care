@@ -1,4 +1,4 @@
-package ispw.foodcare.controller.guicontroller;
+package ispw.foodcare.controller.viewcontroller;
 
 import ispw.foodcare.Role;
 import ispw.foodcare.bean.AddressBean;
@@ -8,13 +8,14 @@ import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
 import java.util.Map;
 
 public class RegistrationNutritionistGuiController {
 
     @FXML
     private void handleBackToLogin(ActionEvent event) {
-        ispw.foodcare.utils.NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
+        NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
 
     @FXML

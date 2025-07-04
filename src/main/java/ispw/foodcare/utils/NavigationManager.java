@@ -1,7 +1,7 @@
 package ispw.foodcare.utils;
 
 import ispw.foodcare.bean.NutritionistBean;
-import ispw.foodcare.controller.guicontroller.BookAppointmentGuiController;
+import ispw.foodcare.controller.viewcontroller.BookAppointmentGuiController;
 import ispw.foodcare.controller.guicontroller.NutritionistProfileGuiController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
