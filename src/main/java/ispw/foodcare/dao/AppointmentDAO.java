@@ -1,6 +1,6 @@
 package ispw.foodcare.dao;
 
-import ispw.foodcare.bean.applicationcontroller.BookAppointmentController;
+import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
 import ispw.foodcare.model.Appointment;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.query.QueryAppointment;

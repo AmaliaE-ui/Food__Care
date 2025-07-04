@@ -1,4 +1,4 @@
-package ispw.foodcare.bean.applicationcontroller;
+package ispw.foodcare.controller.applicationcontroller;
 
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.model.User;
