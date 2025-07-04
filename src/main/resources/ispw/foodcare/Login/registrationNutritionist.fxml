@@ -17,6 +17,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ComboBox?>
 <BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.guicontroller.RegistrationNutritionistGuiController">
 
     <left>
@@ -122,7 +123,7 @@
                     <Label text="Specializzazione:" GridPane.columnIndex="0" GridPane.rowIndex="9">
                         <font><Font name="System Bold" size="14.0" /></font>
                     </Label>
-                    <ChoiceBox fx:id="specializzazioneChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                    <ComboBox fx:id="specializzazioneComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
 
                     <Label text="Via:" GridPane.columnIndex="0" GridPane.rowIndex="10">
                         <font>

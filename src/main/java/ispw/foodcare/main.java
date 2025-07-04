@@ -1,5 +1,9 @@
 package ispw.foodcare;
 
+import ispw.foodcare.dao.AppointmentDAO;
+import ispw.foodcare.dao.AvailabilityDAO;
+import ispw.foodcare.dao.NutritionistDAO;
+import ispw.foodcare.dao.UserDAO;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.application.Application;
@@ -35,6 +39,10 @@ public class Main extends Application {
 
             if(type.equals("1")){
                 Session.getInstance().setDB(true); //Salvo in DB
+                Session.getInstance().setUserDAO(new UserDAO()); //UserDAO unificato
+                Session.getInstance().setNutritionistDAO(new NutritionistDAO());
+                Session.getInstance().setAvailabilityDAO(new AvailabilityDAO());
+                Session.getInstance().setAppointmentDAO(new AppointmentDAO());
 
             } else if(type.equals("2")){
                 Session.getInstance().setDB(false); //Salvo in File
@@ -44,10 +52,12 @@ public class Main extends Application {
                 return; //Uscita dal main
             }
         } else if(enablePersistance.equals("n")) {
-
             Session.getInstance().setRam(true);
+            Session.getInstance().setUserDAO(new UserDAO());
+            Session.getInstance().setNutritionistDAO(new NutritionistDAO());
+            Session.getInstance().setAvailabilityDAO(new AvailabilityDAO());
+            Session.getInstance().setAppointmentDAO(new AppointmentDAO());
         }else {
-
             System.out.println("Inserimento non valido");
             return;
         }

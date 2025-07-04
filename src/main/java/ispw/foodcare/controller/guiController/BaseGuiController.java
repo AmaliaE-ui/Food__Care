@@ -1,10 +1,8 @@
 package ispw.foodcare.controller.guicontroller;
 
 import ispw.foodcare.Role;
-import ispw.foodcare.bean.UserBean;
+import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
-import ispw.foodcare.utils.SessionManager;
-import ispw.foodcare.utils.factory.GuiFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,7 +19,7 @@ public class BaseGuiController {
     // Pulsante Home: torna alla dashboard dell’utente loggato
     @FXML
     protected void goHomePage(ActionEvent event) {
-        Role role = SessionManager.getInstance().getCurrentRole();
+        Role role = Session.getInstance().getCurrentRole();
         if (role == null) {
             NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
             return;

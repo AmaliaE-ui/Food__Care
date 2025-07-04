@@ -5,11 +5,10 @@ public class PatientBean extends UserBean{
     private String birthDate;
     private String gender;
 
-    public PatientBean() {
-        // Costruttore vuoto
-    }
+    // Costruttore vuoto
+    public PatientBean() {}
 
-    // Getter & Setter
+    // Getter e Setter
     public String getBirthDate() {return birthDate;}
     public String getGender() {return gender;}
 

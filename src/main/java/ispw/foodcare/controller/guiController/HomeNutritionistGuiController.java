@@ -1,7 +1,7 @@
 package ispw.foodcare.controller.guicontroller;
 
+import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
-import ispw.foodcare.utils.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,8 +46,7 @@ public class HomeNutritionistGuiController extends BaseGuiController{
     }
 
     @FXML
-    private void handleAvailability(ActionEvent event) {
-        loadContent("/ispw/foodcare/availabilityNutritionist.fxml");
+    private void handleAvailability(ActionEvent event) { loadContent("/ispw/foodcare/BookAppointment/manageAvailability.fxml");
     }
 
     @FXML
@@ -57,7 +56,7 @@ public class HomeNutritionistGuiController extends BaseGuiController{
 
     @FXML
     private void handleLogout(ActionEvent event) {
-        SessionManager.getInstance().logout();
+        Session.getInstance().logout();
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
 }

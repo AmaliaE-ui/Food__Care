@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ispw.foodcare.controller.guicontroller.ManageAvailabilityGuiController"
+      spacing="15" alignment="CENTER" style="-fx-padding: 20.0;">
+
+    <Label text="Gestisci Disponibilità" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <DatePicker fx:id="datePicker" promptText="Seleziona la data" />
+
+    <ListView fx:id="slotsListView" prefHeight="150" prefWidth="200" />
+
+    <Button text="Aggiungi Disponibilità" onAction="#handleAddAvailability" />
+
+    <Label text="Disponibilità Inserite" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+    <TableView fx:id="availabilityTableView" prefHeight="200" prefWidth="400">
+        <columns>
+            <TableColumn fx:id="dateColumn" text="Data" prefWidth="100" />
+            <TableColumn fx:id="startTimeColumn" text="Inizio" prefWidth="100" />
+            <TableColumn fx:id="endTimeColumn" text="Fine" prefWidth="100" />
+            <TableColumn fx:id="actionColumn" text="Azione" prefWidth="100" />
+        </columns>
+    </TableView>
+</VBox>

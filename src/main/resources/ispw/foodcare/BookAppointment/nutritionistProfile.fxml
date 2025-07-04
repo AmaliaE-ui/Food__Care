@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ispw.foodcare.controller.guicontroller.NutritionistProfileGuiController"
+            style="-fx-background-color: #ffffff; -fx-padding: 20;"
+            prefWidth="900.0" prefHeight="600.0">
+
+    <top>
+        <Button text="← Indietro" prefWidth="100" onAction="#handleBack" />
+    </top>
+
+    <center>
+        <HBox spacing="20">
+            <VBox spacing="10">
+                <ImageView fx:id="profileImageView" fitWidth="200" fitHeight="200" />
+                <HBox spacing="5">
+                    <Label text="★★★☆☆" />
+                </HBox>
+                <Button text="Recensioni" onAction="#handleReviews"/>
+            </VBox>
+
+
+            <VBox spacing="15" HBox.hgrow="ALWAYS">
+                <TitledPane text="Dati personali" expanded="true">
+                    <GridPane hgap="10" vgap="8" style="-fx-padding: 10">
+                        <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label fx:id="nameLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Cognome:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label fx:id="surnameLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <Label fx:id="emailLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Telefono:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <Label fx:id="phoneLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                        <Label text="Specializzazione:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <Label fx:id="specializationLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                        <Label text="Indirizzo:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                        <Label fx:id="addressLabel" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+                    </GridPane>
+                </TitledPane>
+
+                <TitledPane text="Curriculum" expanded="true">
+                    <TextArea fx:id="curriculumTextArea" editable="false" wrapText="true" prefHeight="150"/>
+                </TitledPane>
+            </VBox>
+        </HBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="Prenota Appuntamento" fx:id="bookAppointmentButton" onAction="#handleBookAppointment"
+                    style="-fx-font-size: 16px; -fx-padding: 10 20;" />
+        </HBox>
+    </bottom>
+</BorderPane>

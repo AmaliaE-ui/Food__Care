@@ -10,15 +10,13 @@ import ispw.foodcare.model.Nutritionist;
 import ispw.foodcare.model.Patient;
 import ispw.foodcare.model.User;
 
-/*
-* Classe che converte un oggetto entity in un oggetto Bean
-* */
+/*Classe che converte un oggetto entity in un oggetto Bean*/
 
 public class Converter {
-    private Converter() {
-            // Costruttore privato per evitare istanziazione
-    }
+    // Costruttore privato per evitare istanziazione
+    private Converter() {}
 
+    //Metodo entity -> bean
     public static UserBean userToBean(User user) {
         if (user == null) return null;
 
@@ -57,6 +55,7 @@ public class Converter {
         return bean;
     }
 
+    //Metodo entity -> bean
     public static AddressBean addressToBean(Address address) {
         if (address == null) return null;
 
@@ -122,6 +121,15 @@ public class Converter {
             );
         }
         return user;
+    }
+
+    //Metodi per rendere più chiaro il codice
+    public static Nutritionist beanToNutritionist(NutritionistBean bean) {
+        return (Nutritionist) beanToUser(bean);
+    }
+
+    public static Patient beanToPatient(PatientBean bean) {
+        return (Patient) beanToUser(bean);
     }
 }
 

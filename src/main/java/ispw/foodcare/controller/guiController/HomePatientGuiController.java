@@ -1,8 +1,8 @@
 package ispw.foodcare.controller.guicontroller;
 
 
+import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
-import ispw.foodcare.utils.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +24,7 @@ public class HomePatientGuiController extends BaseGuiController{
 
     @FXML
     public void initialize() {
-        loadContent("/ispw/foodcare/personalAreaNutritionist.fxml");
+        loadContent("/ispw/foodcare/BookAppointment/searchNutritionist.fxml");
     }
 
     private void loadContent(String fxmlPath) {
@@ -45,7 +45,7 @@ public class HomePatientGuiController extends BaseGuiController{
 
     @FXML
     public void handleHome(ActionEvent event) {
-        loadContent("/ispw/foodcare/homePatient.fxml");
+        loadContent("/ispw/foodcare/BookAppointment/searchNutritionist.fxml");
     }
 
     @FXML
@@ -64,8 +64,7 @@ public class HomePatientGuiController extends BaseGuiController{
 
     @FXML
     private void handleLogout(ActionEvent event) {
-        SessionManager.getInstance().logout();
+        Session.getInstance().logout();
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
 }
-

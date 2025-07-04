@@ -1,14 +1,13 @@
 package ispw.foodcare.controller.applicationcontroller;
 
 import ispw.foodcare.bean.UserBean;
-import ispw.foodcare.controller.guicontroller.UserDAOInterface;
-import ispw.foodcare.model.Session;
-import ispw.foodcare.utils.factory.UserDAOFactory;
-
+import ispw.foodcare.model.User;
+import ispw.foodcare.utils.Converter;
 
 public class LoginController {
 
     private static final LoginController instance = new LoginController();
+    private static final UserService userService = new UserService(); //Creo istanza di USerService
 
     private LoginController() {}
 
@@ -16,21 +15,11 @@ public class LoginController {
         return instance;
     }
 
-
-    //Dovrebbe essere User di tipo entity(model) non la UserBean --> le bean passano i dati solo tra GuiController e ControllerAppicativo
     public static UserBean authenticateUser(String username, String password) {
-
-        //Se la DAO non è ancora impostata la setta in base alla modalità scelta
-        if(Session.getInstance().getUserDAO() == null) {
-            boolean isRam = Session.getInstance().isRam();
-            boolean isDB = Session.getInstance().isDB();
-
-            //Uso Factory per ottenere l'implementazione giusta
-            UserDAOInterface dao = UserDAOFactory.getInstance().getUserDAO(isDB,isRam);
-            Session.getInstance().setUserDAO(dao);
+        User user = userService.login(username, password);
+        if (user != null) {
+            return Converter.userToBean(user);
         }
-
-        //Esegui Login usando la DAO memeorizzata in Sessione
-        return Session.getInstance().getUserDAO().checkLogin(username, password);
+        return null;
     }
 }

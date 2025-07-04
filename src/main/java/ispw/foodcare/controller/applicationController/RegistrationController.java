@@ -1,41 +1,30 @@
 package ispw.foodcare.controller.applicationcontroller;
 
 
-import ispw.foodcare.bean.UserBean;
-import ispw.foodcare.controller.guicontroller.UserDAOInterface;
+import ispw.foodcare.bean.NutritionistBean;
+import ispw.foodcare.bean.PatientBean;
+import ispw.foodcare.model.Nutritionist;
+import ispw.foodcare.model.Patient;
 import ispw.foodcare.exeption.AccountAlreadyExistsException;
-import ispw.foodcare.model.Session;
-import ispw.foodcare.model.User;
 import ispw.foodcare.utils.Converter;
-import ispw.foodcare.utils.factory.UserDAOFactory;
+
 
 public class RegistrationController {
 
-    //Metodo
-    public boolean register(UserBean userBean) {
+    private final UserService userService = new UserService(); //Creo istanza
 
-        //Se necessario imposta il DAO da Session
-        if(Session.getInstance().getUserDAO() == null) {
-            boolean isRam = Session.getInstance().isRam();
-            boolean isDB = Session.getInstance().isDB();
 
-            UserDAOInterface dao = UserDAOFactory.getInstance().getUserDAO(isDB, isRam);
-            Session.getInstance().setUserDAO(dao);
-        }
-
-        //Converti bean -> entity
-        User user = Converter.beanToUser(userBean);
-
-        try {
-            //Salvataggio centalizzato
-            Session.getInstance().getUserDAO().saveUser(user);
-            return true;
-        } catch (AccountAlreadyExistsException e) {
-            System.err.println("⚠️ Registrazione fallita: utente già esistente.");
-            return false;
-        } catch (Exception e) {
-            System.err.println("❌ Errore durante la registrazione: " + e.getMessage());
-            return false;
-        }
+    //Metodo riceve Bean, lo valida, lo converte e lo registra
+    public boolean registrationNutritionist(NutritionistBean bean) throws AccountAlreadyExistsException {
+        //Converti il Bean in un Model
+        Nutritionist nutritionist = Converter.beanToNutritionist(bean);
+        //Registrazione
+        return userService.registerUser(nutritionist);
     }
+
+    public boolean registrationPatient(PatientBean bean) throws AccountAlreadyExistsException {
+        Patient patient = Converter.beanToPatient(bean);
+        return userService.registerUser(patient);
+    }
+
 }

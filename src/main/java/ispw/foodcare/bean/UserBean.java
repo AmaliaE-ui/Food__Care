@@ -3,6 +3,7 @@ package ispw.foodcare.bean;
 import ispw.foodcare.Role;
 
 public class UserBean {
+
     private String name;
     private String surname;
     private String phoneNumber;
@@ -11,7 +12,10 @@ public class UserBean {
     private String password;
     private Role role;
 
-    // Getter & Setter
+    // Costruttore vuoto
+    public UserBean() {}
+
+    // Getter e Setter
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 

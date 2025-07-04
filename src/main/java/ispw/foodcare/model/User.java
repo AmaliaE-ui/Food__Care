@@ -3,6 +3,7 @@ package ispw.foodcare.model;
 import ispw.foodcare.Role;
 
 public class User {
+
     private final String username;
     private String password;
     private String name;

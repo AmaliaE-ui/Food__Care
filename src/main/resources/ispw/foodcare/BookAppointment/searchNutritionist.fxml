@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="680.0" spacing="15" style="-fx-background-color: #f0f8ff; -fx-padding: 20;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.guicontroller.SearchNutritionistGuiController">
+
+    <HBox spacing="10">
+        <TextField fx:id="searchTextField" prefHeight="26.0" prefWidth="530.0" promptText="Inserisci la città..." />
+        <Button onAction="#onSearchClicked" prefHeight="26.0" prefWidth="100.0" text="Cerca" />
+    </HBox>
+
+    <TableView fx:id="nutritionistTableView" prefHeight="500.0" prefWidth="660.0">
+        <columns>
+            <TableColumn fx:id="nameColumn" prefWidth="120.0" text="Nome" />
+            <TableColumn fx:id="surnameColumn" prefWidth="120.0" text="Cognome" />
+            <TableColumn fx:id="cityColumn" prefWidth="120.0" text="Città" />
+            <TableColumn fx:id="specializationColumn" prefWidth="180.0" text="Specializzazione" />
+            <TableColumn fx:id="profileColumn" prefWidth="100.0" text="Profilo" />
+        </columns>
+    </TableView>
+
+</VBox>

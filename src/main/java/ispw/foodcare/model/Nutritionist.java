@@ -4,7 +4,6 @@ import ispw.foodcare.Role;
 
 public class Nutritionist extends User {
 
-
     private String piva;
     private String titoloStudio;
     private String specializzazione;

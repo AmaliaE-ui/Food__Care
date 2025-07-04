@@ -1,6 +1,7 @@
 package ispw.foodcare.model;
 
  public class Address {
+
      private String via;
      private String civico;
      private String cap;

@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Button;
+import ispw.foodcare.model.Session;
 
 
 public class LoginGuiController {
@@ -30,17 +31,15 @@ public class LoginGuiController {
         String username = usernameTextField.getText();
         String password = passwordPasswordField.getText();
 
-        UserBean user = LoginController.getInstance().authenticateUser(username, password);
+        UserBean userBean = LoginController.getInstance().authenticateUser(username, password);
 
-        if (user != null) {
+        if (userBean != null) {
             //Salva nella sessione
-            ispw.foodcare.utils.SessionManager.getInstance().login(user);
+            Session.getInstance().setCurrentUser(userBean);
 
             //Ottieni path corretto dalla GuiFactory
-            Role role = user.getRole();
+            Role role = userBean.getRole();
             String homePath = ispw.foodcare.utils.factory.GuiFactory.getHomePath(role);
-
-            System.out.println("FXML location: " + homePath);
 
             //Home dinamica
             NavigationManager.switchScene(event, homePath, "FoodCare - Home");

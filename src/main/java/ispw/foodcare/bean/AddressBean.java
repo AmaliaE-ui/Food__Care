@@ -1,6 +1,7 @@
 package ispw.foodcare.bean;
 
 public class AddressBean {
+
     private String via;
     private String civico;
     private String cap;
@@ -8,7 +9,10 @@ public class AddressBean {
     private String provincia;
     private String regione;
 
-    // Getters e setters
+    // Costruttore vuoto
+    public AddressBean() {}
+
+    // Getter e setter
     public String getVia() { return via; }
     public void setVia(String via) { this.via = via; }
 

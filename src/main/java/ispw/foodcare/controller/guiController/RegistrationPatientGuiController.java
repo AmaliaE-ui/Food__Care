@@ -54,16 +54,20 @@ public class RegistrationPatientGuiController {
             }
 
             RegistrationController controller = new RegistrationController();
-            controller.register(bean);
+            boolean success = controller.registrationPatient(bean);
 
-            // Mostra messaggio verde
-            errorLabel.setStyle("-fx-text-fill: green;");
-            errorLabel.setText("Registrazione avvenuta con successo!");
+            if(success){
+                errorLabel.setStyle("-fx-text-fill: green");
+                errorLabel.setText("Registrazione avvenuta con successo!");
 
-            // Attendi 5 secondi e poi torna al login
-            javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
-            delay.setOnFinished(e -> NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login"));
-            delay.play();
+                // Attendi 3 secondi e poi torna al login
+                javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
+                delay.setOnFinished(e -> NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login"));
+                delay.play();
+            } else{
+                errorLabel.setStyle("fx-text-fill: red;");
+                errorLabel.setText("Errore nella registrazione! Controlla i dati inseriti");
+            }
 
         } catch (Exception e) {
             errorLabel.setStyle("-fx-text-fill: red;");

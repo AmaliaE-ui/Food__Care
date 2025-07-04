@@ -17,6 +17,7 @@ public class Patient extends User {
      //Getter e Setter
      public String getBirthDate() { return birthDate; }
      public void setBirthDate(String birthDate) { this.birthDate = birthDate; }
+
      public String getGender() { return gender; }
      public void setGender(String gender) { this.gender = gender; }
  }

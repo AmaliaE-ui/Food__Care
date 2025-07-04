@@ -1,11 +1,15 @@
 package ispw.foodcare.utils;
 
 import ispw.foodcare.Main;
+import ispw.foodcare.bean.NutritionistBean;
+import ispw.foodcare.controller.guicontroller.BookAppointmentGuiController;
+import ispw.foodcare.controller.guicontroller.NutritionistProfileGuiController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -51,4 +55,33 @@ public class NavigationManager {
             e.printStackTrace();
         }
     }
+
+    public static void switchPane(String fxmlPath, Node sourceNode, Object controllerConfig) {
+        try {
+            FXMLLoader loader = new FXMLLoader(NavigationManager.class.getResource(fxmlPath));
+            Parent newContent = loader.load();
+
+            // Passaggio del NutritionistBean se presente
+            if (controllerConfig != null) {
+                Object controller = loader.getController();
+                if (controller instanceof BookAppointmentGuiController && controllerConfig instanceof NutritionistBean) {
+                    ((BookAppointmentGuiController) controller).setNutritionist((NutritionistBean) controllerConfig);
+                }
+                if(controller instanceof NutritionistProfileGuiController && controllerConfig instanceof NutritionistBean) {
+                    ((NutritionistProfileGuiController) controller).setNutritionistBean( (NutritionistBean) controllerConfig);
+                }
+            }
+
+            AnchorPane contentArea = (AnchorPane) sourceNode.getScene().lookup("#contentArea");
+            contentArea.getChildren().setAll(newContent);
+            AnchorPane.setTopAnchor(newContent, 0.0);
+            AnchorPane.setBottomAnchor(newContent, 0.0);
+            AnchorPane.setLeftAnchor(newContent, 0.0);
+            AnchorPane.setRightAnchor(newContent, 0.0);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

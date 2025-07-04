@@ -1,8 +1,7 @@
 package ispw.foodcare.controller.guicontroller;
 
-import ispw.foodcare.bean.PatientBean;
 import ispw.foodcare.bean.UserBean;
-import ispw.foodcare.utils.SessionManager;
+import ispw.foodcare.model.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -22,7 +21,7 @@ public class PersonalAreaPatientGuiController {
 
     @FXML
     public void initialize() {
-        UserBean currentUser = SessionManager.getInstance().getCurrentUser();
+        UserBean currentUser = Session.getInstance().getCurrentUser();
 
         if (currentUser != null) {
             nameLabel.setText(currentUser.getName() + " " + currentUser.getSurname());
@@ -31,7 +30,7 @@ public class PersonalAreaPatientGuiController {
             //dobLabel.setText(currentUser.getBirthDate());
 
             goalsTextArea.setText("Obiettivi da raggiungere:\n" +
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.");
+                    "Ancora da aggiungere.");
         }
     }
 
