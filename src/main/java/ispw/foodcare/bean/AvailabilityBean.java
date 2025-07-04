@@ -13,13 +13,6 @@ public class AvailabilityBean {
     // Costruttore vuoto
     public AvailabilityBean() {}
 
-    // Costruttore utile in test/unità
-    public AvailabilityBean(LocalDate date, LocalTime startTime, LocalTime endTime, String nutritionistUsername) {
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.nutritionistUsername = nutritionistUsername;
-    }
 
     // Getter e Setter
     public LocalDate getDate() { return date; }

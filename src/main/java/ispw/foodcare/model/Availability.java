@@ -19,15 +19,11 @@ public class Availability {
 
     // Getter e Setter
     public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
 
     public LocalTime getStartTime() { return startTime; }
-    public void setStartTime(LocalTime startTime) { this.startTime = startTime; }
 
     public LocalTime getEndTime() { return endTime; }
-    public void setEndTime(LocalTime endTime) { this.endTime = endTime; }
 
     public String getNutritionistUsername() { return nutritionistUsername; }
-    public void setNutritionistUsername(String nutritionistUsername) { this.nutritionistUsername = nutritionistUsername; }
 
 }
