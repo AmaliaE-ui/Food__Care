@@ -26,6 +26,7 @@ public class UserDAO {
     // Buffer per la modalità RAM
     private final List<User> userList = new ArrayList<>();
 
+
     // Salva un nuovo utente
     public void saveUser(User user) throws AccountAlreadyExistsException {
         if (Session.getInstance().isRam()) {
@@ -33,6 +34,8 @@ public class UserDAO {
                 throw new AccountAlreadyExistsException("User già esistente con username: " + user.getUsername());
             }
             userList.add(user);
+            //trasformare in nutrionist
+            //Session.getInstance().getNutritionistDAO().saveNutritionistRam(nutritionist);
         } else if (Session.getInstance().isDB()) {
             saveUserToDB(user);
         }
@@ -119,7 +122,7 @@ public class UserDAO {
             if (user instanceof Patient patient) {
                 try (PreparedStatement stmt = conn.prepareStatement(QueryPatient.INSERT_PATIENT)) {
                     stmt.setString(1, patient.getUsername());
-                    stmt.setString(2, patient.getBirthDate());
+                    stmt.setDate(2, java.sql.Date.valueOf(patient.getBirthDate()));/*Conversione da LocalDate a java.sql.Date*/
                     stmt.setString(3, patient.getGender());
                     stmt.executeUpdate();
                 }
@@ -174,7 +177,7 @@ public class UserDAO {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return new Patient(username, password, name, surname, email, phone, Role.PATIENT,
-                        rs.getString("data_nascita"), rs.getString("genere"));
+                        rs.getDate("data_nascita").toLocalDate(), rs.getString("genere"));
             }
         }
         return null;

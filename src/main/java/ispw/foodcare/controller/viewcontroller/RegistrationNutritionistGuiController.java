@@ -13,45 +13,27 @@ import java.util.Map;
 
 public class RegistrationNutritionistGuiController {
 
-    @FXML
-    private void handleBackToLogin(ActionEvent event) {
+    @FXML private void handleBackToLogin(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
 
-    @FXML
-    private TextField nameTextField;
-    @FXML
-    private TextField surnameTextField;
-    @FXML
-    private TextField phoneTextField;
-    @FXML
-    private TextField usernameTextField;
-    @FXML
-    private TextField emailTextField;
-    @FXML
-    private PasswordField passwordTextField;
-    @FXML
-    private PasswordField confirmPasswordTextField;
-    @FXML
-    private TextField pivaTextField;
-    @FXML
-    private ChoiceBox<String> titoloStudioChoiceBox;
-    @FXML
-    private TextField viaTextField;
-    @FXML
-    private TextField civicoTextField;
-    @FXML
-    private TextField capTextField;
-    @FXML
-    private TextField cittaTextField;
-    @FXML
-    private TextField provinciaTextField;
-    @FXML
-    private TextField regioneTextField;
-    @FXML
-    private ComboBox<String> specializzazioneComboBox;
-    @FXML
-    private Label errorLabel;
+    @FXML private TextField nameTextField;
+    @FXML private TextField surnameTextField;
+    @FXML private TextField phoneTextField;
+    @FXML private TextField usernameTextField;
+    @FXML private TextField emailTextField;
+    @FXML private PasswordField passwordTextField;
+    @FXML private PasswordField confirmPasswordTextField;
+    @FXML private TextField pivaTextField;
+    @FXML private ChoiceBox<String> titoloStudioChoiceBox;
+    @FXML private TextField viaTextField;
+    @FXML private TextField civicoTextField;
+    @FXML private TextField capTextField;
+    @FXML private TextField cittaTextField;
+    @FXML private TextField provinciaTextField;
+    @FXML private TextField regioneTextField;
+    @FXML private ComboBox<String> specializzazioneComboBox;
+    @FXML private Label errorLabel;
 
     public void handleSaveButton(ActionEvent event) {
         try {

@@ -1,5 +1,6 @@
 package ispw.foodcare.controller.viewcontroller;
 
+import ispw.foodcare.controller.applicationcontroller.AppointmentController;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
@@ -7,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -17,14 +19,30 @@ public class HomeNutritionistGuiController extends BaseGuiController {
     @FXML private Button personalAreaButton;
     @FXML private Button availabilityButton;
     @FXML private Button appointmentsButton;
+    @FXML private Label notificationBadge;
     @FXML private Button logoutButton;
     @FXML private AnchorPane contentArea;
 
     private static final double ANCHOR_ZERO = 0.0;
 
+    private final AppointmentController appointmentController = new AppointmentController();
+
+
     @FXML
     public void initialize() {
         loadContent("/ispw/foodcare/personalAreaNutritionist.fxml");
+        checkAndDisplayNotification();
+    }
+
+    //Ho cambiato da private a public
+    public void checkAndDisplayNotification() {
+        boolean hasUnviewedAppointments = appointmentController.hasUnviewedAppointmentsForNutritionist(
+                Session.getInstance().getCurrentUser().getUsername());
+        if (hasUnviewedAppointments == true){
+        notificationBadge.setVisible(hasUnviewedAppointments);}
+        else {
+            notificationBadge.setVisible(false);
+        }
     }
 
     private void loadContent(String fxmlPath) {
@@ -59,7 +77,7 @@ public class HomeNutritionistGuiController extends BaseGuiController {
 
     @FXML
     private void handleAppointments(ActionEvent event) {
-        loadContent("/ispw/foodcare/appointmentsNutritionist.fxml");
+        loadContent("/ispw/foodcare/BookAppointment/appointmentsNutritionist.fxml");
     }
 
     @FXML

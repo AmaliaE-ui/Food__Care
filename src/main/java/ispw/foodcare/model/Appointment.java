@@ -12,7 +12,8 @@ public class Appointment {
     private LocalDate date;
     private LocalTime time;
     private String note;
-    private AppointmentStatus status; //Valori CONFIRMED/CANCELLED
+    private AppointmentStatus status;//Valori CONFIRMED/CANCELLED
+    private String patientName;
 
     public Appointment(String patientUsername, String nutritionistUsername, LocalDate date, LocalTime time, String note) {
         this.patientUsername = patientUsername;
@@ -25,20 +26,18 @@ public class Appointment {
 
     //Getter e setter
     public String getPatientUsername() {return patientUsername;}
-    public void setPatientUsername(String patientUsername) {this.patientUsername = patientUsername;}
 
     public String getNutritionistUsername() {return nutritionistUsername;}
-    public void setNutritionistUsername(String nutritionistUsername) {this.nutritionistUsername = nutritionistUsername;}
 
     public LocalDate getDate() {return date;}
-    public void setDate(LocalDate date) {this.date = date;}
 
     public LocalTime getTime() {return time;}
     public void setTime(LocalTime time) {this.time = time;}
 
     public String getNotes() {return note;}
-    public void getNotes(String note) {this.note = note;}
 
     public AppointmentStatus getStatus() {return status;}
     public void setStatus(AppointmentStatus status) {this.status = status;}
+
+    public void setPatientName(String patientName) {this.patientName = patientName;};
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<VBox alignment="CENTER" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.viewcontroller.AppointmentsPatientGuiController">
+   <HBox prefHeight="10.0" prefWidth="600.0">
+      <children>
+          <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="27.0" prefWidth="605.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="I tuoi appuntamenti prenotati" />
+      </children>
+   </HBox>
+    <TableView fx:id="appointmentsTableView" prefHeight="400" prefWidth="600">
+        <columns>
+            <TableColumn fx:id="dateColumn" prefWidth="100" text="Data" />
+            <TableColumn fx:id="timeColumn" prefWidth="100" text="Ora" />
+            <TableColumn fx:id="nutritionistColumn" prefWidth="150" text="Nutrizionista" />
+            <TableColumn fx:id="statusColumn" prefWidth="100" text="Stato" />
+            <TableColumn fx:id="notesColumn" prefWidth="150" text="Note" />
+        </columns>
+    </TableView>
+    <Button fx:id="deleteButton"
+            text="Elimina Appuntamento Selezionato"
+            onAction="#handleDeleteAppointment"
+            style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 16;"
+            disable="true" ></Button>
+</VBox>

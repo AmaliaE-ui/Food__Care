@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 
+<?import javafx.scene.web.WebView?>
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ispw.foodcare.controller.viewcontroller.NutritionistProfileGuiController"
@@ -50,6 +51,12 @@
 
                 <TitledPane text="Curriculum" expanded="true">
                     <TextArea fx:id="curriculumTextArea" editable="false" wrapText="true" prefHeight="150"/>
+                </TitledPane>
+
+                <TitledPane text="Posizione" expanded="false">
+                    <VBox spacing="5" style="-fx-padding: 10">
+                        <WebView fx:id="mapWebView" prefHeight="600" prefWidth="400"/>
+                    </VBox>
                 </TitledPane>
             </VBox>
         </HBox>

@@ -27,6 +27,7 @@ public class BookAppointmentController {
     private final AppointmentDAO appointmentDAO = Session.getInstance().getAppointmentDAO();
     private final AvailabilityDAO availabilityDAO = Session.getInstance().getAvailabilityDAO();
 
+    private LocalDate date = LocalDate.now();
 
     /*Ricerca nutizionista per Città*/
     public List<NutritionistBean> searchNutritionistsByCity(String city) {
@@ -52,12 +53,23 @@ public class BookAppointmentController {
                 appointmentBean.getTime(),
                 appointmentBean.getNotes()
         );
+        //Prima di salvare gestire eccezione
+        if (appointmentDAO.isSlotAlreadyBooked(appointmentBean.getNutritionistUsername(), appointmentBean.getDate(), appointmentBean.getTime())) {
+            throw new IllegalStateException("L'orario selezionato è già stato prenotato.");
+        }
+        appointmentDAO.saveAppointment(appointment);
+
         appointment.setStatus(AppointmentStatus.CONFIRMED);
         appointmentDAO.saveAppointment(appointment);
     }
 
     public void addAvailability(AvailabilityBean bean) {
-        Availability availability = new Availability(bean.getDate(), bean.getStartTime(), bean.getEndTime(), bean.getNutritionistUsername());
+        Availability availability = new Availability();
+        availability.setData(bean.getDate());
+        availability.setStartTime(bean.getStartTime());
+        availability.setEndTime(bean.getEndTime());
+        availability.setNutritionistUsername(bean.getNutritionistUsername());
+
         availabilityDAO.addAvailability(availability);
     }
 
@@ -76,7 +88,12 @@ public class BookAppointmentController {
 
     //Cancella disponibilità
     public void deleteAvailability(AvailabilityBean bean) {
-        Availability availability = new Availability(bean.getDate(), bean.getStartTime(), bean.getEndTime(), bean.getNutritionistUsername());
+        Availability availability = new Availability();
+        availability.setData(bean.getDate());
+        availability.setStartTime(bean.getStartTime());
+        availability.setEndTime(bean.getEndTime());
+        availability.setNutritionistUsername(bean.getNutritionistUsername());
+
         availabilityDAO.deleteAvailability(availability);
     }
 
@@ -92,9 +109,48 @@ public class BookAppointmentController {
         return slots;
     }
 
+    //------------------------- forse da togliere  e mettere in bean
     //Controlla se la data è un girono feriale
     public static boolean isWeekday(LocalDate date) {
         DayOfWeek day = date.getDayOfWeek();
         return !(day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY);
     }
+    //---------------------------------------------------------------
+
+    public List<AppointmentBean> getPatientAppointments(String patientUsername) {
+        List<Appointment> appointments = appointmentDAO.getAppointmentsForPatient(patientUsername);
+        return appointments.stream()
+                .map(Converter::appointmentToBean)
+                .collect(Collectors.toList());
+    }
+
+    public List<LocalTime> getBookedTimes(String nutritionistUsername, LocalDate date) {
+        return appointmentDAO.getBookedTimesForNutritionist(nutritionistUsername, date);
+    }
+
+    public void deleteAppointment(AppointmentBean appointmentBean) {
+        Session.getInstance().getAppointmentDAO().deleteAppointment(
+                appointmentBean.getNutritionistUsername(),
+                appointmentBean.getDate(),
+                appointmentBean.getTime()
+        );
+        if(appointmentBean.getDate().isAfter(date)) {
+            addAvailability(appointmentToAvailabilityBean(appointmentBean));
+        }
+    }
+
+    public AvailabilityBean appointmentToAvailabilityBean(AppointmentBean appointmentBean) {
+        AvailabilityBean availability = new AvailabilityBean();
+        availability.setDate(appointmentBean.getDate());
+        availability.setStartTime(appointmentBean.getTime());
+        availability.setEndTime(appointmentBean.getTime().plusMinutes(45));
+        availability.setNutritionistUsername(appointmentBean.getNutritionistUsername());
+        return availability;        }
+
+    public void deleteExpiredAvailabilities() {
+        availabilityDAO.deleteAvailabilitybydata(LocalDate.now());
+    }
+
+
+
 }

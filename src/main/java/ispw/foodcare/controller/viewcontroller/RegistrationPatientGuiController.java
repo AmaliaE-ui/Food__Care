@@ -23,13 +23,11 @@ public class RegistrationPatientGuiController {
     @FXML private ChoiceBox<String> genderChoiceBox;
     @FXML private Label errorLabel;
 
-    @FXML
-    public void initialize() {
+    @FXML public void initialize() {
         genderChoiceBox.getItems().addAll("Maschio", "Femmina", "Altro");
     }
 
-    @FXML
-    public void handleSaveButton(ActionEvent event) {
+    @FXML public void handleSaveButton(ActionEvent event) {
         try {
             PatientBean bean = new PatientBean();
             bean.setName(nameTextField.getText());
@@ -40,7 +38,7 @@ public class RegistrationPatientGuiController {
             bean.setPassword(passwordTextField.getText());
             bean.setRole(Role.PATIENT);
             if(birthDatePicker.getValue() != null) {
-                bean.setBirthDate(birthDatePicker.getValue().toString());
+                bean.setBirthDate(birthDatePicker.getValue());
             }
             bean.setGender(genderChoiceBox.getValue());
 
@@ -78,8 +76,7 @@ public class RegistrationPatientGuiController {
         }
     }
 
-    @FXML
-    private void handleBackToLogin(ActionEvent event) {
+    @FXML private void handleBackToLogin(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
 }

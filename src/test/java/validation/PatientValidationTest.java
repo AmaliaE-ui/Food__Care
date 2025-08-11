@@ -3,6 +3,9 @@ package validation;
 import ispw.foodcare.bean.PatientBean;
 import ispw.foodcare.validation.PatientValidator;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PatientValidationTest {
@@ -16,7 +19,7 @@ public class PatientValidationTest {
         bean.setEmail("m.rossi@email.com");
         bean.setPhoneNumber("1234567890");
         bean.setPassword("password123");
-        bean.setBirthDate("1990-01-01");
+        bean.setBirthDate(LocalDate.parse("1990-01-01"));
         bean.setGender("Maschio");
 
         String confirmPassword = "password123";
@@ -34,7 +37,7 @@ public class PatientValidationTest {
         bean.setEmail("m.rossi@email.com");
         bean.setPhoneNumber("1234567890");
         bean.setPassword("password123");
-        bean.setBirthDate("1990-01-01");
+        bean.setBirthDate(LocalDate.parse("1990-01-01"));
         bean.setGender("Maschio");
 
         String result = PatientValidator.validatePatient(bean, "password123");
@@ -50,7 +53,7 @@ public class PatientValidationTest {
         bean.setEmail("nonèunemail");
         bean.setPhoneNumber("1234567890");
         bean.setPassword("password123");
-        bean.setBirthDate("1990-01-01");
+        bean.setBirthDate(LocalDate.parse("1990-01-01"));
         bean.setGender("Maschio");
 
         String result = PatientValidator.validatePatient(bean, "password123");
@@ -66,7 +69,7 @@ public class PatientValidationTest {
         bean.setEmail("m.rossi@email.com");
         bean.setPhoneNumber("1234567890");
         bean.setPassword("password123");
-        bean.setBirthDate("1990-01-01");
+        bean.setBirthDate(LocalDate.parse("1990-01-01"));
         bean.setGender("Maschio");
 
         String result = PatientValidator.validatePatient(bean, "altrapassword");

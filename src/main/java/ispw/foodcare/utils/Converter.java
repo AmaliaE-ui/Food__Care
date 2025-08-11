@@ -1,14 +1,8 @@
 package ispw.foodcare.utils;
 
 import ispw.foodcare.Role;
-import ispw.foodcare.bean.AddressBean;
-import ispw.foodcare.bean.NutritionistBean;
-import ispw.foodcare.bean.PatientBean;
-import ispw.foodcare.bean.UserBean;
-import ispw.foodcare.model.Address;
-import ispw.foodcare.model.Nutritionist;
-import ispw.foodcare.model.Patient;
-import ispw.foodcare.model.User;
+import ispw.foodcare.bean.*;
+import ispw.foodcare.model.*;
 
 /*Classe che converte un oggetto entity in un oggetto Bean*/
 
@@ -131,5 +125,17 @@ public class Converter {
     public static Patient beanToPatient(PatientBean bean) {
         return (Patient) beanToUser(bean);
     }
+
+    //Metodo  Entity -> Bean
+    public static AppointmentBean appointmentToBean(Appointment appointment) {
+        AppointmentBean bean = new AppointmentBean();
+        bean.setDate(appointment.getDate());
+        bean.setTime(appointment.getTime());
+        bean.setNotes(appointment.getNotes());
+        bean.setNutritionistUsername(appointment.getNutritionistUsername());
+        bean.setStatus(appointment.getStatus());
+        return bean;
+    }
+
 }
 

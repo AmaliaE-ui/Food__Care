@@ -1,9 +1,11 @@
 package ispw.foodcare;
 
+import ispw.foodcare.cli.InitializeCli;
 import ispw.foodcare.dao.AppointmentDAO;
 import ispw.foodcare.dao.AvailabilityDAO;
 import ispw.foodcare.dao.NutritionistDAO;
 import ispw.foodcare.dao.UserDAO;
+import ispw.foodcare.exeption.AccountAlreadyExistsException;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.application.Application;
@@ -16,55 +18,74 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
-        //Avvio scena JavaFX
         NavigationManager.switchScene(stage, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws AccountAlreadyExistsException {
         Scanner scanner = new Scanner(System.in);
+        InitializeCli initializeCli = new InitializeCli();
 
         System.out.println("Avvio FoodCare");
 
-        //Selezione la modaltà: Demo (N persistenza) / Non-Demo (S persistenza)
-        System.out.println("Vuoi abilitare la persistenza dei dati? (S/N) ");
-        String enablePersistance = scanner.nextLine().trim().toLowerCase();
+        // Scegli tra CLI o FXML
+        String cliorfxml;
+        while (true) {
+            System.out.print("Vuoi usare cli(s) o fxml(n)? (S/N): ");
+            cliorfxml = scanner.nextLine().trim().toLowerCase();
+            if (cliorfxml.equals("s") || cliorfxml.equals("n")) break;
+            System.out.println("Inserimento non valido. Inserisci 's' o 'n'.");
+        }
 
-        if(enablePersistance.equals("s")){
+        // Scelta persistenza
+        String enablePersistence;
+        while (true) {
+            System.out.print("Vuoi abilitare la persistenza dei dati? (S/N): ");
+            enablePersistence = scanner.nextLine().trim().toLowerCase();
+            if (enablePersistence.equals("s") || enablePersistence.equals("n")) break;
+            System.out.println(" Inserimento non valido. Inserisci 's' o 'n'.");
+        }
 
-            Session.getInstance().setRam(false); //Persistenza, Salvo DB o FileSystem
-            System.out.println("Scegli il tipo di persistenza: [1] Database, [2] File System");
-            String type = scanner.nextLine().trim();
 
-            if(type.equals("1")){
-                Session.getInstance().setDB(true); //Salvo in DB
-                Session.getInstance().setUserDAO(new UserDAO()); //UserDAO unificato
+        if (enablePersistence.equals("s")) {
+            Session.getInstance().setRam(false); // Non uso RAM, abilito persistenza
+
+            String typeOfPersistance;
+            while (true) {
+                System.out.print("Scegli il tipo di persistenza: [1] Database, [2] File System: ");
+                typeOfPersistance = scanner.nextLine().trim();
+                if (typeOfPersistance.equals("1") || typeOfPersistance.equals("2")) break;
+                System.out.println(" Inserimento non valido. Inserisci '1' o '2'.");
+            }
+
+            if (typeOfPersistance.equals("1")) {
+                Session.getInstance().setDB(true); // uso DB
+                Session.getInstance().setUserDAO(new UserDAO());
                 Session.getInstance().setNutritionistDAO(new NutritionistDAO());
                 Session.getInstance().setAvailabilityDAO(new AvailabilityDAO());
                 Session.getInstance().setAppointmentDAO(new AppointmentDAO());
-
-            } else if(type.equals("2")){
-                Session.getInstance().setDB(false); //Salvo in File
-
             } else {
-                System.out.println("Inserimento non valido");
-                return; //Uscita dal main
+                Session.getInstance().setDB(false); // uso file system
             }
-        } else if(enablePersistance.equals("n")) {
-            Session.getInstance().setRam(true);
+
+
+        } else {
+            Session.getInstance().setRam(true); // uso solo RAM
             Session.getInstance().setUserDAO(new UserDAO());
             Session.getInstance().setNutritionistDAO(new NutritionistDAO());
             Session.getInstance().setAvailabilityDAO(new AvailabilityDAO());
             Session.getInstance().setAppointmentDAO(new AppointmentDAO());
-        }else {
-            System.out.println("Inserimento non valido");
-            return;
         }
 
-        //Avvia JavaFX
-        System.out.println("Avvio modalità grafica ...");
-        Session.getInstance().setCLI(false);
-        launch();
+        // Avvia modalità scelta
+        if (cliorfxml.equals("s")) {
+            System.out.println("Avvio modalità CLI...");
+            Session.getInstance().setCLI(true);
+            initializeCli.initialize();
+
+        } else {
+            System.out.println(" Avvio modalità grafica...");
+            Session.getInstance().setCLI(false);
+            launch();
+        }
     }
 }

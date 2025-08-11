@@ -16,18 +16,13 @@ import javafx.scene.control.TextField;
 
 public class LoginGuiController {
 
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Label loginMessageLabel;
-    @FXML
-    private TextField usernameTextField;
-    @FXML
-    private PasswordField passwordPasswordField;
+    @FXML private Button loginButton;
+    @FXML private Label loginMessageLabel;
+    @FXML private TextField usernameTextField;
+    @FXML private PasswordField passwordPasswordField;
 
     /*Metodo per il Login*/
-    @FXML
-    private void handleLogin(ActionEvent event) {
+    @FXML private void handleLogin(ActionEvent event) {
         String username = usernameTextField.getText();
         String password = passwordPasswordField.getText();
 
@@ -49,8 +44,7 @@ public class LoginGuiController {
     }
 
     /*Metodo per la Registrazione*/
-    @FXML
-    private void handleRegistration(ActionEvent event) {
+    @FXML private void handleRegistration(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/chooseRole.fxml", "Seleziona ruolo");
     }
 }

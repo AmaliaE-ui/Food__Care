@@ -5,6 +5,7 @@ import ispw.foodcare.model.Session;
 import ispw.foodcare.query.QueryAvailability;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -92,12 +93,13 @@ public class AvailabilityDAO {
             stmt.setString(1, nutritionistUsername);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                list.add(new Availability(
-                        rs.getDate("data").toLocalDate(),
-                        rs.getTime("start_time").toLocalTime(),
-                        rs.getTime("end_time").toLocalTime(),
-                        nutritionistUsername
-                ));
+                Availability availability = new Availability();
+                availability.setData(rs.getDate("data").toLocalDate());
+                availability.setStartTime(rs.getTime("ora_inizio").toLocalTime());
+                availability.setEndTime(rs.getTime("ora_fine").toLocalTime());
+                availability.setNutritionistUsername(nutritionistUsername);
+                list.add(availability);
+
             }
         } catch (SQLException e) {
             logger.severe("Errore recupero disponibilità da DB: " + e.getMessage());
@@ -117,4 +119,20 @@ public class AvailabilityDAO {
             logger.severe("Errore cancellazione disponibilità su DB: " + e.getMessage());
         }
     }
+
+    public void deleteAvailabilitybydata(LocalDate oggi) {
+
+        try (Connection conn = DBManager.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(QueryAvailability.DELETE_AVAILABILITY_BY_DATE)) {
+
+            LocalDate cutoffDate = LocalDate.now(); // oppure una data che scegli
+            stmt.setDate(1, java.sql.Date.valueOf(cutoffDate)); // imposta il parametro nella query
+
+            int deleted = stmt.executeUpdate();
+            System.out.println("Righe eliminate: " + deleted);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+    }
+}
 }

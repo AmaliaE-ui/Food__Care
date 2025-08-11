@@ -4,6 +4,7 @@ import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
+import ispw.foodcare.utils.ShowAlert;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,7 @@ public class SearchNutritionistGuiController {
     @FXML private TableColumn<NutritionistBean, String> cityColumn;
     @FXML private TableColumn<NutritionistBean, String> specializationColumn;
     @FXML private TableColumn<NutritionistBean, Void> profileColumn;
+    private ShowAlert alert;
 
     @FXML
     public void initialize() {
@@ -87,7 +89,7 @@ public class SearchNutritionistGuiController {
     private void onSearchClicked() {
         String city = searchTextField.getText();
         if (city == null || city.isBlank()) {
-            showAlert("Campo vuoto", "Inserisci una città per effettuare la ricerca.");
+            alert.showAlert("Campo vuoto", "Inserisci una città per effettuare la ricerca.");
             return;
         }
 
@@ -95,7 +97,7 @@ public class SearchNutritionistGuiController {
         List<NutritionistBean> result = controller.searchNutritionistsByCity(city);
 
         if (result.isEmpty()) {
-            showAlert("Nessun risultato", "Nessun nutrizionista trovato nella città \"" + city + "\".");
+            alert.showAlert("Nessun risultato", "Nessun nutrizionista trovato nella città \"" + city + "\".");
             nutritionistTableView.getItems().clear();
             Session.getInstance().removeAttribute(lastSearchResults);
             Session.getInstance().removeAttribute(lastSearchQuery);
@@ -110,14 +112,6 @@ public class SearchNutritionistGuiController {
         Session.getInstance().setAttributes(lastSearchQuery, city);
     }
 
-    /*Alert generico.*/
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 
     /*Carica la schermata del profilo nutrizionista.*/
     private void handleViewProfile(NutritionistBean bean) {
