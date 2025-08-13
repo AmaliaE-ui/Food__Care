@@ -12,7 +12,7 @@
             prefWidth="900.0" prefHeight="600.0">
 
     <top>
-        <Button text="← Indietro" prefWidth="100" onAction="#handleBack" />
+        <Button text="← Indietro" prefWidth="100" onAction="#onBackClick" />
     </top>
 
     <center>
@@ -22,7 +22,7 @@
                 <HBox spacing="5">
                     <Label text="★★★☆☆" />
                 </HBox>
-                <Button text="Recensioni" onAction="#handleReviews"/>
+                <Button text="Recensioni" onAction="#onReviewsClick"/>
             </VBox>
 
 
@@ -64,7 +64,7 @@
 
     <bottom>
         <HBox alignment="CENTER_RIGHT">
-            <Button text="Prenota Appuntamento" fx:id="bookAppointmentButton" onAction="#handleBookAppointment"
+            <Button text="Prenota Appuntamento" fx:id="bookAppointmentButton" onAction="#onBookAppointmentClick"
                     style="-fx-font-size: 16px; -fx-padding: 10 20;" />
         </HBox>
     </bottom>

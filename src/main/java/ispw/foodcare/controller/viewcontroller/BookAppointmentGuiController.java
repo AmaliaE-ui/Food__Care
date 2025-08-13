@@ -36,8 +36,7 @@ public class BookAppointmentGuiController {
         populateCalendarWithAvailability();
     }
 
-    @FXML
-    private void initialize() {
+    @FXML private void initialize() {
         calendarView = new CalendarView();
         calendarView.setShowAddCalendarButton(false);
         calendarView.setShowPrintButton(false);
@@ -102,8 +101,7 @@ public class BookAppointmentGuiController {
     }
 
 
-    @FXML
-    private void handleBookAppointment() {
+    @FXML private void onBookAppointmentClick() {
         if (selectedDate == null || selectedTime == null) {
             alert.showAlert("Errore", "Devi selezionare una data e un orario disponibili dal calendario.");
             return;
@@ -135,8 +133,7 @@ public class BookAppointmentGuiController {
         selectionSummaryLabel.setText("Seleziona una data e un orario sul calendario per procedere.");
     }
 
-    @FXML
-    private void handleBack() {
+    @FXML private void onBackClick() {
         NavigationManager.switchPane(
                 "/ispw/foodcare/BookAppointment/nutritionistProfile.fxml",
                 calendarPane, // nodo generico

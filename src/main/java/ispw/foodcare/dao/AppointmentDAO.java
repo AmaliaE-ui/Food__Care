@@ -2,13 +2,11 @@ package ispw.foodcare.dao;
 
 import ispw.foodcare.AppointmentStatus;
 import ispw.foodcare.bean.AppointmentBean;
-import ispw.foodcare.bean.AvailabilityBean;
 import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
 import ispw.foodcare.model.Appointment;
 import ispw.foodcare.model.Availability;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.query.QueryAppointment;
-import ispw.foodcare.query.QueryAvailability;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -89,7 +87,7 @@ public class AppointmentDAO {
             AvailabilityDAO availabilityDAO = Session.getInstance().getAvailabilityDAO();
             Availability toRemove = new Availability();
             toRemove.setNutritionistUsername(appointment.getNutritionistUsername());
-            toRemove.setData(appointment.getDate());
+            toRemove.setDate(appointment.getDate());
             toRemove.setStartTime(appointment.getTime());
             toRemove.setEndTime(appointment.getTime().plusMinutes(45));
 
@@ -312,7 +310,7 @@ public class AppointmentDAO {
                 // Usa AvailabilityDAO per reinserire la disponibilità
                 Availability availability = new Availability();
                 availability.setNutritionistUsername(nutritionistUsername);
-                availability.setData(date);
+                availability.setDate(date);
                 availability.setStartTime(ora_inizio);
                 availability.setEndTime(ora_fine);
 

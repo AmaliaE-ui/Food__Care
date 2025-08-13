@@ -24,7 +24,7 @@
     </TableView>
     <Button fx:id="deleteButton"
             text="Elimina Appuntamento Selezionato"
-            onAction="#handleDeleteAppointment"
+            onAction="#onDeleteAppointmentClick"
             style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 16;"
             disable="true" ></Button>
 </VBox>

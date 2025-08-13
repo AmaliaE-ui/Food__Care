@@ -57,8 +57,7 @@ public class NutritionistProfileGuiController {
         profileImageView.setImage(new Image(getClass().getResourceAsStream("/ispw/foodcare/images/nutritionist_generic.png")));
     }
 
-    @FXML
-    private void handleBookAppointment(ActionEvent event) {
+    @FXML private void onBookAppointmentClick(ActionEvent event) {
         NavigationManager.switchPane(
                 "/ispw/foodcare/BookAppointment/bookAppointment.fxml",
                 nameLabel,  // Nodo dell'interfaccia per accedere alla scena
@@ -67,14 +66,12 @@ public class NutritionistProfileGuiController {
     }
 
 
-    @FXML
-    private void handleReviews(ActionEvent event) {
+    @FXML private void onReviewsClick(ActionEvent event) {
         // TODO: implementa apertura finestra recension
         alert.showAlert("Non implementato","Le recensioni non sono state implementate.");
     }
 
-    @FXML
-    private void handleBack(ActionEvent event) {
+    @FXML private void onBackClick(ActionEvent event) {
         // Torna alla lista dei nutrizionisti
         NavigationManager.switchScene(event,"/ispw/foodcare/BookAppointment/homePatient.fxml", "FoodCare - Home");
     }

@@ -10,15 +10,11 @@ import javafx.scene.layout.AnchorPane;
 
 public class BaseGuiController {
 
-    @FXML
-    protected AnchorPane myAnchorPane;
-
-    @FXML
-    protected Button homeButton;
+    @FXML protected AnchorPane myAnchorPane;
+    @FXML protected Button homeButton;
 
     // Pulsante Home: torna alla dashboard dell’utente loggato
-    @FXML
-    protected void goHomePage(ActionEvent event) {
+    @FXML protected void goHomePage(ActionEvent event) {
         Role role = Session.getInstance().getCurrentRole();
         if (role == null) {
             NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
@@ -30,8 +26,7 @@ public class BaseGuiController {
         }
 
         // Pulsante Indietro al login
-        @FXML
-        protected void handleBackToLogin(ActionEvent event) {
+        @FXML protected void onBackToLoginClick(ActionEvent event) {
             NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
         }
 }

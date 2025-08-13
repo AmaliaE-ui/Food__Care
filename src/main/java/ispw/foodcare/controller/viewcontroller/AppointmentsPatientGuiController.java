@@ -56,8 +56,7 @@ public class AppointmentsPatientGuiController {
         appointmentsTableView.setItems(FXCollections.observableArrayList(appointments));
     }
 
-    @FXML
-    private void handleDeleteAppointment() {
+    @FXML private void onDeleteAppointmentClick() {
         AppointmentBean selected = appointmentsTableView.getSelectionModel().getSelectedItem();
         if (selected == null) {
             alert.showAlert("Attenzione", "Seleziona un appuntamento da eliminare.");
@@ -81,5 +80,4 @@ public class AppointmentsPatientGuiController {
             }
         });
     }
-
 }

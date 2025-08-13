@@ -27,8 +27,7 @@ public class SearchNutritionistGuiController {
     @FXML private TableColumn<NutritionistBean, Void> profileColumn;
     private ShowAlert alert;
 
-    @FXML
-    public void initialize() {
+    @FXML public void initialize() {
         nutritionistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         profileColumn.setMinWidth(120);
         //impedisce all'utente di ridimensionare colonna
@@ -73,7 +72,7 @@ public class SearchNutritionistGuiController {
                 btn.setStyle("-fx-background-color: #87cefa; -fx-text-fill: black; -fx-font-weight: bold;");
                 btn.setOnAction(event -> {
                     NutritionistBean bean = getTableView().getItems().get(getIndex());
-                    handleViewProfile(bean);
+                    onViewProfileClick(bean);
                 });
             }
 
@@ -85,8 +84,7 @@ public class SearchNutritionistGuiController {
         });
     }
 
-    @FXML
-    private void onSearchClicked() {
+    @FXML private void onSearchClick() {
         String city = searchTextField.getText();
         if (city == null || city.isBlank()) {
             alert.showAlert("Campo vuoto", "Inserisci una città per effettuare la ricerca.");
@@ -114,7 +112,7 @@ public class SearchNutritionistGuiController {
 
 
     /*Carica la schermata del profilo nutrizionista.*/
-    private void handleViewProfile(NutritionistBean bean) {
+    private void onViewProfileClick(NutritionistBean bean) {
         NavigationManager.switchPane("/ispw/foodcare/BookAppointment/nutritionistProfile.fxml",
                 searchTextField,
                 bean

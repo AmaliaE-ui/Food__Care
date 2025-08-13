@@ -27,7 +27,7 @@ public class RegistrationPatientGuiController {
         genderChoiceBox.getItems().addAll("Maschio", "Femmina", "Altro");
     }
 
-    @FXML public void handleSaveButton(ActionEvent event) {
+    @FXML public void onSaveButtonClick(ActionEvent event) {
         try {
             PatientBean bean = new PatientBean();
             bean.setName(nameTextField.getText());
@@ -76,7 +76,7 @@ public class RegistrationPatientGuiController {
         }
     }
 
-    @FXML private void handleBackToLogin(ActionEvent event) {
+    @FXML private void onBackToLoginClick(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
 }

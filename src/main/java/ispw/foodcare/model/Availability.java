@@ -12,7 +12,7 @@ public class Availability {
 
     // Getter e Setter
     public LocalDate getDate() { return date; }
-    public void setData(LocalDate date) {this.date = date; }
+    public void setDate(LocalDate date) {this.date = date; }
 
     public LocalTime getStartTime() { return startTime; }
     public void setStartTime(LocalTime startTime) { this.startTime = startTime; }

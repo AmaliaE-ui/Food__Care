@@ -21,13 +21,13 @@
             </VBox.margin>
             </Label>
             <Line endX="160.0" endY="0.0" startX="0.0" startY="0.0" stroke="WHITE" strokeWidth="3.0" />
-            <Button fx:id="homeButton" onAction="#handleHome" prefWidth="180" text="Home">
+            <Button fx:id="homeButton" onAction="#onHomeClick" prefWidth="180" text="Home">
                 <VBox.margin><Insets top="20.0" /></VBox.margin>
             </Button>
-            <Button fx:id="personalAreaButton" onAction="#handlePersonalArea" prefWidth="180" text="Area personale" />
-            <Button fx:id="appointmentButton" onAction="#handleAppointments" prefWidth="180" text="Appuntamenti prenotati" />
-            <Button fx:id="historyButton" onAction="#handleHistory" prefWidth="180" text="Storico appuntamenti" />
-         <Button fx:id="logoutButton" onAction="#handleLogout" prefWidth="180" text="Log out">
+            <Button fx:id="personalAreaButton" onAction="#onPersonalAreaClick" prefWidth="180" text="Area personale" />
+            <Button fx:id="appointmentButton" onAction="#onAppointmentsClick" prefWidth="180" text="Appuntamenti prenotati" />
+            <Button fx:id="historyButton" onAction="#onHistoryClick" prefWidth="180" text="Storico appuntamenti" />
+         <Button fx:id="logoutButton" onAction="#onLogoutClick" prefWidth="180" text="Log out">
             <VBox.margin>
                <Insets top="100.0" />
             </VBox.margin>

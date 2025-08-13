@@ -8,19 +8,13 @@ import javafx.scene.control.TextArea;
 
 public class PersonalAreaPatientGuiController {
 
-    @FXML
-    private Label nameLabel;
-    @FXML
-    private Label emailLabel;
-    @FXML
-    private Label phoneLabel;
-    @FXML
-    private Label dobLabel;
-    @FXML
-    private TextArea goalsTextArea;
+    @FXML private Label nameLabel;
+    @FXML private Label emailLabel;
+    @FXML private Label phoneLabel;
+    @FXML private Label dobLabel;
+    @FXML private TextArea goalsTextArea;
 
-    @FXML
-    public void initialize() {
+    @FXML public void initialize() {
         UserBean currentUser = Session.getInstance().getCurrentUser();
 
         if (currentUser != null) {
@@ -33,13 +27,11 @@ public class PersonalAreaPatientGuiController {
         }
     }
 
-    @FXML
-    private void handleEdit() {
-        System.out.println("Modifica profilo: implementa funzione");
+    @FXML private void onEditClick() {
+        System.out.println("Modifica profilo: non implementato");
     }
 
-    @FXML
-    private void handleDelete() {
-        System.out.println("Elimina account: implementa funzione");
+    @FXML private void onDeleteClick() {
+        System.out.println("Elimina account: non implementato");
     }
 }

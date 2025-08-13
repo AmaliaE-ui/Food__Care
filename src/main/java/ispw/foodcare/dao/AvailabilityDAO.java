@@ -94,7 +94,7 @@ public class AvailabilityDAO {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Availability availability = new Availability();
-                availability.setData(rs.getDate("data").toLocalDate());
+                availability.setDate(rs.getDate("data").toLocalDate());
                 availability.setStartTime(rs.getTime("ora_inizio").toLocalTime());
                 availability.setEndTime(rs.getTime("ora_fine").toLocalTime());
                 availability.setNutritionistUsername(nutritionistUsername);

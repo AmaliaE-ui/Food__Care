@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class RegistrationNutritionistGuiController {
 
-    @FXML private void handleBackToLogin(ActionEvent event) {
+    @FXML private void onBackToLoginClick(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
 
@@ -35,7 +35,7 @@ public class RegistrationNutritionistGuiController {
     @FXML private ComboBox<String> specializzazioneComboBox;
     @FXML private Label errorLabel;
 
-    public void handleSaveButton(ActionEvent event) {
+    public void onSaveButtonClick(ActionEvent event) {
         try {
             //Costruzione del bean Address
             AddressBean address = new AddressBean();
@@ -102,8 +102,7 @@ public class RegistrationNutritionistGuiController {
     );
 
 
-    @FXML
-    public void initialize() {
+    @FXML public void initialize() {
         titoloStudioChoiceBox.getItems().addAll(
                 "Laurea in Dietistica",
                 "Laurea in Biologia",

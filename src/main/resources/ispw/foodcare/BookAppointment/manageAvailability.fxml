@@ -16,7 +16,7 @@
 
     <ListView fx:id="slotsListView" prefHeight="150" prefWidth="200" />
 
-    <Button onAction="#handleAddAvailability" text="Aggiungi Disponibilità" />
+    <Button onAction="#onAddAvailabilityClick" text="Aggiungi Disponibilità" />
 
     <Label alignment="CENTER" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Disponibilità" />
 

@@ -28,8 +28,7 @@ public class HomeNutritionistGuiController extends BaseGuiController {
     private final AppointmentController appointmentController = new AppointmentController();
 
 
-    @FXML
-    public void initialize() {
+    @FXML public void initialize() {
         loadContent("/ispw/foodcare/personalAreaNutritionist.fxml");
         checkAndDisplayNotification();
     }
@@ -65,23 +64,19 @@ public class HomeNutritionistGuiController extends BaseGuiController {
         AnchorPane.setRightAnchor(node, ANCHOR_ZERO);
     }
 
-    @FXML
-    private void handlePersonalArea(ActionEvent event) {
+    @FXML private void onPersonalAreaClick(ActionEvent event) {
         loadContent("/ispw/foodcare/personalAreaNutritionist.fxml");
     }
 
-    @FXML
-    private void handleAvailability(ActionEvent event) {
+    @FXML private void onAvailabilityClick(ActionEvent event) {
         loadContent("/ispw/foodcare/BookAppointment/manageAvailability.fxml");
     }
 
-    @FXML
-    private void handleAppointments(ActionEvent event) {
+    @FXML private void onAppointmentsClick(ActionEvent event) {
         loadContent("/ispw/foodcare/BookAppointment/appointmentsNutritionist.fxml");
     }
 
-    @FXML
-    private void handleLogout(ActionEvent event) {
+    @FXML private void onLogoutClick(ActionEvent event) {
         Session.getInstance().logout();
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }

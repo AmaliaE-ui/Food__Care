@@ -59,7 +59,7 @@
                 <Font name="Arial Rounded MT Bold" size="28.0" />
             </font>
         </Label>
-        <Button fx:id="patientButton" onAction="#handlePatientChoice" prefHeight="40.0" prefWidth="200.0" text="Paziente" />
-        <Button fx:id="nutritionistButton" onAction="#handleNutritionistChoice" prefHeight="40.0" prefWidth="200.0" text="Nutrizionista" />
+        <Button fx:id="patientButton" onAction="#onPatientChoiceClick" prefHeight="40.0" prefWidth="200.0" text="Paziente" />
+        <Button fx:id="nutritionistButton" onAction="#onNutritionistChoiceClick" prefHeight="40.0" prefWidth="200.0" text="Nutrizionista" />
     </VBox>
 </StackPane>

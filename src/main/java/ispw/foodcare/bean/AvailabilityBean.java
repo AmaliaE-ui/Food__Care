@@ -26,7 +26,6 @@ public class AvailabilityBean {
         }
         if(date.isAfter(today)) {
             this.date = date;
-
         }else{
             throw new IllegalArgumentException("Non puoi prenotare in una data passata.");}
     }

@@ -9,19 +9,13 @@ import javafx.scene.control.TextArea;
 
 public class PersonalAreaNutritionistGuiController {
 
-    @FXML
-    private Label nameLabel;
-    @FXML
-    private Label emailLabel;
-    @FXML
-    private Label phoneLabel;
-    @FXML
-    private Label specializationLabel;
-    @FXML
-    private TextArea bioTextArea;
+    @FXML private Label nameLabel;
+    @FXML private Label emailLabel;
+    @FXML private Label phoneLabel;
+    @FXML private Label specializationLabel;
+    @FXML private TextArea bioTextArea;
 
-    @FXML
-    public void initialize() {
+    @FXML public void initialize() {
         UserBean currentUser = Session.getInstance().getCurrentUser();
 
         if (currentUser instanceof NutritionistBean nutritionist) {
@@ -42,13 +36,11 @@ public class PersonalAreaNutritionistGuiController {
         }
     }
 
-    @FXML
-    private void handleEdit() {
-        System.out.println("Modifica profilo nutrizionista: implementa funzione");
+    @FXML private void onEditClick() {
+        System.out.println("Modifica profilo nutrizionista: non implementato");
     }
 
-    @FXML
-    private void handleDelete() {
-        System.out.println("Elimina account nutrizionista: implementa funzione");
+    @FXML private void onDeleteClick() {
+        System.out.println("Elimina account nutrizionista: non implementato");
     }
 }

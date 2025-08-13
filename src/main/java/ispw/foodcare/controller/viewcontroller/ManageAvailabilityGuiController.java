@@ -29,8 +29,7 @@ public class ManageAvailabilityGuiController {
 
     ShowAlert alert = new ShowAlert();
 
-    @FXML
-    private void initialize() {
+    @FXML private void initialize() {
 
         controller.deleteExpiredAvailabilities();
         slotsListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -41,7 +40,7 @@ public class ManageAvailabilityGuiController {
 
         availabilityTableView.setItems(availabilityList);
 
-        //Aggiunta colonna 'Elimina'
+        /*Aggiunta colonna 'Elimina'*/
         actionColumn.setCellFactory(col -> new TableCell<>() {
             private final Button deleteButton = new Button("Elimina");
 
@@ -62,7 +61,7 @@ public class ManageAvailabilityGuiController {
         });
 
 
-        // Carica disponibilità già presenti
+        /*Carica disponibilità già presenti*/
         String username = Session.getInstance().getCurrentUser().getUsername();
         List<AvailabilityBean> loadedAvailabilities =
                new java.util.ArrayList<>(controller.getAvailabilitiesForNutritionist(username));
@@ -81,8 +80,7 @@ public class ManageAvailabilityGuiController {
         });
     }
 
-    @FXML
-    private void handleAddAvailability() {
+    @FXML private void onAddAvailabilityClick() {
         LocalDate date = datePicker.getValue();
         List<LocalTime> selectedSlots = slotsListView.getSelectionModel().getSelectedItems();
 

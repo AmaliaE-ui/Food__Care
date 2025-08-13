@@ -42,22 +42,24 @@ public class HomePatientGuiController extends BaseGuiController {
         }
     }
 
-    @FXML public void handleHome(ActionEvent event) {
+    @FXML public void onHomeClick(ActionEvent event) {
         loadContent("/ispw/foodcare/BookAppointment/searchNutritionist.fxml");
     }
 
-    @FXML private void handlePersonalArea(ActionEvent event) {
+    @FXML private void onPersonalAreaClick(ActionEvent event) {
         //carica dinamicamente solo l'AnchorPane dentro il BorderPane generale che non viene modificato
         loadContent("/ispw/foodcare/personalAreaPatient.fxml");
     }
 
-    @FXML private void handleAppointments(ActionEvent event) { loadContent("/ispw/foodcare/appointmentsPatient.fxml"); }
+    @FXML private void onAppointmentsClick(ActionEvent event) {
+        loadContent("/ispw/foodcare/appointmentsPatient.fxml");
+    }
 
-    @FXML private void handleHistory(ActionEvent event) {
+    @FXML private void onHistoryClick(ActionEvent event) {
         loadContent("/ispw/foodcare/historyPatient.fxml");
     }
 
-    @FXML private void handleLogout(ActionEvent event) {
+    @FXML private void onLogoutClick(ActionEvent event) {
         Session.getInstance().logout();
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }

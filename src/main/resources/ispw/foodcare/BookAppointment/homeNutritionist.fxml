@@ -20,16 +20,16 @@
                     <Insets top="50.0" />
                 </VBox.margin>
             </Label>
-            <Button fx:id="personalAreaButton" onAction="#handlePersonalArea" prefWidth="180" text="Area personale" />
-            <Button fx:id="availabilityButton" onAction="#handleAvailability" prefWidth="180" text="Modifica disponibilità" />
+            <Button fx:id="personalAreaButton" onAction="#onPersonalAreaClick" prefWidth="180" text="Area personale" />
+            <Button fx:id="availabilityButton" onAction="#onAvailabilityClick" prefWidth="180" text="Modifica disponibilità" />
             <AnchorPane maxWidth="180" prefWidth="180">
                 <children>
-                    <Button fx:id="appointmentsButton" layoutX="0" layoutY="0" onAction="#handleAppointments" prefWidth="180" text="Appuntamenti" />
+                    <Button fx:id="appointmentsButton" layoutX="0" layoutY="0" onAction="#onAppointmentsClick" prefWidth="180" text="Appuntamenti" />
                     <Label fx:id="notificationBadge" layoutX="148.0" layoutY="-5" prefHeight="28.0" prefWidth="22.0" style="-fx-text-fill: red; -fx-font-size: 16px;" text="●" visible="false" />
                 </children>
             </AnchorPane>
 
-            <Button fx:id="logoutButton" onAction="#handleLogout" prefWidth="180" text="Log out">
+            <Button fx:id="logoutButton" onAction="#onLogoutClick" prefWidth="180" text="Log out">
                 <VBox.margin>
                     <Insets top="100.0" />
                 </VBox.margin>

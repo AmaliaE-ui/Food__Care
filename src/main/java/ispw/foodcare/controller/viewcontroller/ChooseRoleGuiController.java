@@ -6,13 +6,11 @@ import javafx.fxml.FXML;
 
 public class ChooseRoleGuiController {
 
-    @FXML
-    private void handlePatientChoice(ActionEvent event) {
+    @FXML private void onPatientChoiceClick(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/registrationPatient.fxml", "FoodCare - Registrazione");
     }
 
-    @FXML
-    private void handleNutritionistChoice(ActionEvent event) {
+    @FXML private void onNutritionistChoiceClick(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/registrationNutritionist.fxml", "FoodCare - Registrazione");
     }
 }

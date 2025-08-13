@@ -32,8 +32,8 @@
         <TextArea fx:id="goalsTextArea" prefRowCount="5" wrapText="true" editable="false" />
 
         <HBox spacing="20" style="-fx-alignment: center-right;">
-            <Button text="✓ Modifica" onAction="#handleEdit" />
-            <Button text="× Elimina account" onAction="#handleDelete" />
+            <Button text="✓ Modifica" onAction="#onEditClick" />
+            <Button text="× Elimina account" onAction="#onDeleteClick" />
         </HBox>
     </VBox>
 

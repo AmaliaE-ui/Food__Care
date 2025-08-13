@@ -31,7 +31,7 @@
                 </VBox.margin>
             </Label>
             <Line endX="160.0" endY="0.0" startX="0.0" startY="0.0" stroke="WHITE" strokeWidth="3.0" />
-            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" onAction="#handleBackToLogin" prefHeight="27.0" prefWidth="114.0" styleClass="button" text="Indietro">
+            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" onAction="#onBackToLoginClick" prefHeight="27.0" prefWidth="114.0" styleClass="button" text="Indietro">
                 <font>
                     <Font size="14.0" />
                 </font>
@@ -124,7 +124,7 @@
             </GridPane>
 
             <HBox alignment="CENTER" prefHeight="73.0" prefWidth="600.0" spacing="20">
-                <Button fx:id="saveButton" onAction="#handleSaveButton" prefHeight="36.0" prefWidth="254.0" styleClass="button" text="Salva">
+                <Button fx:id="saveButton" onAction="#onSaveButtonClick" prefHeight="36.0" prefWidth="254.0" styleClass="button" text="Salva">
                     <font><Font size="18.0" /></font>
                 </Button>
                 <Label fx:id="errorLabel" alignment="CENTER" style="-fx-font-weight: bold; -fx-font-size: 14px;" textFill="red" GridPane.columnSpan="2" />

@@ -11,7 +11,7 @@
 
     <HBox spacing="10">
         <TextField fx:id="searchTextField" prefHeight="26.0" prefWidth="530.0" promptText="Inserisci la città..." />
-        <Button onAction="#onSearchClicked" prefHeight="26.0" prefWidth="100.0" text="Cerca" />
+        <Button onAction="#onSearchClick" prefHeight="26.0" prefWidth="100.0" text="Cerca" />
     </HBox>
 
     <TableView fx:id="nutritionistTableView" prefHeight="500.0" prefWidth="660.0">
