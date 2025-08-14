@@ -6,6 +6,8 @@ import ispw.foodcare.bean.AddressBean;
 
 public class NutritionistValidator {
 
+    private NutritionistValidator() {}
+
     public static String validateNutritionist(NutritionistBean bean, AddressBean address, String confirmPassword) {
         String commonCheck = UserValidator.validateBaseUser(bean, confirmPassword);
         if (commonCheck != null) return commonCheck;

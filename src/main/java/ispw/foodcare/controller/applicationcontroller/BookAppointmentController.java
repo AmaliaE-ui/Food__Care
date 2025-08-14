@@ -134,7 +134,7 @@ public class BookAppointmentController {
         List<Appointment> appointments = appointmentDAO.getAppointmentsForPatient(patientUsername);
         return appointments.stream()
                 .map(Converter::appointmentToBean)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /*Restituise orari già prenotati*/

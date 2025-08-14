@@ -5,6 +5,8 @@ import ispw.foodcare.utils.FieldValidator;
 
 public class UserValidator {
 
+    private UserValidator() {}
+
     public static String validateBaseUser(UserBean bean, String confirmPassword) {
         if (FieldValidator.isEmpty(bean.getName())) return "Il nome è obbligatorio.";
         if (FieldValidator.isEmpty(bean.getSurname())) return "Il cognome è obbligatorio.";

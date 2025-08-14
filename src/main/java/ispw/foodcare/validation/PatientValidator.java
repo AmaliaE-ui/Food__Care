@@ -4,6 +4,8 @@ import ispw.foodcare.bean.PatientBean;
 
 public class PatientValidator {
 
+    private PatientValidator() {}
+
     public static String validatePatient(PatientBean bean, String confirmPassword) {
         String commonCheck = UserValidator.validateBaseUser(bean, confirmPassword);
         if (commonCheck != null) return commonCheck;

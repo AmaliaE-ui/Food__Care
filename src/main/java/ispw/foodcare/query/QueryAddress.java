@@ -6,7 +6,5 @@ public class QueryAddress {
 
     public static final String INSERT_ADDRESS = "INSERT INTO address (via, civico, cap, citta, provincia, regione) VALUES (?, ?, ?, ?, ?, ?)";
 
-    public static final String DELETE_ADDRESS = "DELETE FROM address WHERE id = ?";
-
     public static final String SELECT_ADDRESS = "SELECT * FROM address WHERE id_address = ?";
 }

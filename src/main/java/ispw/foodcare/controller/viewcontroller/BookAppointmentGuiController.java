@@ -70,7 +70,7 @@ public class BookAppointmentGuiController {
         List<AvailabilityBean> availabilities =
                 appointmentController.getAvailabilitiesForNutritionist(selectedNutritionist.getUsername());
 
-        Calendar calendar = new Calendar("Disponibilità");
+        Calendar<String> calendar = new Calendar<>("Disponibilità");
         calendar.setStyle(Calendar.Style.STYLE1); // verde
 
         for (AvailabilityBean availability : availabilities) {

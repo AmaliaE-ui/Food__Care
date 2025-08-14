@@ -30,7 +30,6 @@ public class Converter {
             //Campi di Nutritionist
             nutritionistBean.setPiva(nutritionist.getPiva());
             nutritionistBean.setTitoloStudio(nutritionist.getTitoloStudio());
-            //nutritionistBean.setIndirizzoStudio(nutritionist.getIndirizzoStudio());
             nutritionistBean.setSpecializzazione(nutritionist.getSpecializzazione());
             nutritionistBean.setAddress(addressToBean(nutritionist.getAddress()));
             bean = nutritionistBean;

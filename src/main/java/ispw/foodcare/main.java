@@ -1,14 +1,18 @@
 package ispw.foodcare;
 
 import ispw.foodcare.cli.InitializeCli;
+import ispw.foodcare.dao.AppointmentDAO;
 import ispw.foodcare.exeption.AccountAlreadyExistsException;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Main extends Application {
+
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     @Override public void start(Stage stage) {
         NavigationManager.switchScene(stage, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
@@ -16,7 +20,7 @@ public class Main extends Application {
 
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Avvio FoodCare");
+        logger.info("Avvio FoodCare");
 
         /*Istanzio la Sssione*/
         Session s = Session.getInstance();
@@ -33,7 +37,7 @@ public class Main extends Application {
             if ("1".equals(type)) {
                 s.setDB(true);
                 s.setRam(false);
-                System.out.println("Modalità persistente: Database.");
+                logger.info("Modalità persistente: Database.");
             } else {
                 s.setDB(false);
                 s.setRam(false);
@@ -41,21 +45,21 @@ public class Main extends Application {
         } else {
             s.setDB(false);
             s.setRam(true);
-            System.out.println("Modalità RAM (no persistenza).");
+            logger.info("Modalità RAM (no persistenza).");
         }
 
         s.setCLI(useCli);
 
         /*Avvia modalità scelta*/
         if (useCli) {
-            System.out.println("Avvio modalità CLI...");
+            logger.info("Avvio modalità CLI...");
             try {
                 new InitializeCli().initialize();
             } catch (AccountAlreadyExistsException e) {
-                System.out.println("Errore inizializzazione CLI: " + e.getMessage());
+                logger.info("Errore inizializzazione CLI: " + e.getMessage());
             }
         } else {
-            System.out.println(" Avvio modalità grafica...");
+            logger.info(" Avvio modalità grafica...");
             launch(args);
         }
     }
@@ -63,20 +67,20 @@ public class Main extends Application {
     /*Metodi helper*/
     private static boolean askYesNo(Scanner scanner, String prompt) {
         while (true) {
-            System.out.print(prompt);
+            logger.info(prompt);
             String in = scanner.nextLine().trim().toLowerCase();
             if (in.equals("s")) return true;
             if (in.equals("n")) return false;
-            System.out.println("Inserimento non valido. Inserisci 's' o 'n'.");
+            logger.info("Inserimento non valido. Inserisci 's' o 'n'.");
         }
     }
 
     private static String askChoice(Scanner scanner, String prompt, String... accepted) {
         while (true) {
-            System.out.print(prompt);
+            logger.info(prompt);
             String in = scanner.nextLine().trim().toLowerCase();
             for (String a : accepted) if (a.equals(in)) return in;
-            System.out.println("Inserimento non valido. Opzioni: " + String.join("/", accepted));
+            logger.info("Inserimento non valido. Opzioni: " + String.join("/", accepted));
         }
     }
 }

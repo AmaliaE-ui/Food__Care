@@ -57,7 +57,7 @@ public class UserBean {
 
     public String getEmail() { return email; }
     public void setEmail(String email) {
-        if (email == null || !email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+        if (email == null || !email.matches("[\\w.-]+\\.[a-zA-Z]{2,}$")) {
             throw new IllegalArgumentException("Email non valida.");
         }
         this.email = email.trim();

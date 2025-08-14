@@ -4,6 +4,8 @@ import ispw.foodcare.Role;
 
 public class GuiFactory {
 
+    private GuiFactory() {}
+
     public static String getHomePath(Role role) {
         return switch (role) {
             case PATIENT -> "/ispw/foodcare/BookAppointment/homePatient.fxml";

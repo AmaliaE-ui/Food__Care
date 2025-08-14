@@ -71,7 +71,6 @@ public class AppointmentsPatientGuiController {
 
         confirm.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                BookAppointmentController controller = new BookAppointmentController();
                 controller.deleteAppointment(selected);
 
                 appointmentsTableView.getItems().remove(selected);

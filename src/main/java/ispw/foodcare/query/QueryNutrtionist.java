@@ -8,8 +8,5 @@ public class QueryNutrtionist {
 
     public static final String SELECT_NUTRITIONIST = "SELECT piva, titolo_studio, indirizzo_studio, specializzazione FROM nutritionist WHERE username = ?";
 
-    public static final String SELECT_BY_CITY = "SELECT * FROM nutritionist \n" +
-            "JOIN address ON nutritionist.indirizzo_studio = address.id_address \n" +
-            "JOIN user ON nutritionist.username = user.username \n" +
-            "WHERE address.citta = ?\n";
+    public static final String SELECT_BY_CITY = "SELECT * FROM nutritionist JOIN address ON nutritionist.indirizzo_studio = address.id_address JOIN user ON nutritionist.username = user.username WHERE address.citta = ?";
 }

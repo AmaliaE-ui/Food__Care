@@ -1,6 +1,7 @@
 package ispw.foodcare.query;
 
 public class QueryAvailability {
+
     private QueryAvailability() {}
 
     public static final String INSERT_AVAILABILITY =
