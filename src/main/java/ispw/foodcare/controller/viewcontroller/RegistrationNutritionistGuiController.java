@@ -40,6 +40,9 @@ public class RegistrationNutritionistGuiController {
     @FXML private ComboBox<String> specializzazioneComboBox;
     @FXML private Label errorLabel;
 
+    private static final String STYLE_ERROR   = "-fx-text-fill: red;";
+    private static final String STYLE_SUCCESS   = "-fx-text-fill: green;";
+
     @FXML private void onBackToLoginClick(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
@@ -73,7 +76,7 @@ public class RegistrationNutritionistGuiController {
             /*Validazione*/
             String error = ispw.foodcare.validation.NutritionistValidator.validateNutritionist(bean, address, confirmPasswordTextField.getText());
             if (error != null) {
-                errorLabel.setStyle("-fx-text-fill: red;");
+                errorLabel.setStyle(STYLE_ERROR);
                 errorLabel.setText(error);
                 return;
             }
@@ -82,7 +85,7 @@ public class RegistrationNutritionistGuiController {
             boolean success = this.registrationController.registrationNutritionist(bean);
 
             if(success){
-                errorLabel.setStyle("-fx-text-fill: green;");
+                errorLabel.setStyle(STYLE_SUCCESS);
                 errorLabel.setText("Registrazione avvenuta con successo!");
 
                 /* Attendi 2 secondi e poi torna al login*/
@@ -90,13 +93,13 @@ public class RegistrationNutritionistGuiController {
                 delay.setOnFinished(e -> NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login"));
                 delay.play();
             } else{
-                errorLabel.setStyle("-fx-text-fill: red;");
+                errorLabel.setStyle(STYLE_ERROR);
                 errorLabel.setText("Errore nella registrazione! Controlla i dati inseriti");
             }
 
         } catch (IllegalArgumentException e) {
             /*Eccezione dai Bean*/
-            errorLabel.setStyle("-fx-text-fill: red;");
+            errorLabel.setStyle(STYLE_ERROR);
             errorLabel.setText(e.getMessage());
         }
 
@@ -107,7 +110,7 @@ public class RegistrationNutritionistGuiController {
 
         catch (Exception e) {
             /*Eccezione*/
-            errorLabel.setStyle("-fx-text-fill: red;");
+            errorLabel.setStyle(STYLE_ERROR);
             errorLabel.setText("Errore inatteso: " + e.getMessage());
         }
     }

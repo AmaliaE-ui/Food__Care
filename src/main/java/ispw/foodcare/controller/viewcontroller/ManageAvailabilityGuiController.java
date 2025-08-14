@@ -85,7 +85,7 @@ public class ManageAvailabilityGuiController {
         List<LocalTime> selectedSlots = slotsListView.getSelectionModel().getSelectedItems();
 
         if (date == null || selectedSlots.isEmpty()) {
-            alert.showAlert("Errore", "Seleziona una data valida e almeno uno slot orario.");;
+            alert.showAlert("Errore", "Seleziona una data valida e almeno uno slot orario.");
             return;
         }
 

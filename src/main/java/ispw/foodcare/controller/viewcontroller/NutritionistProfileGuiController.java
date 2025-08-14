@@ -60,19 +60,18 @@ public class NutritionistProfileGuiController {
     @FXML private void onBookAppointmentClick(ActionEvent event) {
         NavigationManager.switchPane(
                 "/ispw/foodcare/BookAppointment/bookAppointment.fxml",
-                nameLabel,  // Nodo dell'interfaccia per accedere alla scena
+                nameLabel,  /*Nodo dell'interfaccia per accedere alla scena*/
                 nutritionistBean
         );
     }
 
 
     @FXML private void onReviewsClick(ActionEvent event) {
-        // TODO: implementa apertura finestra recension
         alert.showAlert("Non implementato","Le recensioni non sono state implementate.");
     }
 
     @FXML private void onBackClick(ActionEvent event) {
-        // Torna alla lista dei nutrizionisti
+        /*Torna alla lista dei nutrizionisti*/
         NavigationManager.switchScene(event,"/ispw/foodcare/BookAppointment/homePatient.fxml", "FoodCare - Home");
     }
 }

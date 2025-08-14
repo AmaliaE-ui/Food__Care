@@ -3,7 +3,6 @@ package ispw.foodcare.cli;
 import ispw.foodcare.bean.AppointmentBean;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
-
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;

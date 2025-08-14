@@ -8,10 +8,9 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PatientValidationTest {
+class PatientValidationTest {
 
-    @Test
-    public void testValidPatient() {
+    @Test void testValidPatient() {
         PatientBean bean = new PatientBean();
         bean.setName("Mario");
         bean.setSurname("Rossi");
@@ -28,8 +27,7 @@ public class PatientValidationTest {
         assertNull(result); // nessun errore, validazione superata
     }
 
-    @Test
-    public void testEmptyName() {
+    @Test void testEmptyName() {
         PatientBean bean = new PatientBean();
         bean.setName(""); // campo vuoto
         bean.setSurname("Rossi");
@@ -44,8 +42,7 @@ public class PatientValidationTest {
         assertEquals("Il nome è obbligatorio.", result);
     }
 
-    @Test
-    public void testInvalidEmail() {
+    @Test void testInvalidEmail() {
         PatientBean bean = new PatientBean();
         bean.setName("Mario");
         bean.setSurname("Rossi");
@@ -60,8 +57,7 @@ public class PatientValidationTest {
         assertEquals("Email non valida.", result);
     }
 
-    @Test
-    public void testPasswordsDoNotMatch() {
+    @Test void testPasswordsDoNotMatch() {
         PatientBean bean = new PatientBean();
         bean.setName("Mario");
         bean.setSurname("Rossi");

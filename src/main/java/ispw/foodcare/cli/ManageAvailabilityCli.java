@@ -5,7 +5,6 @@ import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
 import ispw.foodcare.exeption.AccountAlreadyExistsException;
 import ispw.foodcare.model.Session;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;

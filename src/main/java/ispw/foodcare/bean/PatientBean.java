@@ -1,7 +1,6 @@
 package ispw.foodcare.bean;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 public class PatientBean extends UserBean {
 

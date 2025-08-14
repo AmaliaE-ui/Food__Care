@@ -1,7 +1,6 @@
 package ispw.foodcare.cli;
 
 import ispw.foodcare.bean.NutritionistBean;
-
 import java.util.Scanner;
 
 public class NutritionistProfileCli {

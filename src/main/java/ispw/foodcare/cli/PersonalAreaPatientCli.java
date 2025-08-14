@@ -2,7 +2,6 @@ package ispw.foodcare.cli;
 
 import ispw.foodcare.bean.UserBean;
 
-
 public class PersonalAreaPatientCli {
 
         private final UserBean user;

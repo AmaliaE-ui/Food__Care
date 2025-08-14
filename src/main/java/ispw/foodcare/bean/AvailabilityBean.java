@@ -2,7 +2,6 @@ package ispw.foodcare.bean;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import ispw.foodcare.utils.ShowAlert;
 
 public class AvailabilityBean {
 

@@ -8,7 +8,6 @@ import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -19,6 +18,8 @@ public class LoginGuiController {
     @FXML private Label loginMessageLabel;
     @FXML private TextField usernameTextField;
     @FXML private PasswordField passwordPasswordField;
+
+    private static final String STYLE_ERROR   = "-fx-text-fill: red;";
 
     /*Iniettiamo il controller applicativo*/
     private final LoginController loginController;
@@ -42,7 +43,7 @@ public class LoginGuiController {
             UserBean userBean = loginController.authenticateUser(username, password);
 
             if (userBean == null) {
-                loginMessageLabel.setStyle("-fx-text-fill: red;");
+                loginMessageLabel.setStyle(STYLE_ERROR);
                 loginMessageLabel.setText("Login fallito. Credenziali non valide.");
                 return;
             }
@@ -57,11 +58,11 @@ public class LoginGuiController {
 
         } catch (IllegalArgumentException e) {
             /*input vuoti*/
-            loginMessageLabel.setStyle("-fx-text-fill: red;");
+            loginMessageLabel.setStyle(STYLE_ERROR);
             loginMessageLabel.setText(e.getMessage());
         } catch (Exception e) {
             /*errori tecnici imprevisti (IO/DAO...)*/
-            loginMessageLabel.setStyle("-fx-text-fill: red;");
+            loginMessageLabel.setStyle(STYLE_ERROR);
             loginMessageLabel.setText("Errore durante il login: " + e.getMessage());
         }
     }

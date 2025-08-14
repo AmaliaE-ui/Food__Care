@@ -37,7 +37,7 @@ public class HomeNutritionistGuiController extends BaseGuiController {
     public void checkAndDisplayNotification() {
         boolean hasUnviewedAppointments = appointmentController.hasUnviewedAppointmentsForNutritionist(
                 Session.getInstance().getCurrentUser().getUsername());
-        if (hasUnviewedAppointments == true){
+        if (hasUnviewedAppointments){
         notificationBadge.setVisible(hasUnviewedAppointments);}
         else {
             notificationBadge.setVisible(false);

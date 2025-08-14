@@ -23,25 +23,29 @@ public class UserDAO {
 
     private static final Logger logger = Logger.getLogger(UserDAO.class.getName());
 
-    // Buffer per la modalità RAM
+    /*Injection del Provider*/
+    private final ConnectionProvider cp;
+
+    /*Buffer per la modalità RAM*/
     private final List<User> userList = new ArrayList<>();
 
+    public UserDAO(ConnectionProvider cp) {
+        this.cp = cp;
+    }
 
-    // Salva un nuovo utente
+    /*Salva un nuovo utente*/
     public void saveUser(User user) throws AccountAlreadyExistsException {
         if (Session.getInstance().isRam()) {
             if (getUserByUsername(user.getUsername()) != null) {
                 throw new AccountAlreadyExistsException("User già esistente con username: " + user.getUsername());
             }
             userList.add(user);
-            //trasformare in nutrionist
-            //Session.getInstance().getNutritionistDAO().saveNutritionistRam(nutritionist);
         } else if (Session.getInstance().isDB()) {
             saveUserToDB(user);
         }
     }
 
-    // Carica un utente per username
+    /*Carica un utente per username*/
     public User getUserByUsername(String username) {
         if (Session.getInstance().isRam()) {
             for (User user : userList) {
@@ -56,7 +60,7 @@ public class UserDAO {
         return null;
     }
 
-    // Check login
+    /*Check login*/
     public User checkLogin(String username, String password) {
         if (Session.getInstance().isRam()) {
             for (User user : userList) {
@@ -66,12 +70,13 @@ public class UserDAO {
             }
             return null;
         } else if (Session.getInstance().isDB()) {
-            try (Connection conn = DBManager.getInstance().getConnection();
+            try (Connection conn = cp.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(QueryUser.SELECT_BY_USERNAME)) {
                 stmt.setString(1, username);
-                ResultSet rs = stmt.executeQuery();
-                if (rs.next() && rs.getString("password").equals(password)) {
-                    return loadUserFromDB(username);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next() && rs.getString("password").equals(password)) {
+                        return loadUserFromDB(username); // carico l'entity completa
+                    }
                 }
             } catch (SQLException e) {
                 logger.log(Level.SEVERE, "Errore durante il login", e);
@@ -81,7 +86,7 @@ public class UserDAO {
         return null;
     }
 
-    // Update user
+    /*Update user (RAM)*/
     public void updateUserModelData(User user) {
         if (Session.getInstance().isRam()) {
             for (int i = 0; i < userList.size(); i++) {
@@ -92,7 +97,7 @@ public class UserDAO {
             }
             userList.add(user);
         } else if (Session.getInstance().isDB()) {
-            // Da implementare in caso di necessità
+            /*Da implementare in caso di necessità*/
         }
     }
 
@@ -106,8 +111,12 @@ public class UserDAO {
         if (loadUserFromDB(user.getUsername()) != null) {
             throw new AccountAlreadyExistsException("Account già esistente con lo username: " + user.getUsername());
         }
-        try (Connection conn = DBManager.getInstance().getConnection()) {
+
+        Connection conn = null;
+        try {
+            conn = cp.getConnection();
             conn.setAutoCommit(false);
+
             try (PreparedStatement stmt = conn.prepareStatement(QueryUser.INSERT_USER)) {
                 stmt.setString(1, user.getUsername());
                 stmt.setString(2, user.getPassword());
@@ -137,31 +146,44 @@ public class UserDAO {
                     stmt.executeUpdate();
                 }
             }
+
             conn.commit();
         } catch (SQLException e) {
+            if (conn != null) {
+                try { conn.rollback(); } catch (SQLException ex) {
+                    logger.log(Level.SEVERE, "Rollback fallito", ex);
+                }
+            }
             logger.log(Level.SEVERE, "Errore nel salvataggio dell'utente nel database", e);
+        } finally {
+            if (conn != null) {
+                try { conn.close(); } catch (SQLException e) {
+                    logger.log(Level.WARNING, "Chiusura connessione fallita", e);
+                }
+            }
         }
     }
 
     private User loadUserFromDB(String username) {
-        try (Connection conn = DBManager.getInstance().getConnection();
+        try (Connection conn = cp.getConnection();
              PreparedStatement stmt = conn.prepareStatement(QueryUser.SELECT_BY_USERNAME)) {
             stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                Role role = Role.valueOf(rs.getString("ruolo"));
-                String name = rs.getString("nome");
-                String surname = rs.getString("cognome");
-                String email = rs.getString("email");
-                String phone = rs.getString("n_telefono");
-                String password = rs.getString("password");
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Role role = Role.valueOf(rs.getString("ruolo"));
+                    String name = rs.getString("nome");
+                    String surname = rs.getString("cognome");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("n_telefono");
+                    String password = rs.getString("password");
 
-                if (role == Role.PATIENT) {
-                    return loadPatient(conn, username, name, surname, email, phone, password);
-                } else if (role == Role.NUTRITIONIST) {
-                    return loadNutritionist(conn, username, name, surname, email, phone, password);
-                } else {
-                    return new User(username, password, name, surname, email, phone, role);
+                    if (role == Role.PATIENT) {
+                        return loadPatient(conn, username, name, surname, email, phone, password);
+                    } else if (role == Role.NUTRITIONIST) {
+                        return loadNutritionist(conn, username, name, surname, email, phone, password);
+                    } else {
+                        return new User(username, password, name, surname, email, phone, role);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -174,10 +196,11 @@ public class UserDAO {
                                 String email, String phone, String password) throws SQLException {
         try (PreparedStatement stmt = conn.prepareStatement(QueryPatient.SELECT_PATIENT)) {
             stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return new Patient(username, password, name, surname, email, phone, Role.PATIENT,
-                        rs.getDate("data_nascita").toLocalDate(), rs.getString("genere"));
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Patient(username, password, name, surname, email, phone, Role.PATIENT,
+                            rs.getDate("data_nascita").toLocalDate(), rs.getString("genere"));
+                }
             }
         }
         return null;
@@ -187,12 +210,13 @@ public class UserDAO {
                                           String email, String phone, String password) throws SQLException {
         try (PreparedStatement stmt = conn.prepareStatement(QueryNutrtionist.SELECT_NUTRITIONIST)) {
             stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                int addressId = rs.getInt("indirizzo_studio");
-                Address address = loadAddress(conn, addressId);
-                return new Nutritionist(username, password, name, surname, email, phone, Role.NUTRITIONIST,
-                        rs.getString("piva"), rs.getString("titolo_studio"), rs.getString("specializzazione"), address);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int addressId = rs.getInt("indirizzo_studio");
+                    Address address = loadAddress(conn, addressId);
+                    return new Nutritionist(username, password, name, surname, email, phone, Role.NUTRITIONIST,
+                            rs.getString("piva"), rs.getString("titolo_studio"), rs.getString("specializzazione"), address);
+                }
             }
         }
         return null;
@@ -201,14 +225,16 @@ public class UserDAO {
     private Address loadAddress(Connection conn, int addressId) throws SQLException {
         try (PreparedStatement stmt = conn.prepareStatement(QueryAddress.SELECT_ADDRESS)) {
             stmt.setInt(1, addressId);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return new Address(rs.getString("via"), rs.getString("civico"), rs.getString("cap"),
-                        rs.getString("citta"), rs.getString("provincia"), rs.getString("regione"));
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Address(rs.getString("via"), rs.getString("civico"), rs.getString("cap"),
+                            rs.getString("citta"), rs.getString("provincia"), rs.getString("regione"));
+                }
             }
         }
         return null;
     }
+
 
     private int insertAddress(Connection conn, Address address) throws SQLException {
         try (PreparedStatement stmt = conn.prepareStatement(QueryAddress.INSERT_ADDRESS, Statement.RETURN_GENERATED_KEYS)) {
@@ -219,11 +245,12 @@ public class UserDAO {
             stmt.setString(5, address.getProvincia());
             stmt.setString(6, address.getRegione());
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) {
-                return rs.getInt(1);
-            } else {
-                throw new SQLException("Errore nel recupero dell'ID dell'indirizzo");
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                } else {
+                    throw new SQLException("Errore nel recupero dell'ID dell'indirizzo");
+                }
             }
         }
     }

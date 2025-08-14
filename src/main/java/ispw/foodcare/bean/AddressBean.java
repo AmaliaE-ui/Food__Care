@@ -9,7 +9,7 @@ public class AddressBean {
     private String provincia;
     private String regione;
 
-    public AddressBean() {}
+    public AddressBean() { /* Costruttore vuoto */ }
 
     public String getVia() { return via; }
     public void setVia(String via) {

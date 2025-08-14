@@ -7,10 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class NutritionistValidationTest {
+class NutritionistValidationTest {
 
-        @Test
-        public void testValidNutritionist() {
+        @Test void testValidNutritionist() {
             NutritionistBean bean = new NutritionistBean();
             bean.setName("Laura");
             bean.setSurname("Bianchi");
@@ -34,8 +33,7 @@ public class NutritionistValidationTest {
             assertNull(result); // validazione superata
         }
 
-        @Test
-        public void testMissingSpecializzazione() {
+        @Test void testMissingSpecializzazione() {
             NutritionistBean bean = new NutritionistBean();
             bean.setName("Laura");
             bean.setSurname("Bianchi");
@@ -59,8 +57,7 @@ public class NutritionistValidationTest {
             assertEquals("La specializzazione è obbligatoria.", result);
         }
 
-        @Test
-        public void testInvalidPhoneNumber() {
+        @Test void testInvalidPhoneNumber() {
             NutritionistBean bean = new NutritionistBean();
             bean.setName("Laura");
             bean.setSurname("Bianchi");
@@ -84,8 +81,7 @@ public class NutritionistValidationTest {
             assertEquals("Numero di telefono non valido.", result);
         }
 
-        @Test
-        public void testMissingAddressField() {
+        @Test void testMissingAddressField() {
             NutritionistBean bean = new NutritionistBean();
             bean.setName("Laura");
             bean.setSurname("Bianchi");

@@ -10,14 +10,14 @@ public class LoginController {
 
     private final UserDAO userDAO;
 
-    /* Constructor injection (preferito)*/
+    /* Constructor injection*/
     public LoginController(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
     /**/
     public LoginController() {
-        var s = ispw.foodcare.model.Session.getInstance();
+        var s = Session.getInstance();
         this.userDAO = s.getUserDAO();
     }
 

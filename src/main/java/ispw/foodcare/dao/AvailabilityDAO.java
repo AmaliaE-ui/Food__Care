@@ -3,7 +3,6 @@ package ispw.foodcare.dao;
 import ispw.foodcare.model.Availability;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.query.QueryAvailability;
-
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,6 +12,13 @@ import java.util.logging.Logger;
 public class AvailabilityDAO {
 
     private static final Logger logger = Logger.getLogger(AvailabilityDAO.class.getName());
+
+    /*injection*/
+    private final ConnectionProvider cp;
+
+    public AvailabilityDAO(ConnectionProvider cp) {
+        this.cp = cp;
+    }
 
     // --------------------------
     // PUBLIC API
@@ -74,7 +80,7 @@ public class AvailabilityDAO {
     // DB MODE
     // --------------------------
     private void addAvailabilityDB(Availability availability) {
-        try (Connection conn = DBManager.getInstance().getConnection();
+        try (Connection conn = cp.getConnection();
              PreparedStatement stmt = conn.prepareStatement(QueryAvailability.INSERT_AVAILABILITY)) {
             stmt.setString(1, availability.getNutritionistUsername());
             stmt.setDate(2, Date.valueOf(availability.getDate()));
@@ -88,18 +94,18 @@ public class AvailabilityDAO {
 
     private List<Availability> getAvailabilitiesDB(String nutritionistUsername) {
         List<Availability> list = new ArrayList<>();
-        try (Connection conn = DBManager.getInstance().getConnection();
+        try (Connection conn = cp.getConnection();
              PreparedStatement stmt = conn.prepareStatement(QueryAvailability.SELECT_AVAILABILITIES_FOR_NUTRITIONIST)) {
             stmt.setString(1, nutritionistUsername);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                Availability availability = new Availability();
-                availability.setDate(rs.getDate("data").toLocalDate());
-                availability.setStartTime(rs.getTime("ora_inizio").toLocalTime());
-                availability.setEndTime(rs.getTime("ora_fine").toLocalTime());
-                availability.setNutritionistUsername(nutritionistUsername);
-                list.add(availability);
-
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Availability availability = new Availability();
+                    availability.setDate(rs.getDate("data").toLocalDate());
+                    availability.setStartTime(rs.getTime("ora_inizio").toLocalTime());
+                    availability.setEndTime(rs.getTime("ora_fine").toLocalTime());
+                    availability.setNutritionistUsername(nutritionistUsername);
+                    list.add(availability);
+                }
             }
         } catch (SQLException e) {
             logger.severe("Errore recupero disponibilità da DB: " + e.getMessage());
@@ -108,7 +114,7 @@ public class AvailabilityDAO {
     }
 
     private void deleteAvailabilityDB(Availability availability) {
-        try (Connection conn = DBManager.getInstance().getConnection();
+        try (Connection conn = cp.getConnection();
              PreparedStatement stmt = conn.prepareStatement(QueryAvailability.DELETE_AVAILABILITY)) {
             stmt.setString(1, availability.getNutritionistUsername());
             stmt.setDate(2, Date.valueOf(availability.getDate()));
@@ -120,19 +126,14 @@ public class AvailabilityDAO {
         }
     }
 
-    public void deleteAvailabilitybydata(LocalDate oggi) {
-
-        try (Connection conn = DBManager.getInstance().getConnection();
+    public void deleteAvailabilitybydata(LocalDate cutoffDate) {
+        try (Connection conn = cp.getConnection();
              PreparedStatement stmt = conn.prepareStatement(QueryAvailability.DELETE_AVAILABILITY_BY_DATE)) {
-
-            LocalDate cutoffDate = LocalDate.now(); // oppure una data che scegli
-            stmt.setDate(1, java.sql.Date.valueOf(cutoffDate)); // imposta il parametro nella query
-
+            stmt.setDate(1, java.sql.Date.valueOf(cutoffDate));
             int deleted = stmt.executeUpdate();
             System.out.println("Righe eliminate: " + deleted);
-
         } catch (SQLException e) {
             e.printStackTrace();
+        }
     }
-}
 }

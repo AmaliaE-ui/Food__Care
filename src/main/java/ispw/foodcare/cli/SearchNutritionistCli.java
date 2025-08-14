@@ -4,7 +4,6 @@ import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
 import ispw.foodcare.exeption.AccountAlreadyExistsException;
-
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;

@@ -12,7 +12,6 @@ import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.Converter;
 import ispw.foodcare.bean.AvailabilityBean;
 import ispw.foodcare.model.Availability;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;

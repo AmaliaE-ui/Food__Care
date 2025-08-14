@@ -1,7 +1,7 @@
 package ispw.foodcare.query;
 
 public class QueryAppointment {
-    private QueryAppointment() {};
+    private QueryAppointment() {}
 
     public static final String INSERT_APPOINTMENT = "INSERT INTO appointment (patient_username, nutritionist_username, date, " +
             "time, status, notes, viewed_by_nutritionist) VALUES (?,?,?,?,?,?,?)";

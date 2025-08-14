@@ -39,5 +39,5 @@ public class Appointment {
     public AppointmentStatus getStatus() {return status;}
     public void setStatus(AppointmentStatus status) {this.status = status;}
 
-    public void setPatientName(String patientName) {this.patientName = patientName;};
+    public void setPatientName(String patientName) {this.patientName = patientName;}
 }

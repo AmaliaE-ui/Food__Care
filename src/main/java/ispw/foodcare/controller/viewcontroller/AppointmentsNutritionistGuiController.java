@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 

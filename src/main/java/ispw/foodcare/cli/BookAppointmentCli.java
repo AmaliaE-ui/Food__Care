@@ -4,7 +4,6 @@ import ispw.foodcare.bean.AppointmentBean;
 import ispw.foodcare.bean.AvailabilityBean;
 import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;

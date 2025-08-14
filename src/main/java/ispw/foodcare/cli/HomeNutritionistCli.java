@@ -4,7 +4,6 @@ import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.AppointmentController;
 import ispw.foodcare.exeption.AccountAlreadyExistsException;
 import ispw.foodcare.model.Session;
-
 import java.util.Scanner;
 
 public class HomeNutritionistCli {

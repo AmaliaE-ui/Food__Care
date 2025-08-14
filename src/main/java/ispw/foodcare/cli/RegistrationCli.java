@@ -5,8 +5,6 @@ import ispw.foodcare.Role;
 import ispw.foodcare.bean.*;
 import ispw.foodcare.controller.applicationcontroller.RegistrationController;
 import ispw.foodcare.exeption.AccountAlreadyExistsException;
-
-
 import java.time.LocalDate;
 import java.util.Scanner;
 

@@ -17,7 +17,13 @@ public class NutritionistDAO {
 
     private static final Logger logger = Logger.getLogger(NutritionistDAO.class.getName());
 
-    // Public interface for controller applicativi
+    private final ConnectionProvider cp;
+
+    public NutritionistDAO(ConnectionProvider cp) {
+        this.cp = cp;
+    }
+
+    /*Public interface for controller applicativi*/
     public List<Nutritionist> getByCity(String city) {
         if (Session.getInstance().isRam()) {
             return getByCityRam(city);
@@ -52,32 +58,31 @@ public class NutritionistDAO {
     private List<Nutritionist> getByCityDB(String city) {
         List<Nutritionist> nutritionists = new ArrayList<>();
 
-        try (Connection conn = DBManager.getInstance().getConnection();
+        try (Connection conn = cp.getConnection();
              PreparedStatement stmt = conn.prepareStatement(QueryNutrtionist.SELECT_BY_CITY)) {
 
             stmt.setString(1, city);
-            ResultSet rs = stmt.executeQuery();
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String username = rs.getString("username");
+                    String name = rs.getString("nome");
+                    String surname = rs.getString("cognome");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("n_telefono");
+                    String password = rs.getString("password");
+                    String piva = rs.getString("piva");
+                    String titoloStudio = rs.getString("titolo_studio");
+                    String specializzazione = rs.getString("specializzazione");
+                    int addressId = rs.getInt("indirizzo_studio");
 
-            while (rs.next()) {
-                String username = rs.getString("username");
-                String name = rs.getString("nome");
-                String surname = rs.getString("cognome");
-                String email = rs.getString("email");
-                String phone = rs.getString("n_telefono");
-                String password = rs.getString("password");
-                String piva = rs.getString("piva");
-                String titoloStudio = rs.getString("titolo_studio");
-                String specializzazione = rs.getString("specializzazione");
-                int addressId = rs.getInt("indirizzo_studio");
+                    Address address = loadAddress(conn, addressId);
 
-                Address address = loadAddress(conn, addressId);
-
-                nutritionists.add(new Nutritionist(
-                        username, password, name, surname, email, phone,
-                        Role.NUTRITIONIST, piva, titoloStudio, specializzazione, address
-                ));
+                    nutritionists.add(new Nutritionist(
+                            username, password, name, surname, email, phone,
+                            Role.NUTRITIONIST, piva, titoloStudio, specializzazione, address
+                    ));
+                }
             }
-
         } catch (SQLException e) {
             logger.severe("Errore nel recupero dei nutritionist da DB: " + e.getMessage());
         }
@@ -88,16 +93,17 @@ public class NutritionistDAO {
     private Address loadAddress(Connection conn, int id) throws SQLException {
         try (PreparedStatement stmt = conn.prepareStatement(QueryAddress.SELECT_ADDRESS)) {
             stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return new Address(
-                        rs.getString("via"),
-                        rs.getString("civico"),
-                        rs.getString("cap"),
-                        rs.getString("citta"),
-                        rs.getString("provincia"),
-                        rs.getString("regione")
-                );
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Address(
+                            rs.getString("via"),
+                            rs.getString("civico"),
+                            rs.getString("cap"),
+                            rs.getString("citta"),
+                            rs.getString("provincia"),
+                            rs.getString("regione")
+                    );
+                }
             }
         }
         return null;

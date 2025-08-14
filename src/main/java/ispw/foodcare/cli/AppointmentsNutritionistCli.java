@@ -4,7 +4,6 @@ package ispw.foodcare.cli;
 import ispw.foodcare.bean.AppointmentBean;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.AppointmentController;
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
