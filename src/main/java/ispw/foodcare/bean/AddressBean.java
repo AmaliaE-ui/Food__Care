@@ -13,67 +13,79 @@ public class AddressBean {
 
     public String getVia() { return via; }
     public void setVia(String via) {
-        /*Metodo trim() non tocca la stringa, ma elimina gli spazi vuoti all'inizio e alla fine*/
-        if (via == null || via.trim().isEmpty()) {
-            throw new IllegalArgumentException("La via non può essere vuota.");
-        }
-        // Controllo che sia composta solo da lettere e spazi
-        for (char c : via.toCharArray()) {
-            if (!Character.isLetter(c) && !Character.isSpaceChar(c)) {
-                throw new IllegalArgumentException("La via può contenere solo lettere e spazi.");
+        String v = nonBlank(via, "La via non può essere vuota.");
+        // Consenti lettere, cifre, spazio, apostrofo, punto, virgola, trattino
+        for (int i = 0; i < v.length(); i++) {
+            char c = v.charAt(i);
+            if (!Character.isLetter(c) && !Character.isDigit(c) &&
+                    c != ' ' && c != '\'' && c != '’' && c != '.' && c != ',' && c != '-') {
+                throw new IllegalArgumentException("La via contiene caratteri non ammessi.");
             }
         }
-        this.via = via.trim();
+        this.via = v;
     }
 
     public String getCivico() { return civico; }
     public void setCivico(String civico) {
-        if (civico == null || civico.trim().isEmpty()) {
-            throw new IllegalArgumentException("Il numero civico non può essere vuoto.");
-        }
-        // Deve essere solo numeri
-        for (char c : civico.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                throw new IllegalArgumentException("Il numero civico deve contenere solo cifre.");
-            }
-        }
-        this.civico = civico.trim();
+        String v = nonBlank(civico, "Il numero civico non può essere vuoto.");
+        this.civico = v;
     }
+
 
     public String getCap() { return cap; }
     public void setCap(String cap) {
-        if (cap == null || cap.length() != 5) {
-            throw new IllegalArgumentException("Inserimento errato - Il CAP deve essere lungo 5 cifre.");
-        }
-        for (char c : cap.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                throw new IllegalArgumentException("Inserimento errato - Il CAP deve contenere solo numeri.");
+        String v = nonBlank(cap, "Il CAP non può essere vuoto.");
+        if (v.length() != 5) throw new IllegalArgumentException("Il CAP deve avere 5 cifre.");
+        for (int i = 0; i < v.length(); i++) {
+            if (!Character.isDigit(v.charAt(i))) {
+                throw new IllegalArgumentException("Il CAP deve contenere solo cifre.");
             }
         }
-        this.cap = cap.trim();
+        this.cap = v;
     }
 
     public String getCitta() { return citta; }
     public void setCitta(String citta) {
-        this.citta = citta;
+        String v = nonBlank(citta, "La città non può essere vuota.");
+        for (int i = 0; i < v.length(); i++) {
+            char c = v.charAt(i);
+            if (!Character.isLetter(c) && c != ' ' && c != '\'' && c != '’' && c != '-') {
+                throw new IllegalArgumentException("La città contiene caratteri non ammessi.");
+            }
+        }
+        this.citta = v;
     }
 
     public String getProvincia() { return provincia; }
     public void setProvincia(String provincia) {
-        if (provincia == null || provincia.length() != 2) {
-            throw new IllegalArgumentException("Inserimento errato - La provincia deve contenere esattamente 2 caratteri.");
+        String v = nonBlank(provincia, "La provincia non può essere vuota.").toUpperCase();
+        if (v.length() != 2 || !isAsciiLetter(v.charAt(0)) || !isAsciiLetter(v.charAt(1))) {
+            throw new IllegalArgumentException("La provincia deve contenere esattamente 2 lettere.");
         }
-        // Deve essere solo lettere
-        for (char c : provincia.toCharArray()) {
-            if (!Character.isLetter(c)) {
-                throw new IllegalArgumentException("Inserimento errato - La provincia deve contenere solo lettere.");
-            }
-        }
-        this.provincia = provincia.toUpperCase();
+        this.provincia = v;
+    }
+
+    private boolean isAsciiLetter(char c){
+        return (c >= 'A' && c <= 'Z');
     }
 
     public String getRegione() { return regione; }
     public void setRegione(String regione) {
-        this.regione = regione;
+        String v = nonBlank(regione, "La regione non può essere vuota.");
+        for (int i = 0; i < v.length(); i++) {
+            char c = v.charAt(i);
+            if (!Character.isLetter(c) && c != ' ' && c != '\'' && c != '’' && c != '-') {
+                throw new IllegalArgumentException("La regione contiene caratteri non ammessi.");
+            }
+        }
+        this.regione = v;
+    }
+
+    /*Metodo di supporto*/
+    private static String nonBlank(String s, String msg){
+        if (s == null) throw new IllegalArgumentException(msg);
+        String t = s.trim();
+        if (t.isEmpty()) throw new IllegalArgumentException(msg);
+        return t;
     }
 }

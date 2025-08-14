@@ -114,7 +114,7 @@ public class BookAppointmentGuiController {
         appointmentBean.setNutritionistUsername(selectedNutritionist.getUsername());
 
         try{
-            appointmentController.bookAppointment(appointmentBean);
+            appointmentController.bookAppointment(appointmentBean, appointmentBean.getPatientUsername());
             alert.showAlert("Successo", "Appuntamento prenotato correttamente!");
             clearForm();
 

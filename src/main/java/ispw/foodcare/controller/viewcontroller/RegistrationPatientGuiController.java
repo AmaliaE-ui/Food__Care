@@ -3,6 +3,7 @@ package ispw.foodcare.controller.viewcontroller;
 import ispw.foodcare.Role;
 import ispw.foodcare.bean.PatientBean;
 import ispw.foodcare.controller.applicationcontroller.RegistrationController;
+import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,13 @@ import javafx.scene.control.*;
 import java.time.format.DateTimeParseException;
 
 public class RegistrationPatientGuiController {
+
+    private final RegistrationController registrationController;
+
+    public RegistrationPatientGuiController() {
+        var s = Session.getInstance();
+        this.registrationController = new RegistrationController(s.getUserDAO());
+    }
 
     @FXML private TextField nameTextField;
     @FXML private TextField surnameTextField;
@@ -30,6 +38,7 @@ public class RegistrationPatientGuiController {
     @FXML public void onSaveButtonClick(ActionEvent event) {
         try {
             PatientBean bean = new PatientBean();
+
             bean.setName(nameTextField.getText());
             bean.setSurname(surnameTextField.getText());
             bean.setPhoneNumber(phoneTextField.getText());
@@ -50,8 +59,9 @@ public class RegistrationPatientGuiController {
                 return;
             }
 
-            RegistrationController controller = new RegistrationController();
-            boolean success = controller.registrationPatient(bean);
+            /*Invoca Controller Applicativo*/
+            boolean success = this.registrationController.registrationPatient(bean);
+
 
             if(success){
                 errorLabel.setStyle("-fx-text-fill: green");

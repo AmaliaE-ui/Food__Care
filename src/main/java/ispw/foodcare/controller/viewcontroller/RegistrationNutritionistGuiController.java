@@ -4,6 +4,7 @@ import ispw.foodcare.Role;
 import ispw.foodcare.bean.AddressBean;
 import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.controller.applicationcontroller.RegistrationController;
+import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,8 +14,12 @@ import java.util.Map;
 
 public class RegistrationNutritionistGuiController {
 
-    @FXML private void onBackToLoginClick(ActionEvent event) {
-        NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
+    private final RegistrationController registrationController;
+
+    /*Costruttore vuoto, utilr per FXML*/
+    public RegistrationNutritionistGuiController() {
+        var s = Session.getInstance();
+        this.registrationController = new RegistrationController(s.getUserDAO());
     }
 
     @FXML private TextField nameTextField;
@@ -35,9 +40,13 @@ public class RegistrationNutritionistGuiController {
     @FXML private ComboBox<String> specializzazioneComboBox;
     @FXML private Label errorLabel;
 
+    @FXML private void onBackToLoginClick(ActionEvent event) {
+        NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
+    }
+
     public void onSaveButtonClick(ActionEvent event) {
         try {
-            //Costruzione del bean Address
+            /*Costruzione del bean Address*/
             AddressBean address = new AddressBean();
             address.setVia(viaTextField.getText());
             address.setCivico(civicoTextField.getText());
@@ -46,7 +55,7 @@ public class RegistrationNutritionistGuiController {
             address.setProvincia(provinciaTextField.getText());
             address.setRegione(regioneTextField.getText());
 
-            //Costruzione del bean Nutritionist
+            /*Costruzione del bean Nutritionist*/
             NutritionistBean bean = new NutritionistBean();
             bean.setName(nameTextField.getText());
             bean.setSurname(surnameTextField.getText());
@@ -61,7 +70,7 @@ public class RegistrationNutritionistGuiController {
 
             bean.setAddress(address);
 
-            //Validazione
+            /*Validazione*/
             String error = ispw.foodcare.validation.NutritionistValidator.validateNutritionist(bean, address, confirmPasswordTextField.getText());
             if (error != null) {
                 errorLabel.setStyle("-fx-text-fill: red;");
@@ -69,27 +78,40 @@ public class RegistrationNutritionistGuiController {
                 return;
             }
 
-            RegistrationController controller = new RegistrationController();
-            boolean success = controller.registrationNutritionist(bean);
+            /*Invoca Controller Applicativo*/
+            boolean success = this.registrationController.registrationNutritionist(bean);
 
             if(success){
-                errorLabel.setStyle("-fx-text-fill: green");
+                errorLabel.setStyle("-fx-text-fill: green;");
                 errorLabel.setText("Registrazione avvenuta con successo!");
 
-                // Attendi 3 secondi e poi torna al login
-                javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
+                /* Attendi 2 secondi e poi torna al login*/
+                var delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(2));
                 delay.setOnFinished(e -> NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login"));
                 delay.play();
             } else{
-                errorLabel.setStyle("fx-text-fill: red;");
+                errorLabel.setStyle("-fx-text-fill: red;");
                 errorLabel.setText("Errore nella registrazione! Controlla i dati inseriti");
             }
 
-            } catch (Exception e) {
-                errorLabel.setText("-fx-text-fill: red");
-                errorLabel.setText("Errore: " + e.getMessage());
-            }
+        } catch (IllegalArgumentException e) {
+            /*Eccezione dai Bean*/
+            errorLabel.setStyle("-fx-text-fill: red;");
+            errorLabel.setText(e.getMessage());
+        }
+
+        // Se il controller applicativo propagasse eccezioni applicative “note”, gestiscile qui:
+        // } catch (AccountAlreadyExistsException e) {
+        //     errorLabel.setStyle("-fx-text-fill: red;");
+        //     errorLabel.setText("Account già esistente: " + e.getMessage());
+
+        catch (Exception e) {
+            /*Eccezione*/
+            errorLabel.setStyle("-fx-text-fill: red;");
+            errorLabel.setText("Errore inatteso: " + e.getMessage());
+        }
     }
+
 
     private final Map<String, String> descrizioneSpecializzazioni = Map.of(
             "Nutrizione per disturbi alimentari", "Supporto alimentare per chi soffre di anoressia/bulimia/obesità",

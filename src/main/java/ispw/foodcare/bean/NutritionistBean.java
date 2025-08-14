@@ -7,8 +7,7 @@ public class NutritionistBean extends UserBean {
         private String specializzazione;
         private AddressBean address;
 
-        // Costruttore vuoto
-        public NutritionistBean() {}
+        public NutritionistBean() { /* Costruttore vuoto */ }
 
         // Getter e Setter
         public AddressBean getAddress() {return address;}

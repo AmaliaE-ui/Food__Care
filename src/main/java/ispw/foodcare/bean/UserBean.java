@@ -12,8 +12,7 @@ public class UserBean {
     private String password;
     private Role role;
 
-    // Costruttore vuoto
-    public UserBean() {}
+    public UserBean() { /* Costruttore vuoto */ }
 
     public String getName() { return name; }
     public void setName(String name) {

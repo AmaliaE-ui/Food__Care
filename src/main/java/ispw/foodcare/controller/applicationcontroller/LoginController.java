@@ -5,36 +5,29 @@ import ispw.foodcare.dao.UserDAO;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.model.User;
 import ispw.foodcare.utils.Converter;
-import ispw.foodcare.utils.ShowAlert;
-
-import java.util.logging.Logger;
 
 public class LoginController {
 
-    private static final LoginController instance = new LoginController();
-    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
-    /*Prendo il DAO inizializzato in Main*/
-    private static final UserDAO userDAO = Session.getInstance().getUserDAO();
+    private final UserDAO userDAO;
 
-    private LoginController() {
+    /* Constructor injection (preferito)*/
+    public LoginController(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
-    public static LoginController getInstance() {
-        return instance;
+    /**/
+    public LoginController() {
+        var s = ispw.foodcare.model.Session.getInstance();
+        this.userDAO = s.getUserDAO();
     }
 
-    /*Autenticazione utente con username/password
-     *Ritorno un UserBean se le credenziali sono valide, altrimenti null*/
+    /*Autenticazione utente. Se le credenziali sono errate ritorna null*/
     public UserBean authenticateUser(String username, String password) {
-        try {
-            User user = userDAO.checkLogin(username, password);
-            if (user == null) { /*Nessun utente trovato*/
-                return null;
-            }
-            return Converter.userToBean(user);
-        } catch (Exception e) {
-            logger.severe("Login fallito: " + e.getMessage());
-            return null;
+        if (username == null || username.isBlank() || password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Username e password sono obbligatori.");
         }
+
+        User user = userDAO.checkLogin(username, password); // il DAO fa il check credenziali
+        return (user == null) ? null : Converter.userToBean(user);
     }
 }

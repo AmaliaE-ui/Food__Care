@@ -15,7 +15,17 @@ import java.util.logging.Logger;
 public class RegistrationController {
 
     private static final Logger logger = Logger.getLogger(RegistrationController.class.getName());
-    private static final UserDAO userDAO = Session.getInstance().getUserDAO();
+    private final UserDAO userDAO;
+
+    /*Costruttore*/
+    public RegistrationController(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    public RegistrationController() {
+        var s = Session.getInstance();
+        this.userDAO = s.getUserDAO();
+    }
 
     //Registra nutrizionista
     public boolean registrationNutritionist(NutritionistBean bean) {
@@ -26,24 +36,18 @@ public class RegistrationController {
         } catch (AccountAlreadyExistsException e) {
             logger.info("Utente già esistente (" + bean.getUsername() + ")");
             return false;
-        } catch (Exception e) {
-            logger.severe("Errore in registrationNutritionist: " + e.getMessage());
-            return false;
         }
     }
 
     //Registra paziente
-    public boolean registrationPatient(PatientBean bean) {
-        try {
-            Patient patient = Converter.beanToPatient(bean);
-            userDAO.saveUser(patient);
-            return true;
-        } catch (AccountAlreadyExistsException e) {
-            logger.info("Utente già esistente (" + bean.getUsername() + ")");
-            return false;
-        } catch (Exception e) {
-            logger.severe("Errore in registrationPatient: " + e.getMessage());
-            return false;
-        }
+    public boolean registrationPatient(PatientBean bean){
+            try {
+                Patient patient = Converter.beanToPatient(bean);
+                userDAO.saveUser(patient);
+                return true;
+            } catch (AccountAlreadyExistsException e) {
+                logger.info("Utente già esistente (" + bean.getUsername() + ")");
+                return false;
+            }
     }
 }

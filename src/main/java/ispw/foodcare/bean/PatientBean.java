@@ -1,14 +1,14 @@
 package ispw.foodcare.bean;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class PatientBean extends UserBean {
 
     private LocalDate birthDate;
     private String gender;
 
-    // Costruttore vuoto
-    public PatientBean() {}
+    public PatientBean() { /* Costruttore vuoto */ }
 
     // Getter e Setter
     public LocalDate getBirthDate() { return birthDate; }

@@ -15,7 +15,7 @@ public class AppointmentBean {
     private String patientSurname;
     private AppointmentStatus status;
 
-    public AppointmentBean() {}
+    public AppointmentBean() { /* Costruttore vuoto */ }
 
     public LocalDate getDate() { return date; }
     public void setDate(LocalDate date) {

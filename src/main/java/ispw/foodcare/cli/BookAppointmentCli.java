@@ -74,7 +74,7 @@ public class BookAppointmentCli {
             appointment.setNutritionistUsername(nutritionist.getUsername());
 
             try {
-                controller.bookAppointment(appointment);
+                controller.bookAppointment(appointment, appointment.getPatientUsername());
                 System.out.println("✅ Appuntamento prenotato correttamente!");
             } catch (RuntimeException e) {
                 System.out.println("❌ Errore durante la prenotazione: " + e.getMessage());

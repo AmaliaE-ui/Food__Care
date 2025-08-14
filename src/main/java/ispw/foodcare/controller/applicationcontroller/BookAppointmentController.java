@@ -23,9 +23,25 @@ import java.util.stream.Collectors;
 
 public class BookAppointmentController {
 
-    private final NutritionistDAO nutritionistDAO = Session.getInstance().getNutritionistDAO();
-    private final AppointmentDAO appointmentDAO = Session.getInstance().getAppointmentDAO();
-    private final AvailabilityDAO availabilityDAO = Session.getInstance().getAvailabilityDAO();
+    private final NutritionistDAO nutritionistDAO;
+    private final AppointmentDAO appointmentDAO;
+    private final AvailabilityDAO availabilityDAO;
+
+    /*Costruttore*/
+    public BookAppointmentController(NutritionistDAO nutritionistDAO,
+                                     AppointmentDAO appointmentDAO,
+                                     AvailabilityDAO availabilityDAO) {
+        this.nutritionistDAO = nutritionistDAO;
+        this.appointmentDAO = appointmentDAO;
+        this.availabilityDAO = availabilityDAO;
+    }
+
+    public BookAppointmentController() {
+        var s = Session.getInstance();
+        this.nutritionistDAO = s.getNutritionistDAO();
+        this.appointmentDAO = s.getAppointmentDAO();
+        this.availabilityDAO = s.getAvailabilityDAO();
+    }
 
     /*Ricerca nutizionista per Città*/
     public List<NutritionistBean> searchNutritionistsByCity(String city) {
@@ -36,8 +52,9 @@ public class BookAppointmentController {
     }
 
     /*Prenota appuntamento*/
-    public void bookAppointment(AppointmentBean appointmentBean){
-        String patientUsername = Session.getInstance().getCurrentUser().getUsername();
+    public void bookAppointment(AppointmentBean appointmentBean, String patientUsername){
+        /*String patientUsername = Session.getInstance().getCurrentUser().getUsername(); SE LO TENESSI IL CONTROLLER NON SAREBBE STATELESS
+        *Quindi passo lo username dalla GUI/CLI*/
         Appointment appointment = new Appointment(
                 patientUsername,
                 appointmentBean.getNutritionistUsername(),

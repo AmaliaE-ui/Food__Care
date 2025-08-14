@@ -2,11 +2,23 @@ package ispw.foodcare.controller.applicationcontroller;
 
 import ispw.foodcare.bean.AppointmentBean;
 import ispw.foodcare.dao.AppointmentDAO;
+import ispw.foodcare.model.Session;
+
 import java.util.List;
 
 public class AppointmentController {
 
-    private final AppointmentDAO appointmentDAO = new AppointmentDAO();
+    private final AppointmentDAO appointmentDAO;
+
+    /*Costruttore*/
+    public AppointmentController(AppointmentDAO appointmentDAO) {
+        this.appointmentDAO = appointmentDAO;
+    }
+
+    public AppointmentController (){
+        var s = Session.getInstance();
+        this.appointmentDAO = s.getAppointmentDAO();
+    }
 
     public boolean hasUnviewedAppointmentsForNutritionist(String nutritionistUsername) {
         return appointmentDAO.hasUnviewedAppointmentsForNutritionist(nutritionistUsername);
@@ -17,7 +29,6 @@ public class AppointmentController {
     }
 
     public List<AppointmentBean> getAppointmentsForNutritionist(String nutritionistUsername) {
-        List<AppointmentBean> beans = appointmentDAO.getAppointmentBeansForNutritionistWithPatientName(nutritionistUsername);
-        return beans;
+        return appointmentDAO.getAppointmentBeansForNutritionistWithPatientName(nutritionistUsername);
     }
 }

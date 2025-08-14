@@ -13,8 +13,7 @@ public class AvailabilityBean {
 
     private LocalDate today = LocalDate.now();
 
-    // Costruttore vuoto
-    public AvailabilityBean() {}
+    public AvailabilityBean() { /* Costruttore vuoto */ }
 
 
     // Getter e Setter

@@ -20,25 +20,49 @@ public class LoginGuiController {
     @FXML private TextField usernameTextField;
     @FXML private PasswordField passwordPasswordField;
 
+    /*Iniettiamo il controller applicativo*/
+    private final LoginController loginController;
+
+    /*Costruttore vuoto usato da FXML: prende il DAO dalla Session UNA volta (composition root minimale)*/
+    public LoginGuiController() {
+        var s = Session.getInstance();
+        this.loginController = new LoginController(s.getUserDAO());
+    }
+    /*costruttore per test*/
+    public LoginGuiController(LoginController loginController) {
+        this.loginController = loginController;
+    }
+
     /*Login*/
     @FXML private void onLoginClick(ActionEvent event) {
         String username = usernameTextField.getText();
         String password = passwordPasswordField.getText();
 
-        UserBean userBean = LoginController.getInstance().authenticateUser(username, password);
+        try {
+            UserBean userBean = loginController.authenticateUser(username, password);
 
-        if (userBean != null) {
-            /*Salva nella sessione*/
+            if (userBean == null) {
+                loginMessageLabel.setStyle("-fx-text-fill: red;");
+                loginMessageLabel.setText("Login fallito. Credenziali non valide.");
+                return;
+            }
+
+            /* Salva nella sessione */
             Session.getInstance().setCurrentUser(userBean);
 
-            /*Ottieni path corretto dalla GuiFactory*/
+            /* Home dinamica */
             Role role = userBean.getRole();
             String homePath = ispw.foodcare.utils.factory.GuiFactory.getHomePath(role);
-
-            /*Home dinamica*/
             NavigationManager.switchScene(event, homePath, "FoodCare - Home");
-        } else {
-            loginMessageLabel.setText("Login faillito");
+
+        } catch (IllegalArgumentException e) {
+            /*input vuoti*/
+            loginMessageLabel.setStyle("-fx-text-fill: red;");
+            loginMessageLabel.setText(e.getMessage());
+        } catch (Exception e) {
+            /*errori tecnici imprevisti (IO/DAO...)*/
+            loginMessageLabel.setStyle("-fx-text-fill: red;");
+            loginMessageLabel.setText("Errore durante il login: " + e.getMessage());
         }
     }
 
