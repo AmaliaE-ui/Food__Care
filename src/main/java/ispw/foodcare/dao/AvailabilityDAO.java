@@ -7,6 +7,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AvailabilityDAO {
@@ -131,7 +132,7 @@ public class AvailabilityDAO {
              PreparedStatement stmt = conn.prepareStatement(QueryAvailability.DELETE_AVAILABILITY_BY_DATE)) {
             stmt.setDate(1, java.sql.Date.valueOf(cutoffDate));
             int deleted = stmt.executeUpdate();
-            logger.info("Righe eliminate: " + deleted);
+            logger.log(Level.INFO, () -> "Righe eliminate: " + deleted);
         } catch (SQLException e) {
             e.printStackTrace();
         }

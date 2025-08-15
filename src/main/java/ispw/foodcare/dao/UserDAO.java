@@ -7,7 +7,6 @@ import ispw.foodcare.query.QueryAddress;
 import ispw.foodcare.query.QueryNutrtionist;
 import ispw.foodcare.query.QueryPatient;
 import ispw.foodcare.query.QueryUser;
-
 import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -101,7 +100,7 @@ public class UserDAO {
         }
     }
 
-    public User loadUserData(User user) throws FileNotFoundException {
+    public User loadUserData(User user) {
         return getUserByUsername(user.getUsername());
     }
 
