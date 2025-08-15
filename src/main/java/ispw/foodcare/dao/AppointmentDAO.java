@@ -55,16 +55,6 @@ public class AppointmentDAO {
         appointmentsRam.put(nextId++, appointment);
     }
 
-    private List<LocalTime> getAvailableTimesRam(String nutritionistUsername, LocalDate date) {
-        List<LocalTime> slots = BookAppointmentController.generateFixedSlots();
-        for (Appointment a : appointmentsRam.values()) {
-            if (a.getNutritionistUsername().equals(nutritionistUsername) && a.getDate().equals(date)) {
-                slots.remove(a.getTime());
-            }
-        }
-        return slots;
-    }
-
     // --------------------------
     // DB MODE
     // --------------------------
@@ -96,36 +86,18 @@ public class AppointmentDAO {
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     int generatedId = rs.getInt(1);
-                    logger.info("Appuntamento salvato con ID: " + generatedId);
+                    logger.log(Level.INFO, () -> "Appuntamento salvato con ID: " + generatedId);
                 }
             }
 
         } catch (SQLException e) {
             if ("23000".equals(e.getSQLState())) {
-                throw new RuntimeException("Impossibile prenotare: appuntamento già esistente per questa data e ora.");
+                throw new RuntimeException("Impossibile prenotare: appuntamento già esistente per questa data e ora.", e);
             } else {
-                logger.severe("Errore salvataggio appuntamento su DB: " + e.getMessage());
-                throw new RuntimeException("Errore nel salvataggio dell'appuntamento: " + e.getMessage());
+                logger.log(Level.SEVERE, "Errore salvataggio appuntamento su DB", e);
+                throw new RuntimeException("Errore nel salvataggio dell'appuntamento", e);
             }
         }
-    }
-
-    private List<LocalTime> getAvailableTimesDB(String nutritionistUsername, LocalDate date) {
-        List<LocalTime> slots = BookAppointmentController.generateFixedSlots();
-        try (Connection conn = cp.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryAppointment.SELECT_TIMES_FOR_NUTRITIONIST)) {
-            stmt.setString(1, nutritionistUsername);
-            stmt.setDate(2, Date.valueOf(date));
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    LocalTime time = rs.getTime("orario").toLocalTime();
-                    slots.remove(time);
-                }
-            }
-        } catch (SQLException e) {
-            logger.severe("Errore nel recupero orari disponibili DB: " + e.getMessage());
-        }
-        return slots;
     }
 
     public List<Appointment> getAppointmentsForPatient(String patientUsername) {
@@ -251,8 +223,7 @@ public class AppointmentDAO {
                 }
             }
         } catch (SQLException e) {
-            Logger.getLogger(AppointmentDAO.class.getName()).log(Level.SEVERE,
-                    "Errore ripristino disponibilità: " + e.getMessage(), e);
+            logger.log(Level.SEVERE, "Errore ripristino disponibilità", e);
         }
     }
 
@@ -284,7 +255,6 @@ public class AppointmentDAO {
     public void markAppointmentsAsViewedForNutritionist(String nutritionistUsername) {
         if (Session.getInstance().isRam()) {
             // No-op in RAM
-            return;
         } else if (Session.getInstance().isDB()) {
             try (Connection conn = cp.getConnection();
                  PreparedStatement stmt =

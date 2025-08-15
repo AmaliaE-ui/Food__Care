@@ -10,11 +10,6 @@ import javafx.scene.layout.AnchorPane;
 
 public class HomePatientGuiController extends BaseGuiController {
 
-    @FXML private Button personalAreaButton;
-    @FXML private Button appointmentButton;
-    @FXML private Button historyButton;
-    @FXML private Button logoutButton;
-    @FXML private Button homeButton;
     @FXML private AnchorPane contentArea;
 
     @FXML public void initialize() {

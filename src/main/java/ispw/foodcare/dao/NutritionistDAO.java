@@ -6,12 +6,10 @@ import ispw.foodcare.query.QueryAddress;
 import ispw.foodcare.query.QueryNutrtionist;
 import ispw.foodcare.Role;
 import ispw.foodcare.model.Session;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class NutritionistDAO {
 
