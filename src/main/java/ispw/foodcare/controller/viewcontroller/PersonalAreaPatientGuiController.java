@@ -1,10 +1,13 @@
 package ispw.foodcare.controller.viewcontroller;
 
 import ispw.foodcare.bean.UserBean;
+import ispw.foodcare.dao.AppointmentDAO;
 import ispw.foodcare.model.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+
+import java.util.logging.Logger;
 
 public class PersonalAreaPatientGuiController {
 
@@ -13,6 +16,8 @@ public class PersonalAreaPatientGuiController {
     @FXML private Label phoneLabel;
     @FXML private Label dobLabel;
     @FXML private TextArea goalsTextArea;
+
+    private static final Logger logger = Logger.getLogger(PersonalAreaPatientGuiController.class.getName());
 
     @FXML public void initialize() {
         UserBean currentUser = Session.getInstance().getCurrentUser();
@@ -28,10 +33,10 @@ public class PersonalAreaPatientGuiController {
     }
 
     @FXML private void onEditClick() {
-        System.out.println("Modifica profilo: non implementato");
+        logger.info("Modifica profilo: non implementato");
     }
 
     @FXML private void onDeleteClick() {
-        System.out.println("Elimina account: non implementato");
+        logger.info("Elimina account: non implementato");
     }
 }

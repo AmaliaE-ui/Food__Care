@@ -45,7 +45,7 @@ public class NutritionistDAO {
         return nutritionistList.stream()
                 .filter(n -> n.getAddress() != null &&
                         n.getAddress().getCitta().equalsIgnoreCase(city))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void saveNutritionistRam(Nutritionist nutritionist) {

@@ -51,11 +51,11 @@ public class BookAppointmentController {
     }
 
     /*Prenota appuntamento*/
-    public void bookAppointment(AppointmentBean appointmentBean, String patientUsername){
+    public void bookAppointment(AppointmentBean appointmentBean){
         /*String patientUsername = Session.getInstance().getCurrentUser().getUsername(); SE LO TENESSI IL CONTROLLER NON SAREBBE STATELESS
         *Quindi passo lo username dalla GUI/CLI*/
         Appointment appointment = new Appointment(
-                patientUsername,
+                appointmentBean.getPatientUsername(),
                 appointmentBean.getNutritionistUsername(),
                 appointmentBean.getDate(),
                 appointmentBean.getTime(),

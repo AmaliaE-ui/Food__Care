@@ -1,66 +1,57 @@
 package ispw.foodcare.controller.viewcontroller;
 
-
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
-
 public class HomePatientGuiController extends BaseGuiController {
-
 
     @FXML private Button personalAreaButton;
     @FXML private Button appointmentButton;
     @FXML private Button historyButton;
     @FXML private Button logoutButton;
     @FXML private Button homeButton;
-
-    @FXML private AnchorPane contentArea; // deve esistere nel mio FXML
+    @FXML private AnchorPane contentArea;
 
     @FXML public void initialize() {
-        loadContent("/ispw/foodcare/BookAppointment/searchNutritionist.fxml");
-    }
-
-    private void loadContent(String fxmlPath) {
-        try {
-            javafx.scene.Node newNode = FXMLLoader.load(getClass().getResource(fxmlPath));
-            contentArea.getChildren().setAll(newNode);
-
-            //Assicura il contenuto si addatti a tutto l'AncorePAne
-            AnchorPane.setTopAnchor(newNode, 0.0);
-            AnchorPane.setBottomAnchor(newNode, 0.0);
-            AnchorPane.setLeftAnchor(newNode, 0.0);
-            AnchorPane.setRightAnchor(newNode, 0.0);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Pannello di default
+        NavigationManager.switchPane(
+                "/ispw/foodcare/BookAppointment/searchNutritionist.fxml",
+                contentArea);
     }
 
     @FXML public void onHomeClick(ActionEvent event) {
-        loadContent("/ispw/foodcare/BookAppointment/searchNutritionist.fxml");
+        NavigationManager.switchPane(
+                "/ispw/foodcare/BookAppointment/searchNutritionist.fxml",
+                (Node) event.getSource());
     }
 
     @FXML private void onPersonalAreaClick(ActionEvent event) {
-        //carica dinamicamente solo l'AnchorPane dentro il BorderPane generale che non viene modificato
-        loadContent("/ispw/foodcare/personalAreaPatient.fxml");
+        NavigationManager.switchPane(
+                "/ispw/foodcare/personalAreaPatient.fxml",
+                (Node) event.getSource());
     }
 
     @FXML private void onAppointmentsClick(ActionEvent event) {
-        loadContent("/ispw/foodcare/appointmentsPatient.fxml");
+        NavigationManager.switchPane(
+                "/ispw/foodcare/appointmentsPatient.fxml",
+                (Node) event.getSource());
     }
 
     @FXML private void onHistoryClick(ActionEvent event) {
-        loadContent("/ispw/foodcare/historyPatient.fxml");
+        NavigationManager.switchPane(
+                "/ispw/foodcare/historyPatient.fxml",
+                (Node) event.getSource());
     }
 
     @FXML private void onLogoutClick(ActionEvent event) {
         Session.getInstance().logout();
-        NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
+        NavigationManager.switchScene(event,
+                "/ispw/foodcare/Login/login.fxml",
+                "FoodCare - Login");
     }
 }

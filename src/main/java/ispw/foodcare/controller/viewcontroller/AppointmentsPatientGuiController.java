@@ -8,8 +8,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
-
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 

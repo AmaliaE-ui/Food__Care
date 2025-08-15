@@ -101,14 +101,7 @@ public class RegistrationNutritionistGuiController {
             /*Eccezione dai Bean*/
             errorLabel.setStyle(STYLE_ERROR);
             errorLabel.setText(e.getMessage());
-        }
-
-        // Se il controller applicativo propagasse eccezioni applicative “note”, gestiscile qui:
-        // } catch (AccountAlreadyExistsException e) {
-        //     errorLabel.setStyle("-fx-text-fill: red;");
-        //     errorLabel.setText("Account già esistente: " + e.getMessage());
-
-        catch (Exception e) {
+        } catch (Exception e) {
             /*Eccezione*/
             errorLabel.setStyle(STYLE_ERROR);
             errorLabel.setText("Errore inatteso: " + e.getMessage());

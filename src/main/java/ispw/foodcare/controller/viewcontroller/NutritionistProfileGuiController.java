@@ -21,9 +21,9 @@ public class NutritionistProfileGuiController {
     @FXML private ImageView profileImageView;
     @FXML private WebView mapWebView;
 
-    private ShowAlert alert = new ShowAlert();
+    private final ShowAlert alert = new ShowAlert();
 
-    private static NutritionistBean nutritionistBean;
+    private NutritionistBean nutritionistBean;
 
     @FXML public void setNutritionistBean(NutritionistBean bean) {
         this.nutritionistBean = bean;
@@ -57,16 +57,16 @@ public class NutritionistProfileGuiController {
         profileImageView.setImage(new Image(getClass().getResourceAsStream("/ispw/foodcare/images/nutritionist_generic.png")));
     }
 
-    @FXML private void onBookAppointmentClick(ActionEvent event) {
+    @FXML private void onBookAppointmentClick() {
         NavigationManager.switchPane(
                 "/ispw/foodcare/BookAppointment/bookAppointment.fxml",
-                nameLabel,  /*Nodo dell'interfaccia per accedere alla scena*/
-                nutritionistBean
+                nameLabel,  // un Node qualsiasi nella scena corrente
+                BookAppointmentGuiController.class,
+                c -> c.setNutritionist(nutritionistBean)   // passi il bean al controller
         );
     }
 
-
-    @FXML private void onReviewsClick(ActionEvent event) {
+    @FXML private void onReviewsClick() {
         alert.showAlert("Non implementato","Le recensioni non sono state implementate.");
     }
 

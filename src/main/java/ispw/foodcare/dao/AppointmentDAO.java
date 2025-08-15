@@ -2,7 +2,7 @@ package ispw.foodcare.dao;
 
 import ispw.foodcare.AppointmentStatus;
 import ispw.foodcare.bean.AppointmentBean;
-import ispw.foodcare.controller.applicationcontroller.BookAppointmentController; // TODO: idealmente evitare dipendenza dal controller
+import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
 import ispw.foodcare.model.Appointment;
 import ispw.foodcare.model.Availability;
 import ispw.foodcare.model.Session;
@@ -45,16 +45,6 @@ public class AppointmentDAO {
         }
     }
 
-    public List<LocalTime> getAvailableTimesForNutritionist(String nutritionistUsername, LocalDate date) {
-        if (Session.getInstance().isRam()) {
-            return getAvailableTimesRam(nutritionistUsername, date);
-        } else if (Session.getInstance().isDB()) {
-            return getAvailableTimesDB(nutritionistUsername, date);
-        } else {
-            throw new IllegalStateException("Modalità persistenza non configurata.");
-        }
-    }
-
     // --------------------------
     // RAM MODE
     // --------------------------
@@ -66,7 +56,7 @@ public class AppointmentDAO {
     }
 
     private List<LocalTime> getAvailableTimesRam(String nutritionistUsername, LocalDate date) {
-        List<LocalTime> slots = BookAppointmentController.generateFixedSlots(); // TODO: spostare in util
+        List<LocalTime> slots = BookAppointmentController.generateFixedSlots();
         for (Appointment a : appointmentsRam.values()) {
             if (a.getNutritionistUsername().equals(nutritionistUsername) && a.getDate().equals(date)) {
                 slots.remove(a.getTime());
@@ -121,7 +111,7 @@ public class AppointmentDAO {
     }
 
     private List<LocalTime> getAvailableTimesDB(String nutritionistUsername, LocalDate date) {
-        List<LocalTime> slots = BookAppointmentController.generateFixedSlots(); // TODO: spostare in util
+        List<LocalTime> slots = BookAppointmentController.generateFixedSlots();
         try (Connection conn = cp.getConnection();
              PreparedStatement stmt = conn.prepareStatement(QueryAppointment.SELECT_TIMES_FOR_NUTRITIONIST)) {
             stmt.setString(1, nutritionistUsername);
@@ -206,14 +196,6 @@ public class AppointmentDAO {
         }
     }
 
-    public void deleteAppointment(int appointmentId) throws SQLException {
-        try (Connection conn = cp.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryAppointment.DELETE_APPOINTMENT_BY_ID)) {
-            stmt.setInt(1, appointmentId);
-            stmt.executeUpdate();
-        }
-    }
-
     public List<AppointmentBean> getAppointmentBeansForNutritionistWithPatientName(String nutritionistUsername) {
         // Nota: architetturalmente i DAO dovrebbero restituire Entity, non Bean.
         // Mantengo la firma per compatibilità.
@@ -254,14 +236,15 @@ public class AppointmentDAO {
                 if (rs.next()) {
                     String nutritionistUsername = rs.getString("username_nutrizionista");
                     LocalDate date = rs.getDate("data").toLocalDate();
-                    LocalTime ora_inizio = rs.getTime("ora_inizio").toLocalTime();
-                    LocalTime ora_fine = rs.getTime("ora_fine").toLocalTime();
+                    LocalTime oraInizio = rs.getTime("ora_inizio").toLocalTime();
+                    LocalTime oraFine = rs.getTime("ora_fine").toLocalTime();
+
 
                     Availability availability = new Availability();
                     availability.setNutritionistUsername(nutritionistUsername);
                     availability.setDate(date);
-                    availability.setStartTime(ora_inizio);
-                    availability.setEndTime(ora_fine);
+                    availability.setStartTime(oraInizio);
+                    availability.setEndTime(oraFine);
 
                     AvailabilityDAO availDao = (availabilityDAO != null) ? availabilityDAO : new AvailabilityDAO(cp);
                     availDao.addAvailability(availability);
@@ -272,4 +255,48 @@ public class AppointmentDAO {
                     "Errore ripristino disponibilità: " + e.getMessage(), e);
         }
     }
+
+
+    /*Metodi nuovi - Notifiche nuovi appuntamenti*/
+    public boolean hasUnviewedAppointmentsForNutritionist(String nutritionistUsername) {
+        if (Session.getInstance().isRam()) {
+            // In RAM non gestiamo il flag "is_new": restituisco false.
+            return false;
+        } else if (Session.getInstance().isDB()) {
+            try (Connection conn = cp.getConnection();
+                 PreparedStatement stmt =
+                         conn.prepareStatement(QueryAppointment.HAS_UNVIEWED_APPOINTMENTS_FOR_NUTRITIONIST)) {
+                stmt.setString(1, nutritionistUsername);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt(1) > 0;
+                    }
+                }
+            } catch (SQLException e) {
+                logger.severe("Errore nel controllo appuntamenti non letti: " + e.getMessage());
+            }
+            return false;
+        } else {
+            throw new IllegalStateException("Modalità persistenza non configurata.");
+        }
+    }
+
+    public void markAppointmentsAsViewedForNutritionist(String nutritionistUsername) {
+        if (Session.getInstance().isRam()) {
+            // No-op in RAM
+            return;
+        } else if (Session.getInstance().isDB()) {
+            try (Connection conn = cp.getConnection();
+                 PreparedStatement stmt =
+                         conn.prepareStatement(QueryAppointment.MARK_APPOINTMENTS_VIEWED_FOR_NUTRITIONIST)) {
+                stmt.setString(1, nutritionistUsername);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                logger.severe("Errore aggiornamento is_new: " + e.getMessage());
+            }
+        } else {
+            throw new IllegalStateException("Modalità persistenza non configurata.");
+        }
+    }
+
 }

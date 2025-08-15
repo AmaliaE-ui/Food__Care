@@ -131,7 +131,7 @@ public class AvailabilityDAO {
              PreparedStatement stmt = conn.prepareStatement(QueryAvailability.DELETE_AVAILABILITY_BY_DATE)) {
             stmt.setDate(1, java.sql.Date.valueOf(cutoffDate));
             int deleted = stmt.executeUpdate();
-            System.out.println("Righe eliminate: " + deleted);
+            logger.info("Righe eliminate: " + deleted);
         } catch (SQLException e) {
             e.printStackTrace();
         }

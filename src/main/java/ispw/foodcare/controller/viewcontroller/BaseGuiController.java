@@ -17,7 +17,9 @@ public class BaseGuiController {
     @FXML protected void goHomePage(ActionEvent event) {
         Role role = Session.getInstance().getCurrentRole();
         if (role == null) {
-            NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
+            NavigationManager.switchScene(event,
+                    "/ispw/foodcare/Login/login.fxml",
+                    "FoodCare - Login");
             return;
         }
 
@@ -27,6 +29,8 @@ public class BaseGuiController {
 
         // Pulsante Indietro al login
         @FXML protected void onBackToLoginClick(ActionEvent event) {
-            NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
+            NavigationManager.switchScene(event,
+                    "/ispw/foodcare/Login/login.fxml",
+                    "FoodCare - Login");
         }
 }

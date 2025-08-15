@@ -12,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.util.logging.Logger;
+
 
 public class LoginGuiController {
 
@@ -69,6 +71,8 @@ public class LoginGuiController {
 
     /*Registrazione*/
     @FXML private void onRegistrationClick(ActionEvent event) {
-        NavigationManager.switchScene(event, "/ispw/foodcare/Login/chooseRole.fxml", "Seleziona ruolo");
+        NavigationManager.switchScene(event,
+                "/ispw/foodcare/Login/chooseRole.fxml",
+                "Seleziona ruolo");
     }
 }

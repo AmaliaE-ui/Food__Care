@@ -7,7 +7,6 @@ import ispw.foodcare.utils.NavigationManager;
 import ispw.foodcare.utils.ShowAlert;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -15,8 +14,9 @@ import java.util.List;
 
 public class SearchNutritionistGuiController {
 
-    private String lastSearchResults = "lastSearchResults";
-    private String lastSearchQuery = "lastSearchQuery";
+    // chiavi sessione: costanti
+    private static final String ATTR_LAST_SEARCH_RESULTS = "lastSearchResults";
+    private static final String ATTR_LAST_SEARCH_QUERY   = "lastSearchQuery";
 
     @FXML private TextField searchTextField;
     @FXML private TableView<NutritionistBean> nutritionistTableView;
@@ -24,64 +24,62 @@ public class SearchNutritionistGuiController {
     @FXML private TableColumn<NutritionistBean, String> surnameColumn;
     @FXML private TableColumn<NutritionistBean, String> cityColumn;
     @FXML private TableColumn<NutritionistBean, String> specializationColumn;
-    @FXML private TableColumn<NutritionistBean, Void> profileColumn;
-    private ShowAlert alert;
+    @FXML private TableColumn<NutritionistBean, Void>   profileColumn;
+
+    // evita NPE
+    private final ShowAlert alert = new ShowAlert();
+    // riusa il controller
+    private final BookAppointmentController controller = new BookAppointmentController();
 
     @FXML public void initialize() {
         nutritionistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         profileColumn.setMinWidth(120);
-        //impedisce all'utente di ridimensionare colonna
         profileColumn.setReorderable(false);
-
-        Label placeholderLabel = new Label("Inserisci una città per iniziare la ricerca");
-        nutritionistTableView.setPlaceholder(placeholderLabel);
+        nutritionistTableView.setPlaceholder(new Label("Inserisci una città per iniziare la ricerca"));
 
         setUpColumns();
-        setUpProfileButton();
+        setUpProfileButton();  // usa la cella tipizzata (vedi sotto)
 
-        // Ripristino dei dati precedenti da sessione
-        ObservableList<NutritionistBean> cachedResults =
-                (ObservableList<NutritionistBean>) Session.getInstance().getAttributes(lastSearchResults);
+        // ripristino cache da Session
+        @SuppressWarnings("unchecked")
+        var cachedResults = (javafx.collections.ObservableList<NutritionistBean>)
+                Session.getInstance().getAttributes(ATTR_LAST_SEARCH_RESULTS);
         if (cachedResults != null && !cachedResults.isEmpty()) {
             nutritionistTableView.setItems(cachedResults);
         }
-
-        String previousQuery = (String) Session.getInstance().getAttributes(lastSearchQuery);
-        if (previousQuery != null) {
-            searchTextField.setText(previousQuery);
-        }
+        String previousQuery = (String) Session.getInstance().getAttributes(ATTR_LAST_SEARCH_QUERY);
+        if (previousQuery != null) searchTextField.setText(previousQuery);
     }
 
-    /*Colonne con il corretto binding per visualizzare i dati.*/
     private void setUpColumns() {
-        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        surnameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSurname()));
-        cityColumn.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getAddress() != null
-                        ? cellData.getValue().getAddress().getCitta()
-                        : ""));
-        specializationColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSpecializzazione()));
+        nameColumn.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getName()));
+        surnameColumn.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getSurname()));
+        cityColumn.setCellValueFactory(cd -> new SimpleStringProperty(
+                cd.getValue().getAddress() != null ? cd.getValue().getAddress().getCitta() : ""));
+        specializationColumn.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getSpecializzazione()));
     }
 
-    /*Pulsante "Visualizza profilo" all'interno della tabella.*/
+    /** Pulsante "Visualizza profilo" in colonna – niente initializer di istanza. */
     private void setUpProfileButton() {
-        profileColumn.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Visualizza profilo");
+        profileColumn.setCellFactory(col -> new ProfileButtonCell());
+    }
 
-            {
-                btn.setStyle("-fx-background-color: #87cefa; -fx-text-fill: black; -fx-font-weight: bold;");
-                btn.setOnAction(event -> {
-                    NutritionistBean bean = getTableView().getItems().get(getIndex());
-                    onViewProfileClick(bean);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : btn);
-            }
-        });
+    /** Cella dedicata con costruttore: risolve lo smell. */
+    private final class ProfileButtonCell extends TableCell<NutritionistBean, Void> {
+        private final Button btn = new Button("Visualizza profilo");
+        ProfileButtonCell() {
+            btn.setStyle("-fx-background-color: #87cefa; -fx-text-fill: black; -fx-font-weight: bold;");
+            btn.setOnAction(e -> {
+                NutritionistBean bean = getTableView().getItems().get(getIndex());
+                onViewProfileClick(bean);
+            });
+            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        }
+        @Override
+        protected void updateItem(Void item, boolean empty) {
+            super.updateItem(item, empty);
+            setGraphic(empty ? null : btn);
+        }
     }
 
     @FXML private void onSearchClick() {
@@ -90,32 +88,27 @@ public class SearchNutritionistGuiController {
             alert.showAlert("Campo vuoto", "Inserisci una città per effettuare la ricerca.");
             return;
         }
-
-        BookAppointmentController controller = new BookAppointmentController();
-        List<NutritionistBean> result = controller.searchNutritionistsByCity(city);
-
+        List<NutritionistBean> result = controller.searchNutritionistsByCity(city.trim());
         if (result.isEmpty()) {
             alert.showAlert("Nessun risultato", "Nessun nutrizionista trovato nella città \"" + city + "\".");
             nutritionistTableView.getItems().clear();
-            Session.getInstance().removeAttribute(lastSearchResults);
-            Session.getInstance().removeAttribute(lastSearchQuery);
+            Session.getInstance().removeAttribute(ATTR_LAST_SEARCH_RESULTS);
+            Session.getInstance().removeAttribute(ATTR_LAST_SEARCH_QUERY);
             return;
         }
-
-        ObservableList<NutritionistBean> data = FXCollections.observableArrayList(result);
+        var data = FXCollections.observableArrayList(result);
         nutritionistTableView.setItems(data);
-
-        // Salva in sessione i dati per ripristino al ritorno
-        Session.getInstance().setAttributes(lastSearchResults, data);
-        Session.getInstance().setAttributes(lastSearchQuery, city);
+        Session.getInstance().setAttributes(ATTR_LAST_SEARCH_RESULTS, data);
+        Session.getInstance().setAttributes(ATTR_LAST_SEARCH_QUERY, city.trim());
     }
 
-
-    /*Carica la schermata del profilo nutrizionista.*/
-    private void onViewProfileClick(NutritionistBean bean) {
-        NavigationManager.switchPane("/ispw/foodcare/BookAppointment/nutritionistProfile.fxml",
+    @FXML private void onViewProfileClick(NutritionistBean bean) {
+        NavigationManager.switchPane(
+                "/ispw/foodcare/BookAppointment/nutritionistProfile.fxml",
                 searchTextField,
-                bean
+                NutritionistProfileGuiController.class,
+                c -> c.setNutritionistBean(bean)
         );
     }
 }
+

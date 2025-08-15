@@ -2,10 +2,13 @@ package ispw.foodcare.controller.viewcontroller;
 
 import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.bean.UserBean;
+import ispw.foodcare.dao.AppointmentDAO;
 import ispw.foodcare.model.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+
+import java.util.logging.Logger;
 
 public class PersonalAreaNutritionistGuiController {
 
@@ -15,6 +18,8 @@ public class PersonalAreaNutritionistGuiController {
     @FXML private Label specializationLabel;
     @FXML private TextArea bioTextArea;
 
+    private static final Logger logger = Logger.getLogger(PersonalAreaNutritionistGuiController.class.getName());
+
     @FXML public void initialize() {
         UserBean currentUser = Session.getInstance().getCurrentUser();
 
@@ -23,10 +28,6 @@ public class PersonalAreaNutritionistGuiController {
             emailLabel.setText(nutritionist.getEmail());
             phoneLabel.setText(nutritionist.getPhoneNumber());
             specializationLabel.setText(nutritionist.getSpecializzazione());
-
-            /*bioTextArea.setText("Biografia / Presentazione:\n"
-                    + "Specializzato in " + nutritionist.getSpecializzazione() + ".\n"
-                    + "Qui puoi inserire una breve descrizione del tuo approccio nutrizionale.");*/
         } else {
             nameLabel.setText("N/A");
             emailLabel.setText("N/A");
@@ -37,10 +38,10 @@ public class PersonalAreaNutritionistGuiController {
     }
 
     @FXML private void onEditClick() {
-        System.out.println("Modifica profilo nutrizionista: non implementato");
+        logger.info("Modifica profilo nutrizionista: non implementato");
     }
 
     @FXML private void onDeleteClick() {
-        System.out.println("Elimina account nutrizionista: non implementato");
+        logger.info("Elimina account nutrizionista: non implementato");
     }
 }

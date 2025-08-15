@@ -48,7 +48,7 @@ public class BookAppointmentGuiController {
         calendarView.setRequestedTime(LocalTime.now());
         calendarPane.getChildren().add(calendarView);
 
-        // Listener selezione data e ora cliccando sullo slot
+        /*Listener selezione data e ora cliccando sullo slot*/
         calendarView.setEntryDetailsPopOverContentCallback(param -> {
             Entry<?> entry = param.getEntry();
             if (entry != null) {
@@ -58,7 +58,7 @@ public class BookAppointmentGuiController {
                         selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " alle ore " +
                         selectedTime.format(DateTimeFormatter.ofPattern("HH:mm")));
             }
-            return null; // Usa popover di default
+            return null;
         });
 
         populateCalendarWithAvailability();
@@ -114,7 +114,7 @@ public class BookAppointmentGuiController {
         appointmentBean.setNutritionistUsername(selectedNutritionist.getUsername());
 
         try{
-            appointmentController.bookAppointment(appointmentBean, appointmentBean.getPatientUsername());
+            appointmentController.bookAppointment(appointmentBean);
             alert.showAlert("Successo", "Appuntamento prenotato correttamente!");
             clearForm();
 
@@ -136,8 +136,10 @@ public class BookAppointmentGuiController {
     @FXML private void onBackClick() {
         NavigationManager.switchPane(
                 "/ispw/foodcare/BookAppointment/nutritionistProfile.fxml",
-                calendarPane, // nodo generico
-                selectedNutritionist
+                calendarPane,
+                NutritionistProfileGuiController.class,
+                c -> c.setNutritionistBean(selectedNutritionist)
         );
     }
+
 }

@@ -1,7 +1,6 @@
 package ispw.foodcare;
 
 import ispw.foodcare.cli.InitializeCli;
-import ispw.foodcare.dao.AppointmentDAO;
 import ispw.foodcare.exeption.AccountAlreadyExistsException;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
@@ -13,6 +12,9 @@ import java.util.logging.Logger;
 public class Main extends Application {
 
     private static final Logger logger = Logger.getLogger(Main.class.getName());
+    private static final String PROMPT_USE_CLI            = "Vuoi usare CLI? (s/n): ";
+    private static final String PROMPT_ENABLE_PERSISTENCE = "Vuoi abilitare la persistenza dei dati? (s/n): ";
+    private static final String PROMPT_PERSISTENCE_TYPE   = "Scegli il tipo di persistenza: [1] Database, [2] File System: ";
 
     @Override public void start(Stage stage) {
         NavigationManager.switchScene(stage, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
@@ -26,14 +28,14 @@ public class Main extends Application {
         Session s = Session.getInstance();
 
         /*Scegli tra CLI o FXML*/
-        boolean useCli = askYesNo(scanner, "Vuoi usare cli(s) o fxml(n)? (S/N): ");
+        boolean useCli = askYesNo(scanner, PROMPT_USE_CLI);
 
         /*Scelta persistenza*/
-        boolean enablePersistence = askYesNo(scanner, "Vuoi abilitare la persistenza dei dati? (S/N): ");
+        boolean enablePersistence = askYesNo(scanner, PROMPT_ENABLE_PERSISTENCE);
 
 
         if (enablePersistence) {
-            String type = askChoice(scanner, "Scegli il tipo di persistenza: [1] Database, [2] File System: ", "1", "2");
+            String type = askChoice(scanner);
             if ("1".equals(type)) {
                 s.setDB(true);
                 s.setRam(false);
@@ -71,16 +73,16 @@ public class Main extends Application {
             String in = scanner.nextLine().trim().toLowerCase();
             if (in.equals("s")) return true;
             if (in.equals("n")) return false;
-            logger.info("Inserimento non valido. Inserisci 's' o 'n'.");
+            logger.info("Inserimento non valido. Inserisci s/n");
         }
     }
 
-    private static String askChoice(Scanner scanner, String prompt, String... accepted) {
+    private static String askChoice(Scanner scanner) {
         while (true) {
-            logger.info(prompt);
+            logger.info(PROMPT_PERSISTENCE_TYPE);
             String in = scanner.nextLine().trim().toLowerCase();
-            for (String a : accepted) if (a.equals(in)) return in;
-            logger.info("Inserimento non valido. Opzioni: " + String.join("/", accepted));
+            if (in.equals("1") || in.equals("2")) return in;
+            logger.info("Inserimento non valido. Inserisci 1/2" );
         }
     }
 }

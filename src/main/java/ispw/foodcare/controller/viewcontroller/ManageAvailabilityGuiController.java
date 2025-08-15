@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -41,25 +40,8 @@ public class ManageAvailabilityGuiController {
         availabilityTableView.setItems(availabilityList);
 
         /*Aggiunta colonna 'Elimina'*/
-        actionColumn.setCellFactory(col -> new TableCell<>() {
-            private final Button deleteButton = new Button("Elimina");
-
-            {
-                deleteButton.setOnAction(event -> {
-                    AvailabilityBean availability = getTableView().getItems().get(getIndex());
-                    controller.deleteAvailability(availability);
-                    availabilityList.remove(availability);
-                    alert.showAlert("Eliminato", "Disponibilità rimossa con successo!");
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : deleteButton);
-            }
-        });
-
+        actionColumn.setCellFactory(col ->
+                new DeleteButtonCell(controller, availabilityList, alert));
 
         /*Carica disponibilità già presenti*/
         String username = Session.getInstance().getCurrentUser().getUsername();
@@ -129,5 +111,35 @@ public class ManageAvailabilityGuiController {
         slotsListView.getItems().clear();
         slotsListView.getSelectionModel().clearSelection();
 
+    }
+
+    private static final class DeleteButtonCell extends TableCell<AvailabilityBean, Void> {
+        private final Button deleteButton = new Button("Elimina");
+        private final BookAppointmentController controller;
+        private final ObservableList<AvailabilityBean> availabilityList;
+        private final ShowAlert alert;
+
+        DeleteButtonCell(BookAppointmentController controller,
+                         ObservableList<AvailabilityBean> availabilityList,
+                         ShowAlert alert) {
+            this.controller = controller;
+            this.availabilityList = availabilityList;
+            this.alert = alert;
+
+            deleteButton.setOnAction(e -> {
+                AvailabilityBean availability = getTableView().getItems().get(getIndex());
+                controller.deleteAvailability(availability);
+                availabilityList.remove(availability);
+                alert.showAlert("Eliminato", "Disponibilità rimossa con successo!");
+            });
+
+            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+        }
+
+        @Override
+        protected void updateItem(Void item, boolean empty) {
+            super.updateItem(item, empty);
+            setGraphic(empty ? null : deleteButton);
+        }
     }
 }
