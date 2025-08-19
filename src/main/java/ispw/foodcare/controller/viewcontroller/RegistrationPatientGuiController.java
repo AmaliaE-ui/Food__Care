@@ -68,16 +68,25 @@ public class RegistrationPatientGuiController {
             }
 
         } catch (Exception e) {
-            errorLabel.setStyle("-fx-text-fill: red;");
-            if (e instanceof DateTimeParseException){
-                errorLabel.setText("Formato data non valido. Usa GG/MM/AAAA.");
-            } else {
-                errorLabel.setText("Errore: " + e.getMessage());
-            }
+
+            gestisciEccezione(e);
         }
     }
 
     @FXML private void onBackToLoginClick(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
     }
+
+    private void gestisciEccezione(Exception e){
+        errorLabel.setStyle("-fx-text-fill: red;");
+        if (e instanceof DateTimeParseException){
+            errorLabel.setText("Formato data non valido. Usa GG/MM/AAAA.");
+            System.err.println("Formato data non valido. Usa GG/MM/AAAA.");
+        } else {
+            errorLabel.setText("Errore: " + e.getMessage());
+            System.err.println("Errore: " + e.getMessage());
+        }
+
+    }
+
 }
