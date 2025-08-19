@@ -7,6 +7,11 @@ module ispw.foodcare {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires com.calendarfx.view;
+    requires protobuf.java;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.annotation;
+
 
     opens ispw.foodcare to javafx.fxml;
     opens ispw.foodcare.bean to javafx.fxml, javafx.base;
@@ -14,4 +19,6 @@ module ispw.foodcare {
     exports ispw.foodcare;
     opens ispw.foodcare.dao to javafx.fxml;
     opens ispw.foodcare.controller.viewcontroller to javafx.fxml;
+    opens ispw.foodcare.model to com.fasterxml.jackson.databind;
+
 }

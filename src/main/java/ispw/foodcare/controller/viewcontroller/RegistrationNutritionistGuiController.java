@@ -28,7 +28,6 @@ public class RegistrationNutritionistGuiController {
     @FXML private TextField usernameTextField;
     @FXML private TextField emailTextField;
     @FXML private PasswordField passwordTextField;
-    @FXML private PasswordField confirmPasswordTextField;
     @FXML private TextField pivaTextField;
     @FXML private ChoiceBox<String> titoloStudioChoiceBox;
     @FXML private TextField viaTextField;
@@ -72,14 +71,6 @@ public class RegistrationNutritionistGuiController {
             bean.setSpecializzazione(specializzazioneComboBox.getValue());
 
             bean.setAddress(address);
-
-            /*Validazione*/
-            String error = ispw.foodcare.validation.NutritionistValidator.validateNutritionist(bean, address, confirmPasswordTextField.getText());
-            if (error != null) {
-                errorLabel.setStyle(STYLE_ERROR);
-                errorLabel.setText(error);
-                return;
-            }
 
             /*Invoca Controller Applicativo*/
             boolean success = this.registrationController.registrationNutritionist(bean);
@@ -131,8 +122,7 @@ public class RegistrationNutritionistGuiController {
         specializzazioneComboBox.getItems().addAll(descrizioneSpecializzazioni.keySet());
 
         specializzazioneComboBox.setCellFactory(lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
+            @Override protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if(empty || item == null) {
                     setText(null);

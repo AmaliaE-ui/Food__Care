@@ -1,5 +1,0 @@
-mario,mario,PATIENT,Mario,Rossi,mario.rossi@gmail.com,1234567890
-gio,gio,PATIENT,Giovanni,Rossi,gio@gmail.com,3421824701
-sa,sa,NUTRITIONIST,Sara,Viola,sara@gmail.com,3473503508
-gu,gu,NUTRITIONIST,Guglielmo ,Rossi,guglielmo@gmail.com,3659858459
-

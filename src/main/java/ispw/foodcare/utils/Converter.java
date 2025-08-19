@@ -7,10 +7,10 @@ import ispw.foodcare.model.*;
 /*Classe che converte un oggetto entity in un oggetto Bean*/
 
 public class Converter {
-    // Costruttore privato per evitare istanziazione
+    /*Costruttore privato per evitare istanziazione*/
     private Converter() {}
 
-    //Metodo entity -> bean
+    /*Metodo entity -> bean*/
     public static UserBean userToBean(User user) {
         if (user == null) return null;
 
@@ -20,14 +20,14 @@ public class Converter {
         if(user instanceof Patient patient){
             PatientBean patientBean = new PatientBean();
 
-            //Campi di Patient
+            /*Campi di Patient*/
             patientBean.setBirthDate(patient.getBirthDate());
             patientBean.setGender(patient.getGender());
             bean = patientBean;
         } else if (user instanceof Nutritionist nutritionist) {
             NutritionistBean nutritionistBean = new NutritionistBean();
 
-            //Campi di Nutritionist
+            /*Campi di Nutritionist*/
             nutritionistBean.setPiva(nutritionist.getPiva());
             nutritionistBean.setTitoloStudio(nutritionist.getTitoloStudio());
             nutritionistBean.setSpecializzazione(nutritionist.getSpecializzazione());
@@ -37,7 +37,7 @@ public class Converter {
             bean = new UserBean();
         }
 
-        //Campi comuni di User
+        /*Campi comuni di User*/
         bean.setUsername(user.getUsername());
         bean.setPassword(user.getPassword());
         bean.setName(user.getName());
@@ -48,7 +48,7 @@ public class Converter {
         return bean;
     }
 
-    //Metodo entity -> bean
+    /*Metodo entity -> bean*/
     public static AddressBean addressToBean(Address address) {
         if (address == null) return null;
 
@@ -62,7 +62,7 @@ public class Converter {
         return bean;
     }
 
-    //Metodo bean -> entity
+    /*Metodo bean -> entity*/
     public static User beanToUser(UserBean bean) {
         if (bean == null) return null;
 
@@ -116,7 +116,7 @@ public class Converter {
         return user;
     }
 
-    //Metodi per rendere più chiaro il codice
+    /*Metodi per rendere più chiaro il codice*/
     public static Nutritionist beanToNutritionist(NutritionistBean bean) {
         return (Nutritionist) beanToUser(bean);
     }
@@ -125,7 +125,7 @@ public class Converter {
         return (Patient) beanToUser(bean);
     }
 
-    //Metodo  Entity -> Bean
+    /*Metodo  Entity -> Bean*/
     public static AppointmentBean appointmentToBean(Appointment appointment) {
         AppointmentBean bean = new AppointmentBean();
         bean.setDate(appointment.getDate());

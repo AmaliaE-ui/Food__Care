@@ -20,7 +20,7 @@ public class AppointmentDAO {
 
     /*injection*/
     private final ConnectionProvider cp;
-    private final AvailabilityDAO availabilityDAO; // opzionale
+    private final AvailabilityDAO availabilityDAO;
 
     public AppointmentDAO(ConnectionProvider cp) {
         this(cp, null);
@@ -52,6 +52,68 @@ public class AppointmentDAO {
 
     private void saveAppointmentRam(Appointment appointment) {
         appointmentsRam.put(nextId++, appointment);
+
+        /*Rimuovo dalle disponibilità*/
+        Availability toRemove = new Availability();
+        toRemove.setNutritionistUsername(appointment.getNutritionistUsername());
+        toRemove.setDate(appointment.getDate());
+        toRemove.setStartTime(appointment.getTime());
+        toRemove.setEndTime(appointment.getTime().plusMinutes(45));
+
+        AvailabilityDAO availDAO = (availabilityDAO != null)
+                ? availabilityDAO
+                : Session.getInstance().getAvailabilityDAO();
+
+        availDAO.deleteAvailability(toRemove);
+    }
+
+    /*Controllo se lo slot è già prenotato*/
+    private boolean isSlotAlreadyBookedRam(String nutritionistUsername, LocalDate date, LocalTime time) {
+        return appointmentsRam.values().stream().anyMatch(a ->
+                a.getNutritionistUsername().equals(nutritionistUsername)
+                        && a.getDate().equals(date)
+                        && a.getTime().equals(time)
+        );
+    }
+
+    /*Controllo gli slot già prenotato*/
+    private List<LocalTime> getBookedTimesForNutritionistRam(String nutritionistUsername, LocalDate date) {
+        List<LocalTime> out = new ArrayList<>();
+        for (Appointment a : appointmentsRam.values()) {
+            if (a.getNutritionistUsername().equals(nutritionistUsername) && a.getDate().equals(date)) {
+                out.add(a.getTime());
+            }
+        }
+        return out;
+    }
+
+    /*Prendo appuntamento per un paziente*/
+    private List<Appointment> getAppointmentsForPatientRam(String patientUsername) {
+        List<Appointment> out = new ArrayList<>();
+        for (Appointment a : appointmentsRam.values()) {
+            if (a.getPatientUsername().equals(patientUsername)) {
+                out.add(a);
+            }
+        }
+        return out;
+    }
+
+    /*Elimina appuntamento*/
+    private void deleteAppointmentRam(String nutritionistUsername, LocalDate date, LocalTime time) {
+        // rimuovi l'appuntamento corrispondente
+        Integer keyToRemove = null;
+        for (var entry : appointmentsRam.entrySet()) {
+            Appointment a = entry.getValue();
+            if (a.getNutritionistUsername().equals(nutritionistUsername)
+                    && a.getDate().equals(date)
+                    && a.getTime().equals(time)) {
+                keyToRemove = entry.getKey();
+                break;
+            }
+        }
+        if (keyToRemove != null) {
+            appointmentsRam.remove(keyToRemove);
+        }
     }
 
     // --------------------------
@@ -100,131 +162,144 @@ public class AppointmentDAO {
     }
 
     public List<Appointment> getAppointmentsForPatient(String patientUsername) {
-        List<Appointment> appointments = new ArrayList<>();
-        try (Connection conn = cp.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryAppointment.SELECT_APPOINTMENTS_FOR_PATIENT)) {
+        if(Session.getInstance().isRam()){
+            return getAppointmentsForPatientRam(patientUsername);
+        }else {
+            List<Appointment> appointments = new ArrayList<>();
+            try (Connection conn = cp.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryAppointment.SELECT_APPOINTMENTS_FOR_PATIENT)) {
 
-            stmt.setString(1, patientUsername);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    appointments.add(new Appointment(
-                            rs.getString("patient_username"),
-                            rs.getString("nutritionist_username"),
-                            rs.getDate("date").toLocalDate(),
-                            rs.getTime("time").toLocalTime(),
-                            rs.getString("notes")
-                    ));
+                stmt.setString(1, patientUsername);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        appointments.add(new Appointment(
+                                rs.getString("patient_username"),
+                                rs.getString("nutritionist_username"),
+                                rs.getDate("date").toLocalDate(),
+                                rs.getTime("time").toLocalTime(),
+                                rs.getString("notes")
+                        ));
+                    }
                 }
-            }
 
-        } catch (SQLException e) {
-            logger.severe("Errore recupero appuntamenti del paziente: " + e.getMessage());
+            } catch (SQLException e) {
+                logger.severe("Errore recupero appuntamenti del paziente: " + e.getMessage());
+            }
+            return appointments;
         }
-        return appointments;
     }
 
     public boolean isSlotAlreadyBooked(String nutritionistUsername, LocalDate date, LocalTime time) {
-        try (Connection conn = cp.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryAppointment.SELECT_APPOINTMENTS_FOR_STATUS)) {
-            stmt.setString(1, nutritionistUsername);
-            stmt.setDate(2, Date.valueOf(date));
-            stmt.setTime(3, Time.valueOf(time));
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) return rs.getInt(1) > 0;
+        if(Session.getInstance().isRam()){
+            return isSlotAlreadyBookedRam(nutritionistUsername, date, time);
+        }else {
+            try (Connection conn = cp.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryAppointment.SELECT_APPOINTMENTS_FOR_STATUS)) {
+                stmt.setString(1, nutritionistUsername);
+                stmt.setDate(2, Date.valueOf(date));
+                stmt.setTime(3, Time.valueOf(time));
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) return rs.getInt(1) > 0;
+                }
+            } catch (SQLException e) {
+                logger.severe("Errore durante la verifica disponibilità slot: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            logger.severe("Errore durante la verifica disponibilità slot: " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
     public List<LocalTime> getBookedTimesForNutritionist(String nutritionistUsername, LocalDate date) {
-        List<LocalTime> bookedTimes = new ArrayList<>();
-        try (Connection conn = cp.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryAppointment.SELECT_NUTRITIONIST_FOR_STATUS)) {
-            stmt.setString(1, nutritionistUsername);
-            stmt.setDate(2, Date.valueOf(date));
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    bookedTimes.add(rs.getTime("time").toLocalTime());
-                }
-            }
-        } catch (SQLException e) {
-            logger.severe("Errore durante il recupero degli slot già prenotati: " + e.getMessage());
+        if(Session.getInstance().isRam()){
+            return getBookedTimesForNutritionistRam(nutritionistUsername, date);
         }
-        return bookedTimes;
+        else{
+            List<LocalTime> bookedTimes = new ArrayList<>();
+            try (Connection conn = cp.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryAppointment.SELECT_NUTRITIONIST_FOR_STATUS)) {
+                stmt.setString(1, nutritionistUsername);
+                stmt.setDate(2, Date.valueOf(date));
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        bookedTimes.add(rs.getTime("time").toLocalTime());
+                    }
+                }
+            } catch (SQLException e) {
+                logger.severe("Errore durante il recupero degli slot già prenotati: " + e.getMessage());
+            }
+            return bookedTimes;
+        }
     }
 
     public void deleteAppointment(String nutritionistUsername, LocalDate date, LocalTime time) {
-        try (Connection conn = cp.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryAppointment.DELETE_APPOINTMENT)) {
-            stmt.setString(1, nutritionistUsername);
-            stmt.setDate(2, Date.valueOf(date));
-            stmt.setTime(3, Time.valueOf(time));
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            logger.severe("Errore eliminazione appuntamento da DB: " + e.getMessage());
+        if(Session.getInstance().isRam()){
+            deleteAppointmentRam(nutritionistUsername, date, time);
+        }else {
+            try (Connection conn = cp.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryAppointment.DELETE_APPOINTMENT)) {
+                stmt.setString(1, nutritionistUsername);
+                stmt.setDate(2, Date.valueOf(date));
+                stmt.setTime(3, Time.valueOf(time));
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                logger.severe("Errore eliminazione appuntamento da DB: " + e.getMessage());
+            }
         }
     }
 
-    public List<AppointmentBean> getAppointmentBeansForNutritionistWithPatientName(String nutritionistUsername) {
+    public List<Appointment> getAppointmentForNutritionistWithUsername(String nutritionistUsername) {
         // Nota: architetturalmente i DAO dovrebbero restituire Entity, non Bean.
-        // Mantengo la firma per compatibilità.
-        List<AppointmentBean> list = new ArrayList<>();
+        if(Session.getInstance().isRam()){
+            // Compongo i dati leggendo i pazienti da UserDAO
+            var userDAO = Session.getInstance().getUserDAO();
+            List<Appointment> list = new ArrayList<>();
+            for (Appointment a : appointmentsRam.values()) {
+                if (a.getNutritionistUsername().equals(nutritionistUsername)) {
+                    var model = new Appointment();
+                    model.setPatientUsername(a.getPatientUsername());
+                    model.setNutritionistUsername(a.getNutritionistUsername());
+                    model.setDate(a.getDate());
+                    model.setTime(a.getTime());
+                    model.setStatus(a.getStatus());
+                    model.setNotes(a.getNotes());
 
-        try (Connection conn = cp.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(QueryAppointment.SELECT_APPOINTMENTS_FOR_NUTRITIONIST_WITH_PATIENT_NAME)) {
-
-            stmt.setString(1, nutritionistUsername);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    AppointmentBean bean = new AppointmentBean();
-                    bean.setPatientUsername(rs.getString("patient_username"));
-                    bean.setNutritionistUsername(nutritionistUsername);
-                    bean.setDate(rs.getDate("date").toLocalDate());
-                    bean.setTime(rs.getTime("time").toLocalTime());
-                    bean.setStatus(AppointmentStatus.valueOf(rs.getString("status")));
-                    bean.setNotes(rs.getString("notes"));
-                    bean.setPatientName(rs.getString("nome"));
-                    bean.setPatientSurname(rs.getString("cognome"));
-                    list.add(bean);
+                    var u = userDAO.getUserByUsername(a.getPatientUsername());
+                    if (u != null) {
+                        model.setPatientName(u.getName());
+                        model.setPatientSurname(u.getSurname());
+                    }
+                    list.add(model);
                 }
             }
+            return list;
+        }else {
+            List<Appointment> list = new ArrayList<>();
 
-        } catch (SQLException e) {
-            logger.severe("Errore recupero appuntamenti con nome paziente per nutrizionista: " + e.getMessage());
-        }
+            try (Connection conn = cp.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(QueryAppointment.SELECT_APPOINTMENTS_FOR_NUTRITIONIST_WITH_PATIENT_NAME)) {
 
-        return list;
-    }
-
-    public void restoreAvailabilityAfterCancellation(int appointmentId) {
-        try (Connection conn = cp.getConnection();
-             PreparedStatement selectStmt = conn.prepareStatement(QueryAppointment.SELECT_NUTRITIONIST_BEFORE_DELETE)) {
-
-            selectStmt.setInt(1, appointmentId);
-            try (ResultSet rs = selectStmt.executeQuery()) {
-                if (rs.next()) {
-                    String nutritionistUsername = rs.getString("username_nutrizionista");
-                    LocalDate date = rs.getDate("data").toLocalDate();
-                    LocalTime oraInizio = rs.getTime("ora_inizio").toLocalTime();
-                    LocalTime oraFine = rs.getTime("ora_fine").toLocalTime();
-
-
-                    Availability availability = new Availability();
-                    availability.setNutritionistUsername(nutritionistUsername);
-                    availability.setDate(date);
-                    availability.setStartTime(oraInizio);
-                    availability.setEndTime(oraFine);
-
-                    AvailabilityDAO availDao = (availabilityDAO != null) ? availabilityDAO : new AvailabilityDAO(cp);
-                    availDao.addAvailability(availability);
+                stmt.setString(1, nutritionistUsername);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        Appointment a = new Appointment();
+                        a.setPatientUsername(rs.getString("patient_username"));
+                        a.setNutritionistUsername(nutritionistUsername);
+                        a.setDate(rs.getDate("date").toLocalDate());
+                        a.setTime(rs.getTime("time").toLocalTime());
+                        a.setStatus(AppointmentStatus.valueOf(rs.getString("status")));
+                        a.setNotes(rs.getString("notes"));
+                        a.setPatientName(rs.getString("nome"));
+                        a.setPatientSurname(rs.getString("cognome"));
+                        list.add(a);
+                    }
                 }
+
+            } catch (SQLException e) {
+                logger.severe("Errore recupero appuntamenti con nome paziente per nutrizionista: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Errore ripristino disponibilità", e);
-        }
+
+            return list;}
     }
+
 
 
     /*Metodi nuovi - Notifiche nuovi appuntamenti*/

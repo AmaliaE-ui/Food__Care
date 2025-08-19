@@ -7,7 +7,6 @@ import ispw.foodcare.query.QueryAddress;
 import ispw.foodcare.query.QueryNutrtionist;
 import ispw.foodcare.query.QueryPatient;
 import ispw.foodcare.query.QueryUser;
-import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * DAO unificato per User (Patient, Nutritionist, Admin),
+ * DAO unificato per User (Patient, Nutritionist),
  * gestisce automaticamente persistenza in RAM o DB.
  */
 public class UserDAO {
@@ -24,12 +23,14 @@ public class UserDAO {
 
     /*Injection del Provider*/
     private final ConnectionProvider cp;
+    private final AddressDAO addressDAO;
 
     /*Buffer per la modalità RAM*/
     private final List<User> userList = new ArrayList<>();
 
-    public UserDAO(ConnectionProvider cp) {
+    public UserDAO(ConnectionProvider cp, AddressDAO addressDAO) {
         this.cp = cp;
+        this.addressDAO = addressDAO;
     }
 
     /*Salva un nuovo utente*/
@@ -39,6 +40,11 @@ public class UserDAO {
                 throw new AccountAlreadyExistsException("User già esistente con username: " + user.getUsername());
             }
             userList.add(user);
+
+
+            if (user instanceof Nutritionist nutritionist) {
+                Session.getInstance().getNutritionistDAO().saveNutritionistRam(nutritionist);
+            }
         } else if (Session.getInstance().isDB()) {
             saveUserToDB(user);
         }
@@ -104,7 +110,7 @@ public class UserDAO {
         return getUserByUsername(user.getUsername());
     }
 
-    // ------------ GESTIONE DB INTERNA ----------------
+    /* ------------ GESTIONE DB INTERNA ---------------- */
 
     private void saveUserToDB(User user) throws AccountAlreadyExistsException {
         if (loadUserFromDB(user.getUsername()) != null) {
@@ -135,7 +141,7 @@ public class UserDAO {
                     stmt.executeUpdate();
                 }
             } else if (user instanceof Nutritionist nutritionist) {
-                int addressId = insertAddress(conn, nutritionist.getAddress());
+                int addressId = addressDAO.save(nutritionist.getAddress(), conn);
                 try (PreparedStatement stmt = conn.prepareStatement(QueryNutrtionist.INSERT_NUTRITIONIST)) {
                     stmt.setString(1, nutritionist.getUsername());
                     stmt.setString(2, nutritionist.getPiva());
@@ -212,7 +218,7 @@ public class UserDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     int addressId = rs.getInt("indirizzo_studio");
-                    Address address = loadAddress(conn, addressId);
+                    Address address = addressDAO.findById(addressId, conn);
                     return new Nutritionist(username, password, name, surname, email, phone, Role.NUTRITIONIST,
                             rs.getString("piva"), rs.getString("titolo_studio"), rs.getString("specializzazione"), address);
                 }

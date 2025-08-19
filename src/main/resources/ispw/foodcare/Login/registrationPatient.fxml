@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.viewcontroller.RegistrationPatientGuiController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ispw.foodcare.controller.viewcontroller.RegistrationPatientGuiController">
 
     <left>
         <VBox alignment="TOP_CENTER" prefWidth="220.0" spacing="20" style="-fx-background-color: #b0c4de;" BorderPane.alignment="CENTER">
@@ -81,20 +81,15 @@
                 </Label>
                 <PasswordField fx:id="passwordTextField" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-                <Label text="Conferma Password:" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                <Label text="Data di nascita:" GridPane.columnIndex="0" GridPane.rowIndex="6">
                     <font><Font name="System Bold" size="14.0" /></font>
                 </Label>
-                <PasswordField fx:id="confPasswordTextField" promptText="******" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <DatePicker fx:id="birthDatePicker" promptText="GG/MM/AAAA" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-                <Label text="Data di nascita:" GridPane.columnIndex="0" GridPane.rowIndex="7">
+                <Label text="Genere:" GridPane.columnIndex="0" GridPane.rowIndex="7">
                     <font><Font name="System Bold" size="14.0" /></font>
                 </Label>
-                <DatePicker fx:id="birthDatePicker" promptText="GG/MM/AAAA" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-
-                <Label text="Genere:" GridPane.columnIndex="0" GridPane.rowIndex="8">
-                    <font><Font name="System Bold" size="14.0" /></font>
-                </Label>
-                <ChoiceBox fx:id="genderChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                <ChoiceBox fx:id="genderChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="7">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                         </FXCollections>
@@ -105,7 +100,6 @@
                     <ColumnConstraints />
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints />
                     <RowConstraints />
                     <RowConstraints />
                     <RowConstraints />

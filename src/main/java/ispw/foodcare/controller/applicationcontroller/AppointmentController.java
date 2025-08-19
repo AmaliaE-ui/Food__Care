@@ -1,9 +1,15 @@
 package ispw.foodcare.controller.applicationcontroller;
 
+import com.google.protobuf.DescriptorProtos;
 import ispw.foodcare.bean.AppointmentBean;
+import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.dao.AppointmentDAO;
+import ispw.foodcare.model.Appointment;
+import ispw.foodcare.model.Nutritionist;
 import ispw.foodcare.model.Session;
+import ispw.foodcare.utils.Converter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppointmentController {
@@ -29,6 +35,9 @@ public class AppointmentController {
     }
 
     public List<AppointmentBean> getAppointmentsForNutritionist(String nutritionistUsername) {
-        return appointmentDAO.getAppointmentBeansForNutritionistWithPatientName(nutritionistUsername);
+        List<Appointment> listo = appointmentDAO.getAppointmentForNutritionistWithUsername(nutritionistUsername) ;
+        return listo.stream()
+                .map(n -> (AppointmentBean) Converter.appointmentToBean(n))
+                .toList();
     }
 }

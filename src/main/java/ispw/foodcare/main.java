@@ -43,6 +43,8 @@ public class Main extends Application {
             } else {
                 s.setDB(false);
                 s.setRam(false);
+                s.setFs(true);
+                logger.info("Modalità persistente: FileSystem.(solo availability)");
             }
         } else {
             s.setDB(false);

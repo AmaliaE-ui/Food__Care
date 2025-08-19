@@ -6,6 +6,7 @@ import ispw.foodcare.bean.AppointmentBean;
 import ispw.foodcare.bean.AvailabilityBean;
 import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
+import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import ispw.foodcare.utils.ShowAlert;
 import javafx.fxml.FXML;
@@ -108,6 +109,7 @@ public class BookAppointmentGuiController {
         }
 
         AppointmentBean appointmentBean = new AppointmentBean();
+        appointmentBean.setPatientUsername(Session.getInstance().getCurrentUser().getUsername());
         appointmentBean.setDate(selectedDate);
         appointmentBean.setTime(selectedTime);
         appointmentBean.setNotes(notesTextArea.getText());

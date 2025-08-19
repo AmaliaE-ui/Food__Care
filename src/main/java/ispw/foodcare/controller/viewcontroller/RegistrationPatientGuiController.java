@@ -26,7 +26,6 @@ public class RegistrationPatientGuiController {
     @FXML private TextField usernameTextField;
     @FXML private TextField emailTextField;
     @FXML private PasswordField passwordTextField;
-    @FXML private PasswordField confPasswordTextField;
     @FXML private DatePicker birthDatePicker;
     @FXML private ChoiceBox<String> genderChoiceBox;
     @FXML private Label errorLabel;
@@ -51,14 +50,6 @@ public class RegistrationPatientGuiController {
             }
             bean.setGender(genderChoiceBox.getValue());
 
-            //Validazione
-            String error = ispw.foodcare.validation.PatientValidator.validatePatient(bean, confPasswordTextField.getText());
-            if (error != null) {
-                errorLabel.setStyle("-fx-text-fill: red;");
-                errorLabel.setText(error);
-                return;
-            }
-
             /*Invoca Controller Applicativo*/
             boolean success = this.registrationController.registrationPatient(bean);
 
@@ -67,8 +58,8 @@ public class RegistrationPatientGuiController {
                 errorLabel.setStyle("-fx-text-fill: green");
                 errorLabel.setText("Registrazione avvenuta con successo!");
 
-                // Attendi 3 secondi e poi torna al login
-                javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
+                /*Attendi 2 secondi e poi torna al login*/
+                var delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(2));
                 delay.setOnFinished(e -> NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login"));
                 delay.play();
             } else{

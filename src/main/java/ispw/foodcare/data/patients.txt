@@ -1,2 +1,0 @@
-mario,1990-01-01,Maschio
-gio,2020-06-18,Maschio

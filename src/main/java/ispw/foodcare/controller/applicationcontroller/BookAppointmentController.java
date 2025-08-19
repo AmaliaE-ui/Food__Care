@@ -12,6 +12,8 @@ import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.Converter;
 import ispw.foodcare.bean.AvailabilityBean;
 import ispw.foodcare.model.Availability;
+import ispw.foodcare.utils.patternobserver.AppointmentEvent;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -72,6 +74,16 @@ public class BookAppointmentController {
         }
         /*Salvataggio*/
         appointmentDAO.saveAppointment(appointment);
+
+        /*Push verso le view interessate del nuovo appuntamento prenotato*/
+        Session.getInstance().getAppointmentSubject().notifyNewAppointment(
+                new AppointmentEvent(
+                        appointment.getNutritionistUsername(),
+                        appointment.getPatientUsername(),
+                        appointment.getDate(),
+                        appointment.getTime()
+                )
+        );
     }
 
     /*Aggiungi una disponibilità*/

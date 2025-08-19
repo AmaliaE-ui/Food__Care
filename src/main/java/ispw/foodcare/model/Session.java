@@ -3,6 +3,8 @@ package ispw.foodcare.model;
 import ispw.foodcare.Role;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.dao.*;
+import ispw.foodcare.utils.InMemoryAppointmentSubject;
+import ispw.foodcare.utils.patternobserver.AppointmentSubject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,11 +22,18 @@ public class Session {
     private final NutritionistDAO nutritionistDAO;
     private final AvailabilityDAO availabilityDAO;
     private final AppointmentDAO appointmentDAO;
+    private final AddressDAO addressDAO;
+
+    /*Da vedere se serve oppure no - patetrn observer*/
+    private final AppointmentSubject appointmentSubject = new InMemoryAppointmentSubject();
+    public AppointmentSubject getAppointmentSubject() { return appointmentSubject; }
+
 
     private boolean isCLI = false;
     private boolean isDB = false;
     private boolean isRam = false;
-    private Map<String, Object> attributes = new HashMap<>();
+    private boolean isFS=false;
+    private final Map<String, Object> attributes = new HashMap<>();
 
     /*Costruttore privato per non avere istanziazioni esterne*/
     private Session() {
@@ -34,10 +43,11 @@ public class Session {
         this.cp = new DriverManagerConnectionProvider(url, user, pass);
 
         // === DAO con injection del provider ===
-        this.userDAO = new UserDAO(cp);
-        this.nutritionistDAO = new NutritionistDAO(cp);
+        this.addressDAO     = new AddressDAO(cp);
+        this.userDAO        = new UserDAO(cp, addressDAO);        // <— passa il DAO
+        this.nutritionistDAO= new NutritionistDAO(cp, addressDAO);
         this.availabilityDAO = new AvailabilityDAO(cp);
-        this.appointmentDAO  = new AppointmentDAO(cp);
+        this.appointmentDAO  = new AppointmentDAO(cp, this.availabilityDAO);
     }
 
     public static synchronized Session getInstance() {
@@ -56,6 +66,9 @@ public class Session {
     public void setDB(boolean db) { isDB = db; }
     public boolean isRam() { return isRam; }
     public void setRam(boolean ram) { isRam = ram; }
+    public void setFs(boolean fs) { isFS = fs; }
+    public boolean isFS() { return isFS; }
+
 
     public UserDAO getUserDAO(){ return userDAO; }
 
@@ -65,6 +78,9 @@ public class Session {
 
     public AvailabilityDAO getAvailabilityDAO() {return availabilityDAO; }
 
+    public AddressDAO getAddressDAO() { return addressDAO; }
+
+
     public void setAttributes(String key, Object value) { attributes.put(key, value); }
     public Object getAttributes(String key) { return attributes.get(key); }
     public void removeAttribute(String key) { attributes.remove(key); }
@@ -73,4 +89,6 @@ public class Session {
     public void logout() {
         this.currentUser = null;
     }
+
+
 }

@@ -2,6 +2,7 @@ package ispw.foodcare.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class Availability {
 
@@ -23,5 +24,16 @@ public class Availability {
     public String getNutritionistUsername() { return nutritionistUsername; }
     public void setNutritionistUsername(String nutritionistUsername) {this.nutritionistUsername = nutritionistUsername; }
 
+    @Override public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Availability that)) return false;
+        return Objects.equals(nutritionistUsername, that.nutritionistUsername)
+                && Objects.equals(date, that.date)
+                && Objects.equals(startTime, that.startTime)
+                && Objects.equals(endTime, that.endTime);
+    }
 
+    @Override public int hashCode() {
+        return Objects.hash(nutritionistUsername, date, startTime, endTime);
+    }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SearchNutritionistGuiController {
 
-    // chiavi sessione: costanti
+    /*costanti*/
     private static final String ATTR_LAST_SEARCH_RESULTS = "lastSearchResults";
     private static final String ATTR_LAST_SEARCH_QUERY   = "lastSearchQuery";
 
@@ -26,12 +26,13 @@ public class SearchNutritionistGuiController {
     @FXML private TableColumn<NutritionistBean, String> specializationColumn;
     @FXML private TableColumn<NutritionistBean, Void>   profileColumn;
 
-    // evita NPE
+    /*evita NPE*/
     private final ShowAlert alert = new ShowAlert();
-    // riusa il controller
+    /*riuso il controller*/
     private final BookAppointmentController controller = new BookAppointmentController();
 
     @FXML public void initialize() {
+
         nutritionistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         profileColumn.setMinWidth(120);
         profileColumn.setReorderable(false);
@@ -40,7 +41,7 @@ public class SearchNutritionistGuiController {
         setUpColumns();
         setUpProfileButton();  // usa la cella tipizzata (vedi sotto)
 
-        // ripristino cache da Session
+        /*ripristino cache da Session*/
         @SuppressWarnings("unchecked")
         var cachedResults = (javafx.collections.ObservableList<NutritionistBean>)
                 Session.getInstance().getAttributes(ATTR_LAST_SEARCH_RESULTS);
@@ -49,6 +50,7 @@ public class SearchNutritionistGuiController {
         }
         String previousQuery = (String) Session.getInstance().getAttributes(ATTR_LAST_SEARCH_QUERY);
         if (previousQuery != null) searchTextField.setText(previousQuery);
+
     }
 
     private void setUpColumns() {
@@ -59,12 +61,12 @@ public class SearchNutritionistGuiController {
         specializationColumn.setCellValueFactory(cd -> new SimpleStringProperty(cd.getValue().getSpecializzazione()));
     }
 
-    /** Pulsante "Visualizza profilo" in colonna – niente initializer di istanza. */
+    /*Pulsante "Visualizza profilo" in colonna – niente initializer di istanza*/
     private void setUpProfileButton() {
         profileColumn.setCellFactory(col -> new ProfileButtonCell());
     }
 
-    /** Cella dedicata con costruttore: risolve lo smell. */
+    /*Cella dedicata con costruttore*/
     private final class ProfileButtonCell extends TableCell<NutritionistBean, Void> {
         private final Button btn = new Button("Visualizza profilo");
         ProfileButtonCell() {
@@ -75,8 +77,7 @@ public class SearchNutritionistGuiController {
             });
             setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         }
-        @Override
-        protected void updateItem(Void item, boolean empty) {
+        @Override protected void updateItem(Void item, boolean empty) {
             super.updateItem(item, empty);
             setGraphic(empty ? null : btn);
         }

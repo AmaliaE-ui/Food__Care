@@ -16,9 +16,11 @@ public class NutritionistDAO {
     private static final Logger logger = Logger.getLogger(NutritionistDAO.class.getName());
 
     private final ConnectionProvider cp;
+    private final AddressDAO addressDAO;
 
-    public NutritionistDAO(ConnectionProvider cp) {
+    public NutritionistDAO(ConnectionProvider cp, AddressDAO addressDAO) {
         this.cp = cp;
+        this.addressDAO = addressDAO;
     }
 
     /*Public interface for controller applicativi*/
@@ -72,8 +74,7 @@ public class NutritionistDAO {
                     String titoloStudio = rs.getString("titolo_studio");
                     String specializzazione = rs.getString("specializzazione");
                     int addressId = rs.getInt("indirizzo_studio");
-
-                    Address address = loadAddress(conn, addressId);
+                    Address address = addressDAO.findById(addressId, conn);
 
                     nutritionists.add(new Nutritionist(
                             username, password, name, surname, email, phone,

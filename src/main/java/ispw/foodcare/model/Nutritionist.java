@@ -21,10 +21,8 @@ public class Nutritionist extends User {
 
     //Getter e Setter
     public String getPiva() { return piva; }
-    public void setPiva(String piva) { this.piva = piva; }
 
     public String getTitoloStudio() { return titoloStudio; }
-    public void setTitoloStudio(String titoloStudio) { this.titoloStudio = titoloStudio; }
 
     public String getSpecializzazione() { return specializzazione; }
     public void setSpecializzazione(String specializzazione) { this.specializzazione = specializzazione; }

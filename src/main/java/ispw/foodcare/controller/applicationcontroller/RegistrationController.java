@@ -31,7 +31,7 @@ public class RegistrationController {
     public boolean registrationNutritionist(NutritionistBean bean) {
         try {
             Nutritionist nutritionist = Converter.beanToNutritionist(bean);
-            userDAO.saveUser(nutritionist); //RAM/DM/FS deciso da sessione
+            userDAO.saveUser(nutritionist);
             return true;
         } catch (AccountAlreadyExistsException e) {
             logger.info("Utente già esistente (" + bean.getUsername() + ")");

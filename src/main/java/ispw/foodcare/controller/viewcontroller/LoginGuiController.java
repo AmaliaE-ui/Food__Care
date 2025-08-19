@@ -12,8 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import java.util.logging.Logger;
-
 
 public class LoginGuiController {
 
@@ -55,7 +53,7 @@ public class LoginGuiController {
 
             /* Home dinamica */
             Role role = userBean.getRole();
-            String homePath = ispw.foodcare.utils.factory.GuiFactory.getHomePath(role);
+            String homePath = ispw.foodcare.utils.patternfactory.GuiFactory.getHomePath(role);
             NavigationManager.switchScene(event, homePath, "FoodCare - Home");
 
         } catch (IllegalArgumentException e) {

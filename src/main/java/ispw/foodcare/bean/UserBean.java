@@ -49,8 +49,8 @@ public class UserBean {
         if (username == null || username.trim().isEmpty()) {
             throw new IllegalArgumentException("L'username non può essere vuoto.");
         }
-        if (username.length() < 3) {
-            throw new IllegalArgumentException("L'username deve avere almeno 3 caratteri.");
+        if (username.length() < 2) {
+            throw new IllegalArgumentException("L'username deve avere almeno 2 caratteri.");
         }
         this.username = username.trim();
     }
@@ -65,8 +65,8 @@ public class UserBean {
 
     public String getPassword() { return password; }
     public void setPassword(String password) {
-        if (password == null || password.length() < 3) {
-            throw new IllegalArgumentException("La password deve avere almeno 3 caratteri.");
+        if (password == null || password.length() < 2) {
+            throw new IllegalArgumentException("La password deve avere almeno 2 caratteri.");
         }
         this.password = password;
     }

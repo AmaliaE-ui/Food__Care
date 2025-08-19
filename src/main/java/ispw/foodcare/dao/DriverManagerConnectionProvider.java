@@ -17,7 +17,7 @@ public final class DriverManagerConnectionProvider implements ConnectionProvider
     }
 
     @Override public Connection getConnection() throws SQLException {
-        /*Apri una nuova connessione; chiudila con try-with-resources nei DAO*/
+        /*Apro una nuova connessione; chiudo con try-with-resources nei DAO*/
         return DriverManager.getConnection(url, user, password);
     }
 }
