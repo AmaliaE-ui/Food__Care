@@ -2,7 +2,6 @@ package ispw.foodcare.dao;
 
 import ispw.foodcare.model.Nutritionist;
 import ispw.foodcare.model.Address;
-import ispw.foodcare.query.QueryAddress;
 import ispw.foodcare.query.QueryNutrtionist;
 import ispw.foodcare.Role;
 import ispw.foodcare.model.Session;

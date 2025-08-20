@@ -30,7 +30,7 @@ public class AvailabilityDAO {
             .enable(SerializationFeature.INDENT_OUTPUT);
 
     private static class Store {
-        public List<Record> items = new ArrayList<>();
+        public final List<Record> items = new ArrayList<>();
     }
     private static class Record {
         private String nutritionistUsername;
@@ -124,7 +124,7 @@ public class AvailabilityDAO {
     }
 
     private void deleteAvailabilityRam(Availability availability) {
-        // ⚠️ prima usavi remove(availability) (identità). Meglio per valori:
+        // prima usavi remove(availability) (identità). Meglio per valori:
         availabilitiesRam.removeIf(a -> matches(a, availability));
     }
 
@@ -261,7 +261,7 @@ public class AvailabilityDAO {
             int before = s.items.size();
             s.items.removeIf(r -> matches(r, availability));
             int removed = before - s.items.size();
-            if (removed > 0) logger.fine("FS availability removed: " + removed);
+            if (removed > 0) logger.log(Level.INFO, "FS availability removed: " + removed);
             saveStore(s);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "FS deleteAvailability error", e);

@@ -148,7 +148,7 @@ public class AppointmentDAO {
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     int generatedId = rs.getInt(1);
-                    logger.info("Appuntamento salvato con ID: " + generatedId);
+                    logger.log(Level.INFO, "Appuntamento salvato con ID: ", generatedId);
                 }
             }
 

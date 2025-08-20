@@ -32,7 +32,7 @@ public class AppointmentController {
     public List<AppointmentBean> getAppointmentsForNutritionist(String nutritionistUsername) {
         List<Appointment> listo = appointmentDAO.getAppointmentForNutritionistWithUsername(nutritionistUsername) ;
         return listo.stream()
-                .map(n -> (AppointmentBean) Converter.appointmentToBean(n))
+                .map(n -> Converter.appointmentToBean(n))
                 .toList();
     }
 }
