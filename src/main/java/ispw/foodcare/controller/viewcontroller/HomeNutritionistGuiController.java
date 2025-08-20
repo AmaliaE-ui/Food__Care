@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class HomeNutritionistGuiController{
 
     @FXML private Button personalAreaButton;
@@ -22,6 +25,7 @@ public class HomeNutritionistGuiController{
     /*per disiscriversi*/
     private AutoCloseable subscription;
 
+    private static final Logger logger = Logger.getLogger(HomeNutritionistGuiController.class.getName());
 
     @FXML public void initialize() {
         // stato iniziale (covers DB: unseen salvati su tabelle)
@@ -65,7 +69,10 @@ public class HomeNutritionistGuiController{
     }
 
     @FXML private void onLogoutClick(ActionEvent event) {
-        try { if (subscription != null) subscription.close(); } catch (Exception ignored) {}
+        try { if (subscription != null) subscription.close(); }
+        catch (Exception e) {
+            logger.warning("Errore durante la chiusura della subscription in logout" + e.getMessage());
+        }
         Session.getInstance().logout();
         NavigationManager.switchScene(event,
                 "/ispw/foodcare/Login/login.fxml",

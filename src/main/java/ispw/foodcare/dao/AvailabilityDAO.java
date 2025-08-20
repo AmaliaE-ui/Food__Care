@@ -33,10 +33,10 @@ public class AvailabilityDAO {
         public List<Record> items = new ArrayList<>();
     }
     private static class Record {
-        public String nutritionistUsername;
-        public LocalDate date;
-        public java.time.LocalTime startTime;
-        public java.time.LocalTime endTime;
+        private String nutritionistUsername;
+        private LocalDate date;
+        private java.time.LocalTime startTime;
+        private java.time.LocalTime endTime;
     }
 
     public AvailabilityDAO(ConnectionProvider cp) {

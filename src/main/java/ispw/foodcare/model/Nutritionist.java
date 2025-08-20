@@ -10,13 +10,16 @@ public class Nutritionist extends User {
 
     private Address address;
 
-    public Nutritionist(String username, String password, String name, String surname, String email,
-                        String phoneNumber, Role role, String piva, String titoloStudio, String specializzazione, Address address) {
-        super(username, password, name, surname, email, phoneNumber, role);
-        this.piva = piva;
-        this.titoloStudio = titoloStudio;
-        this.specializzazione = specializzazione;
-        this.address = address;
+    public record Credentials(String username, String password) {}
+    public record Anagraphic(String name, String surname, String email, String phone) {}
+    public record NutritionistProfile(String piva, String titoloStudio, String specializzazione, Address address) {}
+
+    public Nutritionist(Credentials c, Anagraphic a, NutritionistProfile p, Role role){
+        super(c.username, c.password, a.name, a.surname, a.email, a.phone, role);
+        this.piva = p.piva;
+        this.titoloStudio = p.titoloStudio;
+        this.specializzazione = p.specializzazione;
+        this.address = p.address;
     }
 
     //Getter e Setter

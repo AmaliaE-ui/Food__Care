@@ -3,7 +3,6 @@ package ispw.foodcare.dao;
 import ispw.foodcare.model.Address;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.query.QueryAddress;
-
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class AddressDAO {
     }
 
     /* Salva un indirizzo e ritorna l'ID */
-    public int saveRam(Address address) throws SQLException {
+    public int saveRam(Address address) {
             int id = nextId++;
             ram.put(id, address);
             return id;

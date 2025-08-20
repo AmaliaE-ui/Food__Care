@@ -1,7 +1,7 @@
 package ispw.foodcare;
 
 import ispw.foodcare.cli.InitializeCli;
-import ispw.foodcare.exeption.AccountAlreadyExistsException;
+import ispw.foodcare.exception.AccountAlreadyExistsException;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.application.Application;

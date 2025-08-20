@@ -5,9 +5,11 @@ import ispw.foodcare.utils.patternobserver.AppointmentListener;
 import ispw.foodcare.utils.patternobserver.AppointmentSubject;
 
 import java.util.concurrent.*;
+import java.util.logging.Logger;
 
 public final class InMemoryAppointmentSubject implements AppointmentSubject {
     private final ConcurrentHashMap<String, CopyOnWriteArrayList<AppointmentListener>> map = new ConcurrentHashMap<>();
+    private static final Logger log = Logger.getLogger(InMemoryAppointmentSubject.class.getName());
 
     /*Iscrizione*/
     @Override public AutoCloseable subscribe(String nutr, AppointmentListener l) {
@@ -25,7 +27,10 @@ public final class InMemoryAppointmentSubject implements AppointmentSubject {
     @Override public void notifyNewAppointment(AppointmentEvent e) {
         var list = map.getOrDefault(e.nutritionistUsername(), new CopyOnWriteArrayList<>());
         for (var l : list) {
-            try { l.onAppointmentCreated(e); } catch (Exception ignore) {}
+            try { l.onAppointmentCreated(e); }
+            catch (Exception ignore) {
+                // Intenzionalmente ignorato: un listener non deve bloccare gli altri
+            }
         }
     }
 }

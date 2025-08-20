@@ -28,9 +28,10 @@ public class Appointment {
 
     //Getter e setter
     public String getPatientUsername() {return patientUsername;}
+    public void setPatientUsername(String patientUsername) {this.patientUsername = patientUsername;}
 
     public String getNutritionistUsername() {return nutritionistUsername;}
-    public void setNutritionistUsername(String nutritionistUsername) {this.patientUsername = nutritionistUsername;}
+    public void setNutritionistUsername(String nutritionistUsername) {this.nutritionistUsername = nutritionistUsername;}
 
 
     public LocalDate getDate() {return date;}
@@ -45,11 +46,7 @@ public class Appointment {
     public AppointmentStatus getStatus() {return status;}
     public void setStatus(AppointmentStatus status) {this.status = status;}
 
-    public String getPatientName() {return patientName;}
-
-    public void setPatientUsername(String patientUsername) {this.patientUsername = patientUsername;}
-    public String getPatientSurname() {return patientSurname;}
     public void setPatientName(String patientName) {this.patientName = patientName;}
-    public void setPatientSurname(String surname) {this.patientSurname = surname;}
 
+    public void setPatientSurname(String surname) {this.patientSurname = surname;}
 }

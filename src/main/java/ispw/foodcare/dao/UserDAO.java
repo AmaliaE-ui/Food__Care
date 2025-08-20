@@ -1,9 +1,8 @@
 package ispw.foodcare.dao;
 
 import ispw.foodcare.Role;
-import ispw.foodcare.exeption.AccountAlreadyExistsException;
+import ispw.foodcare.exception.AccountAlreadyExistsException;
 import ispw.foodcare.model.*;
-import ispw.foodcare.query.QueryAddress;
 import ispw.foodcare.query.QueryNutrtionist;
 import ispw.foodcare.query.QueryPatient;
 import ispw.foodcare.query.QueryUser;
@@ -63,10 +62,6 @@ public class UserDAO {
             return loadUserFromDB(username);
         }
         return null;
-    }
-
-    public User loadUserData(User user) {
-        return getUserByUsername(user.getUsername());
     }
 
     /* ------------ GESTIONE DB INTERNA ---------------- */
@@ -162,8 +157,13 @@ public class UserDAO {
             stmt.setString(1, username);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return new Patient(username, password, name, surname, email, phone, Role.PATIENT,
-                            rs.getDate("data_nascita").toLocalDate(), rs.getString("genere"));
+                    var creds   = new Patient.Credentials(username, password);
+                    var anag    = new Patient.Anagraphic(name, surname, email, phone);
+                    var profile = new Patient.PatientProfile(
+                            rs.getDate("data_nascita").toLocalDate(),
+                            rs.getString("genere")
+                    );
+                    return new Patient(creds, anag, Role.PATIENT, profile);
                 }
             }
         }
@@ -178,44 +178,18 @@ public class UserDAO {
                 if (rs.next()) {
                     int addressId = rs.getInt("indirizzo_studio");
                     Address address = addressDAO.findById(addressId, conn);
-                    return new Nutritionist(username, password, name, surname, email, phone, Role.NUTRITIONIST,
-                            rs.getString("piva"), rs.getString("titolo_studio"), rs.getString("specializzazione"), address);
+                    var creds = new Nutritionist.Credentials(username, password);
+                    var anag = new Nutritionist.Anagraphic(name, surname, email, phone);
+                    var profile = new Nutritionist.NutritionistProfile(
+                            rs.getString("piva"),
+                            rs.getString("titolo_studio"),
+                            rs.getString("specializzazione"),
+                            address
+                    );
+                    return new Nutritionist(creds, anag, profile, Role.NUTRITIONIST);
                 }
             }
         }
         return null;
-    }
-
-    private Address loadAddress(Connection conn, int addressId) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(QueryAddress.SELECT_ADDRESS)) {
-            stmt.setInt(1, addressId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Address(rs.getString("via"), rs.getString("civico"), rs.getString("cap"),
-                            rs.getString("citta"), rs.getString("provincia"), rs.getString("regione"));
-                }
-            }
-        }
-        return null;
-    }
-
-
-    private int insertAddress(Connection conn, Address address) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(QueryAddress.INSERT_ADDRESS, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, address.getVia());
-            stmt.setString(2, address.getCivico());
-            stmt.setString(3, address.getCap());
-            stmt.setString(4, address.getCitta());
-            stmt.setString(5, address.getProvincia());
-            stmt.setString(6, address.getRegione());
-            stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                } else {
-                    throw new SQLException("Errore nel recupero dell'ID dell'indirizzo");
-                }
-            }
-        }
     }
 }

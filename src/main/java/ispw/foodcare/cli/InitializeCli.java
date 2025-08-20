@@ -1,6 +1,6 @@
 package ispw.foodcare.cli;
 
-import ispw.foodcare.exeption.AccountAlreadyExistsException;
+import ispw.foodcare.exception.AccountAlreadyExistsException;
 import java.util.Scanner;
 
 

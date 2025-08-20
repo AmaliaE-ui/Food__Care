@@ -6,6 +6,8 @@ import ispw.foodcare.bean.AppointmentBean;
 import ispw.foodcare.bean.AvailabilityBean;
 import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
+import ispw.foodcare.exception.AppointmentAlreadyExistsException;
+import ispw.foodcare.exception.AppointmentPersistenceException;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import ispw.foodcare.utils.ShowAlert;
@@ -122,8 +124,10 @@ public class BookAppointmentGuiController {
 
             //Aggiorna la Gui ricaricano il calendario senza lo slot prenotato
             populateCalendarWithAvailability();
-        }catch (RuntimeException e){
-            alert.showAlert("Errore", e.getMessage());
+        }catch (AppointmentAlreadyExistsException e){
+            alert.showAlert("Slot occupato", e.getMessage());
+        }catch (AppointmentPersistenceException e){
+            alert.showAlert("Errore tecnico", "Si è verificato un problema durante il salvataggio.");
         }
 
     }

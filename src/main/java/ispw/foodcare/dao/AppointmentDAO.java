@@ -1,7 +1,8 @@
 package ispw.foodcare.dao;
 
 import ispw.foodcare.AppointmentStatus;
-import ispw.foodcare.bean.AppointmentBean;
+import ispw.foodcare.exception.AppointmentAlreadyExistsException;
+import ispw.foodcare.exception.AppointmentPersistenceException;
 import ispw.foodcare.model.Appointment;
 import ispw.foodcare.model.Availability;
 import ispw.foodcare.model.Session;
@@ -147,16 +148,16 @@ public class AppointmentDAO {
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     int generatedId = rs.getInt(1);
-                    logger.log(Level.INFO, () -> "Appuntamento salvato con ID: " + generatedId);
+                    logger.info("Appuntamento salvato con ID: " + generatedId);
                 }
             }
 
         } catch (SQLException e) {
             if ("23000".equals(e.getSQLState())) {
-                throw new RuntimeException("Impossibile prenotare: appuntamento già esistente per questa data e ora.", e);
+                throw new AppointmentAlreadyExistsException("Impossibile prenotare: appuntamento già esistente per questa data e ora.", e);
             } else {
                 logger.log(Level.SEVERE, "Errore salvataggio appuntamento su DB", e);
-                throw new RuntimeException("Errore nel salvataggio dell'appuntamento", e);
+                throw new AppointmentPersistenceException("Errore nel salvataggio dell'appuntamento", e);
             }
         }
     }

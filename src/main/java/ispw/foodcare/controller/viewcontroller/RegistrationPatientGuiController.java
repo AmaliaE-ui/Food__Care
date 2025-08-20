@@ -10,15 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.time.format.DateTimeParseException;
+import java.util.logging.Logger;
 
 public class RegistrationPatientGuiController {
-
-    private final RegistrationController registrationController;
-
-    public RegistrationPatientGuiController() {
-        var s = Session.getInstance();
-        this.registrationController = new RegistrationController(s.getUserDAO());
-    }
 
     @FXML private TextField nameTextField;
     @FXML private TextField surnameTextField;
@@ -30,8 +24,18 @@ public class RegistrationPatientGuiController {
     @FXML private ChoiceBox<String> genderChoiceBox;
     @FXML private Label errorLabel;
 
+    private final RegistrationController registrationController;
+
+    public RegistrationPatientGuiController() {
+        var s = Session.getInstance();
+        this.registrationController = new RegistrationController(s.getUserDAO());
+    }
+
+
     private static final String STYLE_ERROR   = "-fx-text-fill: red;";
     private static final String STYLE_SUCCESS   = "-fx-text-fill: green;";
+
+    private static final Logger logger = Logger.getLogger(RegistrationPatientGuiController.class.getName());
 
     @FXML public void initialize() {
         genderChoiceBox.getItems().addAll("Maschio", "Femmina", "Altro");
@@ -82,10 +86,10 @@ public class RegistrationPatientGuiController {
         errorLabel.setStyle(STYLE_ERROR);
         if (e instanceof DateTimeParseException){
             errorLabel.setText("Formato data non valido. Usa GG/MM/AAAA.");
-            System.err.println("Formato data non valido. Usa GG/MM/AAAA.");
+            logger.warning("Formato data non valido. Usa GG/MM/AAAA.");
         } else {
             errorLabel.setText("Errore: " + e.getMessage());
-            System.err.println("Errore: " + e.getMessage());
+            logger.warning("Errore: " + e.getMessage());
         }
 
     }

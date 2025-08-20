@@ -70,26 +70,25 @@ public class Converter {
         Role role = bean.getRole();
 
         if(bean instanceof PatientBean patientBean){
-            user = new Patient(
-                    patientBean.getUsername(),
-                    patientBean.getPassword(),
+            var creds = new Patient.Credentials(patientBean.getUsername(), patientBean.getPassword());
+            var anag = new Patient.Anagraphic(
                     patientBean.getName(),
                     patientBean.getSurname(),
                     patientBean.getEmail(),
-                    patientBean.getPhoneNumber(),
-                    role,
-                    patientBean.getBirthDate(),
-                    patientBean.getGender()
+                    patientBean.getPhoneNumber()
             );
+            var profile = new Patient.PatientProfile(patientBean.getBirthDate(), patientBean.getGender());
+
+            user = new Patient(creds, anag, role, profile);
         } else if(bean instanceof NutritionistBean nutritionistBean){
-            user = new Nutritionist(
-                    nutritionistBean.getUsername(),
-                    nutritionistBean.getPassword(),
+            var creds = new Nutritionist.Credentials(nutritionistBean.getUsername(), nutritionistBean.getPassword());
+            var anag = new Nutritionist.Anagraphic(
                     nutritionistBean.getName(),
                     nutritionistBean.getSurname(),
                     nutritionistBean.getEmail(),
-                    nutritionistBean.getPhoneNumber(),
-                    role,
+                    nutritionistBean.getPhoneNumber()
+            );
+            var profile = new Nutritionist.NutritionistProfile(
                     nutritionistBean.getPiva(),
                     nutritionistBean.getTitoloStudio(),
                     nutritionistBean.getSpecializzazione(),
@@ -99,9 +98,9 @@ public class Converter {
                             nutritionistBean.getAddress().getCap(),
                             nutritionistBean.getAddress().getCitta(),
                             nutritionistBean.getAddress().getProvincia(),
-                            nutritionistBean.getAddress().getRegione()
-                    )
+                            nutritionistBean.getAddress().getRegione())
             );
+            user = new Nutritionist(creds, anag, profile, role);
         } else {
             user = new User(
                     bean.getUsername(),

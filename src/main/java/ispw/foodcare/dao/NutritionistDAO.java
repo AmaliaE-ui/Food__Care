@@ -76,10 +76,11 @@ public class NutritionistDAO {
                     int addressId = rs.getInt("indirizzo_studio");
                     Address address = addressDAO.findById(addressId, conn);
 
-                    nutritionists.add(new Nutritionist(
-                            username, password, name, surname, email, phone,
-                            Role.NUTRITIONIST, piva, titoloStudio, specializzazione, address
-                    ));
+                    var creds = new Nutritionist.Credentials(username, password);
+                    var anag = new Nutritionist.Anagraphic(name, surname, email, phone);
+                    var profile = new Nutritionist.NutritionistProfile(piva, titoloStudio, specializzazione, address);
+
+                    nutritionists.add(new Nutritionist(creds, anag, profile, Role.NUTRITIONIST));
                 }
             }
         } catch (SQLException e) {
@@ -87,24 +88,5 @@ public class NutritionistDAO {
         }
 
         return nutritionists;
-    }
-
-    private Address loadAddress(Connection conn, int id) throws SQLException {
-        try (PreparedStatement stmt = conn.prepareStatement(QueryAddress.SELECT_ADDRESS)) {
-            stmt.setInt(1, id);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Address(
-                            rs.getString("via"),
-                            rs.getString("civico"),
-                            rs.getString("cap"),
-                            rs.getString("citta"),
-                            rs.getString("provincia"),
-                            rs.getString("regione")
-                    );
-                }
-            }
-        }
-        return null;
     }
 }

@@ -11,16 +11,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class RegistrationNutritionistGuiController {
-
-    private final RegistrationController registrationController;
-
-    /*Costruttore vuoto, utilr per FXML*/
-    public RegistrationNutritionistGuiController() {
-        var s = Session.getInstance();
-        this.registrationController = new RegistrationController(s.getUserDAO());
-    }
 
     @FXML private TextField nameTextField;
     @FXML private TextField surnameTextField;
@@ -39,8 +32,18 @@ public class RegistrationNutritionistGuiController {
     @FXML private ComboBox<String> specializzazioneComboBox;
     @FXML private Label errorLabel;
 
+    private final RegistrationController registrationController;
+
+    /*Costruttore vuoto, utilr per FXML*/
+    public RegistrationNutritionistGuiController() {
+        var s = Session.getInstance();
+        this.registrationController = new RegistrationController(s.getUserDAO());
+    }
+
     private static final String STYLE_ERROR   = "-fx-text-fill: red;";
     private static final String STYLE_SUCCESS   = "-fx-text-fill: green;";
+
+    private static final Logger logger = Logger.getLogger(RegistrationNutritionistGuiController.class.getName());
 
     @FXML private void onBackToLoginClick(ActionEvent event) {
         NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login");
@@ -135,11 +138,11 @@ public class RegistrationNutritionistGuiController {
         if(e instanceof  IllegalArgumentException){
             /*Eccezione dai Bean*/
             errorLabel.setText(e.getMessage());
-            System.err.println("Errore: " + e.getMessage());
+            logger.warning("Errore: " + e.getMessage());
         } else {
             /*Eccezione*/
             errorLabel.setText("Errore inatteso: " + e.getMessage());
-            System.err.println("Errore: " + e.getMessage());
+            logger.warning("Errore: " + e.getMessage());
         }
     }
 }

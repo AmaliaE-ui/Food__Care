@@ -3,7 +3,7 @@ package ispw.foodcare.cli;
 import ispw.foodcare.bean.AvailabilityBean;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
-import ispw.foodcare.exeption.AccountAlreadyExistsException;
+import ispw.foodcare.exception.AccountAlreadyExistsException;
 import ispw.foodcare.model.Session;
 import java.time.LocalDate;
 import java.time.LocalTime;

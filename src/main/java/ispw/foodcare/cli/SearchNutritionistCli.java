@@ -3,7 +3,7 @@ package ispw.foodcare.cli;
 import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
-import ispw.foodcare.exeption.AccountAlreadyExistsException;
+import ispw.foodcare.exception.AccountAlreadyExistsException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;

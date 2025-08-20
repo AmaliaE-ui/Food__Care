@@ -6,7 +6,7 @@ import ispw.foodcare.bean.PatientBean;
 import ispw.foodcare.dao.UserDAO;
 import ispw.foodcare.model.Nutritionist;
 import ispw.foodcare.model.Patient;
-import ispw.foodcare.exeption.AccountAlreadyExistsException;
+import ispw.foodcare.exception.AccountAlreadyExistsException;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.Converter;
 
