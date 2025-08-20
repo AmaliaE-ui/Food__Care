@@ -261,7 +261,7 @@ public class AvailabilityDAO {
             int before = s.items.size();
             s.items.removeIf(r -> matches(r, availability));
             int removed = before - s.items.size();
-            if (removed > 0) logger.log(Level.INFO, "FS availability removed: " + removed);
+            if (removed > 0) logger.log(Level.INFO, () -> "FS availability removed: " + removed);
             saveStore(s);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "FS deleteAvailability error", e);
