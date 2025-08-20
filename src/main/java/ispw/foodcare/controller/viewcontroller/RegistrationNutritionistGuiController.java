@@ -89,13 +89,7 @@ public class RegistrationNutritionistGuiController {
             }
 
         } catch (IllegalArgumentException e) {
-            /*Eccezione dai Bean*/
-            errorLabel.setStyle(STYLE_ERROR);
-            errorLabel.setText(e.getMessage());
-        } catch (Exception e) {
-            /*Eccezione*/
-            errorLabel.setStyle(STYLE_ERROR);
-            errorLabel.setText("Errore inatteso: " + e.getMessage());
+            gestisciEccezione(e);
         }
     }
 
@@ -134,5 +128,18 @@ public class RegistrationNutritionistGuiController {
                 }
             }
         });
+    }
+
+    private void gestisciEccezione(Exception e){
+        errorLabel.setStyle(STYLE_ERROR);
+        if(e instanceof  IllegalArgumentException){
+            /*Eccezione dai Bean*/
+            errorLabel.setText(e.getMessage());
+            System.err.println("Errore: " + e.getMessage());
+        } else {
+            /*Eccezione*/
+            errorLabel.setText("Errore inatteso: " + e.getMessage());
+            System.err.println("Errore: " + e.getMessage());
+        }
     }
 }

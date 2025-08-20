@@ -65,47 +65,6 @@ public class UserDAO {
         return null;
     }
 
-    /*Check login*/
-    public User checkLogin(String username, String password) {
-        if (Session.getInstance().isRam()) {
-            for (User user : userList) {
-                if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                    return user;
-                }
-            }
-            return null;
-        } else if (Session.getInstance().isDB()) {
-            try (Connection conn = cp.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(QueryUser.SELECT_BY_USERNAME)) {
-                stmt.setString(1, username);
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next() && rs.getString("password").equals(password)) {
-                        return loadUserFromDB(username); // carico l'entity completa
-                    }
-                }
-            } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Errore durante il login", e);
-            }
-            return null;
-        }
-        return null;
-    }
-
-    /*Update user (RAM)*/
-    public void updateUserModelData(User user) {
-        if (Session.getInstance().isRam()) {
-            for (int i = 0; i < userList.size(); i++) {
-                if (userList.get(i).getUsername().equals(user.getUsername())) {
-                    userList.set(i, user);
-                    return;
-                }
-            }
-            userList.add(user);
-        } else if (Session.getInstance().isDB()) {
-            /*Da implementare in caso di necessità*/
-        }
-    }
-
     public User loadUserData(User user) {
         return getUserByUsername(user.getUsername());
     }

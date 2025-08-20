@@ -17,11 +17,6 @@ public class QueryAppointment {
             " nutritionist_username = ? AND date = ? AND status = 'CONFIRMED'";
     public static final String DELETE_APPOINTMENT = "DELETE FROM appointment WHERE nutritionist_username = ? AND date = ? AND time = ?";
 
-    public static final String DELETE_APPOINTMENT_BY_ID = "DELETE FROM appointment WHERE id_appointment = ?";
-
-    //Prima di cancellare l'appuntamento recupera dati nutrizioista
-    public static final String SELECT_NUTRITIONIST_BEFORE_DELETE = "SELECT nutritionist_username, date, time FROM appointment WHERE id_appointment = ?";
-
     public static final String MARK_APPOINTMENTS_VIEWED_FOR_NUTRITIONIST = "UPDATE appointment SET" +
             " viewed_by_nutritionist = 1 WHERE nutritionist_username = ?;";
     public static final String HAS_UNVIEWED_APPOINTMENTS_FOR_NUTRITIONIST = "SELECT COUNT(*) FROM appointment\n" +

@@ -21,13 +21,27 @@ public class LoginController {
         this.userDAO = s.getUserDAO();
     }
 
+
     /*Autenticazione utente. Se le credenziali sono errate ritorna null*/
     public UserBean authenticateUser(String username, String password) {
         if (username == null || username.isBlank() || password == null || password.isBlank()) {
             throw new IllegalArgumentException("Username e password sono obbligatori.");
         }
 
-        User user = userDAO.checkLogin(username, password); // il DAO fa il check credenziali
-        return (user == null) ? null : Converter.userToBean(user);
+        User user = userDAO.getUserByUsername(username); // il DAO fa il check credenziali
+        if (user == null) return null;
+
+        // Verifica password (qui dentro, senza classi esterne)
+        if (!password.equals(user.getPassword())) return null;
+
+        return Converter.userToBean(user);
+    }
+
+    public boolean valLogin(String username, String password) {
+        if (username == null || username.isBlank() || password == null || password.isBlank()) {
+            return false;
+        }
+        User user = userDAO.getUserByUsername(username);
+        return user != null && password.equals(user.getPassword());
     }
 }

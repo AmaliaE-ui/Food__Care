@@ -30,6 +30,9 @@ public class RegistrationPatientGuiController {
     @FXML private ChoiceBox<String> genderChoiceBox;
     @FXML private Label errorLabel;
 
+    private static final String STYLE_ERROR   = "-fx-text-fill: red;";
+    private static final String STYLE_SUCCESS   = "-fx-text-fill: green;";
+
     @FXML public void initialize() {
         genderChoiceBox.getItems().addAll("Maschio", "Femmina", "Altro");
     }
@@ -37,7 +40,6 @@ public class RegistrationPatientGuiController {
     @FXML public void onSaveButtonClick(ActionEvent event) {
         try {
             PatientBean bean = new PatientBean();
-
             bean.setName(nameTextField.getText());
             bean.setSurname(surnameTextField.getText());
             bean.setPhoneNumber(phoneTextField.getText());
@@ -55,7 +57,7 @@ public class RegistrationPatientGuiController {
 
 
             if(success){
-                errorLabel.setStyle("-fx-text-fill: green");
+                errorLabel.setStyle(STYLE_SUCCESS);
                 errorLabel.setText("Registrazione avvenuta con successo!");
 
                 /*Attendi 2 secondi e poi torna al login*/
@@ -63,12 +65,11 @@ public class RegistrationPatientGuiController {
                 delay.setOnFinished(e -> NavigationManager.switchScene(event, "/ispw/foodcare/Login/login.fxml", "FoodCare - Login"));
                 delay.play();
             } else{
-                errorLabel.setStyle("fx-text-fill: red;");
+                errorLabel.setStyle(STYLE_ERROR);
                 errorLabel.setText("Errore nella registrazione! Controlla i dati inseriti");
             }
 
         } catch (Exception e) {
-
             gestisciEccezione(e);
         }
     }
@@ -78,7 +79,7 @@ public class RegistrationPatientGuiController {
     }
 
     private void gestisciEccezione(Exception e){
-        errorLabel.setStyle("-fx-text-fill: red;");
+        errorLabel.setStyle(STYLE_ERROR);
         if (e instanceof DateTimeParseException){
             errorLabel.setText("Formato data non valido. Usa GG/MM/AAAA.");
             System.err.println("Formato data non valido. Usa GG/MM/AAAA.");

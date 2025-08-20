@@ -23,6 +23,7 @@ import java.util.List;
 
 public class BookAppointmentController {
 
+    private final LoginController loginController = new LoginController();
     private final NutritionistDAO nutritionistDAO;
     private final AppointmentDAO appointmentDAO;
     private final AvailabilityDAO availabilityDAO;
@@ -55,46 +56,54 @@ public class BookAppointmentController {
     public void bookAppointment(AppointmentBean appointmentBean){
         /*String patientUsername = Session.getInstance().getCurrentUser().getUsername(); SE LO TENESSI IL CONTROLLER NON SAREBBE STATELESS
         *Quindi passo lo username dalla GUI/CLI*/
-        Appointment appointment = new Appointment(
+
+        if(loginController.valLogin(Session.getInstance().getCurrentUser().getUsername(),Session.getInstance().getCurrentUser().getPassword())){
+            Appointment appointment = new Appointment(
                 appointmentBean.getPatientUsername(),
                 appointmentBean.getNutritionistUsername(),
                 appointmentBean.getDate(),
                 appointmentBean.getTime(),
                 appointmentBean.getNotes()
-        );
-        /*Imposto lo stato prima del salvataggio*/
-        appointment.setStatus(AppointmentStatus.CONFIRMED);
+            );
+            /*Imposto lo stato prima del salvataggio*/
+            appointment.setStatus(AppointmentStatus.CONFIRMED);
 
-        /*Controllo se slot è già prenotato*/
-        if (appointmentDAO.isSlotAlreadyBooked(
+            /*Controllo se slot è già prenotato*/
+            if (appointmentDAO.isSlotAlreadyBooked(
                 appointmentBean.getNutritionistUsername(),
                 appointmentBean.getDate(),
                 appointmentBean.getTime())) {
                 throw new IllegalStateException("L'orario selezionato è già stato prenotato.");
-        }
-        /*Salvataggio*/
-        appointmentDAO.saveAppointment(appointment);
+             }
 
-        /*Push verso le view interessate del nuovo appuntamento prenotato*/
-        Session.getInstance().getAppointmentSubject().notifyNewAppointment(
+            /*Salvataggio*/
+            appointmentDAO.saveAppointment(appointment);
+
+            /*Push verso le view interessate del nuovo appuntamento prenotato*/
+            Session.getInstance().getAppointmentSubject().notifyNewAppointment(
                 new AppointmentEvent(
                         appointment.getNutritionistUsername(),
                         appointment.getPatientUsername(),
                         appointment.getDate(),
                         appointment.getTime()
                 )
-        );
+            );
+        }
     }
 
     /*Aggiungi una disponibilità*/
     public void addAvailability(AvailabilityBean bean) {
-        Availability availability = new Availability();
-        availability.setDate(bean.getDate());
-        availability.setStartTime(bean.getStartTime());
-        availability.setEndTime(bean.getEndTime());
-        availability.setNutritionistUsername(bean.getNutritionistUsername());
 
-        availabilityDAO.addAvailability(availability);
+
+        if(loginController.valLogin(Session.getInstance().getCurrentUser().getUsername(),Session.getInstance().getCurrentUser().getPassword())){
+            Availability availability = new Availability();
+            availability.setDate(bean.getDate());
+            availability.setStartTime(bean.getStartTime());
+            availability.setEndTime(bean.getEndTime());
+            availability.setNutritionistUsername(bean.getNutritionistUsername());
+
+            availabilityDAO.addAvailability(availability);
+        }
     }
 
     /*Recupera disponibilità per nutrizionista*/
