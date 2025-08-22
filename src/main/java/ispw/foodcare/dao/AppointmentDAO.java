@@ -36,9 +36,9 @@ public class AppointmentDAO {
     // PUBLIC API
     // --------------------------
     public void saveAppointment(Appointment appointment) {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             saveAppointmentRam(appointment);
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             saveAppointmentDB(appointment);
         } else {
             throw new IllegalStateException("Modalità persistenza non configurata.");
@@ -163,7 +163,7 @@ public class AppointmentDAO {
     }
 
     public List<Appointment> getAppointmentsForPatient(String patientUsername) {
-        if(Session.getInstance().isRam()){
+        if(Session.getInstance().getRam()){
             return getAppointmentsForPatientRam(patientUsername);
         }else {
             List<Appointment> appointments = new ArrayList<>();
@@ -191,7 +191,7 @@ public class AppointmentDAO {
     }
 
     public boolean isSlotAlreadyBooked(String nutritionistUsername, LocalDate date, LocalTime time) {
-        if(Session.getInstance().isRam()){
+        if(Session.getInstance().getRam()){
             return isSlotAlreadyBookedRam(nutritionistUsername, date, time);
         }else {
             try (Connection conn = cp.getConnection();
@@ -210,7 +210,7 @@ public class AppointmentDAO {
     }
 
     public List<LocalTime> getBookedTimesForNutritionist(String nutritionistUsername, LocalDate date) {
-        if(Session.getInstance().isRam()){
+        if(Session.getInstance().getRam()){
             return getBookedTimesForNutritionistRam(nutritionistUsername, date);
         }
         else{
@@ -232,7 +232,7 @@ public class AppointmentDAO {
     }
 
     public void deleteAppointment(String nutritionistUsername, LocalDate date, LocalTime time) {
-        if(Session.getInstance().isRam()){
+        if(Session.getInstance().getRam()){
             deleteAppointmentRam(nutritionistUsername, date, time);
         }else {
             try (Connection conn = cp.getConnection();
@@ -249,7 +249,7 @@ public class AppointmentDAO {
 
     public List<Appointment> getAppointmentForNutritionistWithUsername(String nutritionistUsername) {
         // Nota: architetturalmente i DAO dovrebbero restituire Entity, non Bean.
-        if(Session.getInstance().isRam()){
+        if(Session.getInstance().getRam()){
             // Compongo i dati leggendo i pazienti da UserDAO
             var userDAO = Session.getInstance().getUserDAO();
             List<Appointment> list = new ArrayList<>();
@@ -305,10 +305,10 @@ public class AppointmentDAO {
 
     /*Metodi nuovi - Notifiche nuovi appuntamenti*/
     public boolean hasUnviewedAppointmentsForNutritionist(String nutritionistUsername) {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             // In RAM non gestiamo il flag "is_new": restituisco false.
             return false;
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             try (Connection conn = cp.getConnection();
                  PreparedStatement stmt =
                          conn.prepareStatement(QueryAppointment.HAS_UNVIEWED_APPOINTMENTS_FOR_NUTRITIONIST)) {
@@ -328,9 +328,9 @@ public class AppointmentDAO {
     }
 
     public void markAppointmentsAsViewedForNutritionist(String nutritionistUsername) {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             // No-op in RAM
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getRam()) {
             try (Connection conn = cp.getConnection();
                  PreparedStatement stmt =
                          conn.prepareStatement(QueryAppointment.MARK_APPOINTMENTS_VIEWED_FOR_NUTRITIONIST)) {

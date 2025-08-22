@@ -47,11 +47,11 @@ public class AvailabilityDAO {
     // PUBLIC API
     // --------------------------
     public void addAvailability(Availability availability) {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             addAvailabilityRam(availability);
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             addAvailabilityDB(availability);
-        } else if (Session.getInstance().isFS()) {
+        } else if (Session.getInstance().getFS()) {
             addAvailabilityFS(availability);
         } else {
             throw new IllegalStateException("Modalità persistenza non configurata.");
@@ -59,11 +59,11 @@ public class AvailabilityDAO {
     }
 
     public List<Availability> getAvailabilitiesForNutritionist(String nutritionistUsername) {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             return getAvailabilitiesRam(nutritionistUsername);
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             return getAvailabilitiesDB(nutritionistUsername);
-        } else if (Session.getInstance().isFS()) {
+        } else if (Session.getInstance().getFS()) {
             return getAvailabilitiesFS(nutritionistUsername);
         } else {
             throw new IllegalStateException("Modalità persistenza non configurata.");
@@ -71,11 +71,11 @@ public class AvailabilityDAO {
     }
 
     public void deleteAvailability(Availability availability) {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             deleteAvailabilityRam(availability);
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             deleteAvailabilityDB(availability);
-        } else if (Session.getInstance().isFS()) {
+        } else if (Session.getInstance().getFS()) {
             deleteAvailabilityFS(availability);
         } else {
             throw new IllegalStateException("Modalità persistenza non configurata.");
@@ -83,10 +83,10 @@ public class AvailabilityDAO {
     }
 
     public void deleteAvailabilitybydata(LocalDate cutoffDate) {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             // rimuovi tutto <= cutoffDate
             availabilitiesRam.removeIf(a -> !a.getDate().isAfter(cutoffDate));
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             try (Connection conn = cp.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(QueryAvailability.DELETE_AVAILABILITY_BY_DATE)) {
                 stmt.setDate(1, java.sql.Date.valueOf(cutoffDate));
@@ -95,7 +95,7 @@ public class AvailabilityDAO {
             } catch (SQLException e) {
                 logger.log(Level.SEVERE, "Errore cancellazione disponibilità da DB", e);
             }
-        } else if (Session.getInstance().isFS()) {
+        } else if (Session.getInstance().getFS()) {
             deleteAvailabilityByDateFS(cutoffDate);
         } else {
             throw new IllegalStateException("Modalità persistenza non configurata.");

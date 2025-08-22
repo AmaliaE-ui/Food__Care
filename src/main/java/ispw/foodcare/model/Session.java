@@ -24,10 +24,10 @@ public class Session {
     private final AppointmentDAO appointmentDAO;
     private final AddressDAO addressDAO;
 
-    /*Da vedere se serve oppure no - patetrn observer*/
+    /*patetrn observer*/
     private final AppointmentSubject appointmentSubject = new InMemoryAppointmentSubject();
-    public AppointmentSubject getAppointmentSubject() { return appointmentSubject; }
-
+    public AppointmentSubject getAppointmentSubject() {
+        return appointmentSubject; }
 
     private boolean isCLI = false;
     private boolean isDB = false;
@@ -60,35 +60,22 @@ public class Session {
     public UserBean getCurrentUser() { return currentUser; }
     public void setCurrentUser(UserBean currentUser) { this.currentUser = currentUser; }
 
-    public boolean isCLI() { return isCLI; }
     public void setCLI(boolean cli) { isCLI = cli; }
-    public boolean isDB() { return isDB; }
     public void setDB(boolean db) { isDB = db; }
-    public boolean isRam() { return isRam; }
     public void setRam(boolean ram) { isRam = ram; }
     public void setFs(boolean fs) { isFS = fs; }
-    public boolean isFS() { return isFS; }
 
+    public Boolean getCLI() { return isCLI; }
+    public Boolean getDB() { return isDB; }
+    public Boolean getRam() { return isRam; }
+    public Boolean getFS() { return isFS; }
 
     public UserDAO getUserDAO(){ return userDAO; }
-
     public NutritionistDAO getNutritionistDAO() {return nutritionistDAO; }
-
     public AppointmentDAO getAppointmentDAO() {return appointmentDAO; }
-
     public AvailabilityDAO getAvailabilityDAO() {return availabilityDAO; }
-
-    public AddressDAO getAddressDAO() { return addressDAO; }
-
 
     public void setAttributes(String key, Object value) { attributes.put(key, value); }
     public Object getAttributes(String key) { return attributes.get(key); }
     public void removeAttribute(String key) { attributes.remove(key); }
-
-    public Role getCurrentRole() { return currentUser.getRole(); }
-    public void logout() {
-        this.currentUser = null;
-    }
-
-
 }

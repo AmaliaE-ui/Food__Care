@@ -34,7 +34,7 @@ public class UserDAO {
 
     /*Salva un nuovo utente*/
     public void saveUser(User user) throws AccountAlreadyExistsException {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             if (getUserByUsername(user.getUsername()) != null) {
                 throw new AccountAlreadyExistsException("User già esistente con username: " + user.getUsername());
             }
@@ -44,21 +44,21 @@ public class UserDAO {
             if (user instanceof Nutritionist nutritionist) {
                 Session.getInstance().getNutritionistDAO().saveNutritionistRam(nutritionist);
             }
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             saveUserToDB(user);
         }
     }
 
     /*Carica un utente per username*/
     public User getUserByUsername(String username) {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             for (User user : userList) {
                 if (user.getUsername().equals(username)) {
                     return user;
                 }
             }
             return null;
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             return loadUserFromDB(username);
         }
         return null;

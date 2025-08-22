@@ -24,9 +24,9 @@ public class NutritionistDAO {
 
     /*Public interface for controller applicativi*/
     public List<Nutritionist> getByCity(String city) {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             return getByCityRam(city);
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             return getByCityDB(city);
         } else {
             throw new IllegalStateException("Modalità di persistenza non configurata");

@@ -31,9 +31,9 @@ public class AddressDAO {
 
     /* Variante che partecipa a una transazione esistente */
     public int save(Address address, Connection conn) throws SQLException {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             return saveRam(address);
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             return insertDB(address, conn);
         } else {
             throw new IllegalStateException("Modalità persistenza non configurata.");
@@ -46,9 +46,9 @@ public class AddressDAO {
 
     /* Variante transazionale */
     public Address findById(int id, Connection conn) throws SQLException {
-        if (Session.getInstance().isRam()) {
+        if (Session.getInstance().getRam()) {
             return findByIdRam(id);
-        } else if (Session.getInstance().isDB()) {
+        } else if (Session.getInstance().getDB()) {
             return loadDB(id, conn);
         } else {
             throw new IllegalStateException("Modalità persistenza non configurata.");

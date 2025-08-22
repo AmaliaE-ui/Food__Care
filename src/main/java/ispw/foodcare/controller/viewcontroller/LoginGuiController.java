@@ -4,7 +4,6 @@ package ispw.foodcare.controller.viewcontroller;
 import ispw.foodcare.Role;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.LoginController;
-import ispw.foodcare.exception.AccountAlreadyExistsException;
 import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.NavigationManager;
 import javafx.event.ActionEvent;
