@@ -22,7 +22,7 @@ public class AppointmentsPatientGuiController {
     @FXML private Button deleteButton;
 
     private final BookAppointmentController controller = new BookAppointmentController();
-    ShowAlert alert = new ShowAlert();
+    private final ShowAlert alert = new ShowAlert();
 
     @FXML private void initialize() {
         dateColumn.setCellValueFactory(cellData ->

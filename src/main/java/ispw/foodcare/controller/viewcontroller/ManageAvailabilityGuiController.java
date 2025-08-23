@@ -26,7 +26,7 @@ public class ManageAvailabilityGuiController {
     private final BookAppointmentController controller = new BookAppointmentController();
     private final ObservableList<AvailabilityBean> availabilityList = FXCollections.observableArrayList();
 
-    ShowAlert alert = new ShowAlert();
+    private final ShowAlert alert = new ShowAlert();
 
     @FXML private void initialize() {
 

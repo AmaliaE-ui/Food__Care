@@ -20,7 +20,7 @@ public class PersonalAreaPatientGuiController {
 
     private static final Logger logger = Logger.getLogger(PersonalAreaPatientGuiController.class.getName());
     private static final DateTimeFormatter date = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    ShowAlert showAlert = new ShowAlert();
+    private final ShowAlert showAlert = new ShowAlert();
 
     @FXML public void initialize() {
         UserBean currentUser = Session.getInstance().getCurrentUser();

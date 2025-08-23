@@ -23,7 +23,7 @@ public class AddressDAO {
     }
 
     /* Salva un indirizzo e ritorna l'ID */
-    public int saveRam(Address address) {
+    private int saveRam(Address address) {
             int id = nextId++;
             ram.put(id, address);
             return id;
@@ -40,7 +40,7 @@ public class AddressDAO {
         }
     }
 
-    public Address findByIdRam(int id) {
+    private Address findByIdRam(int id) {
             return ram.get(id);
     }
 

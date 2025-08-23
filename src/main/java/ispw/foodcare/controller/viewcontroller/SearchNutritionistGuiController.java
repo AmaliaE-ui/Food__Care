@@ -31,7 +31,7 @@ public class SearchNutritionistGuiController {
     /*riuso il controller*/
     private final BookAppointmentController controller = new BookAppointmentController();
 
-    @FXML public void initialize() {
+    @FXML private void initialize() {
 
         nutritionistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         profileColumn.setMinWidth(120);
