@@ -330,7 +330,7 @@ public class AppointmentDAO {
     public void markAppointmentsAsViewedForNutritionist(String nutritionistUsername) {
         if (Session.getInstance().getRam()) {
             // No-op in RAM
-        } else if (Session.getInstance().getRam()) {
+        } else if (Session.getInstance().getDB()) {
             try (Connection conn = cp.getConnection();
                  PreparedStatement stmt =
                          conn.prepareStatement(QueryAppointment.MARK_APPOINTMENTS_VIEWED_FOR_NUTRITIONIST)) {

@@ -65,10 +65,9 @@ public class Session {
     public void setRam(boolean ram) { isRam = ram; }
     public void setFs(boolean fs) { isFS = fs; }
 
-    public Boolean getCLI() { return isCLI; }
-    public Boolean getDB() { return isDB; }
-    public Boolean getRam() { return isRam; }
-    public Boolean getFS() { return isFS; }
+    public boolean getDB() { return isDB; }
+    public boolean getRam() { return isRam; }
+    public boolean getFS() { return isFS; }
 
     public UserDAO getUserDAO(){ return userDAO; }
     public NutritionistDAO getNutritionistDAO() {return nutritionistDAO; }
