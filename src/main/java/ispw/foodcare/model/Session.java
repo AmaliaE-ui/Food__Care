@@ -1,6 +1,5 @@
 package ispw.foodcare.model;
 
-import ispw.foodcare.Role;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.dao.*;
 import ispw.foodcare.utils.InMemoryAppointmentSubject;
