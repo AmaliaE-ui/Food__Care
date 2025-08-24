@@ -12,7 +12,7 @@ import java.time.LocalTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 /** Testa il metodo AvailabilityDAO.deleteAvailabilitybydata(...) */
-class AvailabilityDAODeleteByDateTest {
+class AvailabilityDAOTest {
 
     private Session s;
     private AvailabilityDAO dao;
