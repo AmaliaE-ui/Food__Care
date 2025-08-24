@@ -1,3 +1,5 @@
+package test;
+
 import ispw.foodcare.dao.AvailabilityDAO;
 import ispw.foodcare.model.Availability;
 import ispw.foodcare.model.Session;

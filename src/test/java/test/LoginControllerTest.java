@@ -1,3 +1,5 @@
+package test;
+
 import ispw.foodcare.Role;
 import ispw.foodcare.controller.applicationcontroller.LoginController;
 import ispw.foodcare.dao.UserDAO;
