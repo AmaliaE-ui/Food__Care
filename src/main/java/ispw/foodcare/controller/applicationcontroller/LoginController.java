@@ -28,7 +28,7 @@ public class LoginController {
             throw new IllegalArgumentException("Username e password sono obbligatori.");
         }
 
-        User user = userDAO.getUserByUsername(username); // il DAO fa il check credenziali
+        User user = userDAO.getUserByUsername(username); 
         if (user == null) return null;
 
         /*Verifica password*/

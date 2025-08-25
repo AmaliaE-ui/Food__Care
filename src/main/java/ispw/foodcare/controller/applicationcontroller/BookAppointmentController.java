@@ -29,14 +29,6 @@ public class BookAppointmentController {
     private final AvailabilityDAO availabilityDAO;
 
     /*Costruttore*/
-    public BookAppointmentController(NutritionistDAO nutritionistDAO,
-                                     AppointmentDAO appointmentDAO,
-                                     AvailabilityDAO availabilityDAO) {
-        this.nutritionistDAO = nutritionistDAO;
-        this.appointmentDAO = appointmentDAO;
-        this.availabilityDAO = availabilityDAO;
-    }
-
     public BookAppointmentController() {
         var s = Session.getInstance();
         this.nutritionistDAO = s.getNutritionistDAO();
@@ -143,7 +135,7 @@ public class BookAppointmentController {
     }
 
     /*Controlla se la data è un girono feriale*/
-    public static boolean isWeekday(LocalDate date) {
+    public static boolean isWeekend(LocalDate date) {
         DayOfWeek day = date.getDayOfWeek();
         return !(day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY);
     }

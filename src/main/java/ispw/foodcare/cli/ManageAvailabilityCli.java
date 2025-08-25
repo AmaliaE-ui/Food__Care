@@ -95,7 +95,7 @@ public class ManageAvailabilityCli {
         if (date == null) return;
 
         // stessa business rule della GUI: solo giorni feriali
-        if (!BookAppointmentController.isWeekday(date)) {
+        if (BookAppointmentController.isWeekend(date)) {
             System.out.println("✖ Data non valida: inserire solo giorni lavorativi (lun-ven).");
             return;
         }
@@ -127,9 +127,9 @@ public class ManageAvailabilityCli {
 
             try {
                 AvailabilityBean bean = new AvailabilityBean();
-                bean.setDate(date); // può lanciare IllegalArgumentException (date nel passato)
+                bean.setDate(date);
                 bean.setStartTime(slot);
-                bean.setEndTime(slot.plusMinutes(45)); // stessa durata GUI
+                bean.setEndTime(slot.plusMinutes(45));
                 bean.setNutritionistUsername(username);
 
                 controller.addAvailability(bean);
@@ -172,8 +172,7 @@ public class ManageAvailabilityCli {
         String s = scanner.nextLine().trim();
         if (s.isEmpty()) return null;
         try {
-            LocalDate d = LocalDate.parse(s, DMY);
-            return d;
+            return LocalDate.parse(s, DMY);
         } catch (DateTimeParseException e) {
             System.out.println("Formato data non valido.");
             return null;

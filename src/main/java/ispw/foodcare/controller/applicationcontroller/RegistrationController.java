@@ -7,7 +7,6 @@ import ispw.foodcare.dao.UserDAO;
 import ispw.foodcare.model.Nutritionist;
 import ispw.foodcare.model.Patient;
 import ispw.foodcare.exception.AccountAlreadyExistsException;
-import ispw.foodcare.model.Session;
 import ispw.foodcare.utils.Converter;
 
 import java.util.logging.Logger;
@@ -22,12 +21,7 @@ public class RegistrationController {
         this.userDAO = userDAO;
     }
 
-    public RegistrationController() {
-        var s = Session.getInstance();
-        this.userDAO = s.getUserDAO();
-    }
-
-    //Registra nutrizionista
+    /*Registra nutrizionista*/
     public boolean registrationNutritionist(NutritionistBean bean) {
         try {
             Nutritionist nutritionist = Converter.beanToNutritionist(bean);
@@ -39,7 +33,7 @@ public class RegistrationController {
         }
     }
 
-    //Registra paziente
+    /*Registra paziente*/
     public boolean registrationPatient(PatientBean bean){
             try {
                 Patient patient = Converter.beanToPatient(bean);

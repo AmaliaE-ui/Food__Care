@@ -52,7 +52,7 @@ public class ManageAvailabilityGuiController {
 
         datePicker.valueProperty().addListener((obs, oldDate, newDate) -> {
             if (newDate != null) {
-                if (!controller.isWeekday(newDate)) {
+                if (controller.isWeekend(newDate)) {
                     alert.showAlert("Data non valida", "Puoi inserire disponibilità solo nei giorni lavorativi (lun-ven).");
                     datePicker.setValue(null);
                 } else {
@@ -85,12 +85,12 @@ public class ManageAvailabilityGuiController {
 
             try {
                 AvailabilityBean bean = new AvailabilityBean();
-                bean.setDate(date); // può lanciare eccezione se la data è nel passato
+                bean.setDate(date);
                 bean.setStartTime(slot);
                 bean.setEndTime(slot.plusMinutes(45));
                 bean.setNutritionistUsername(username);
 
-                controller.addAvailability(bean); // può sollevare eccezioni dal DAO
+                controller.addAvailability(bean);
                 availabilityList.add(bean);
 
                 availabilityList.sort((a1, a2) -> {
@@ -117,14 +117,12 @@ public class ManageAvailabilityGuiController {
         private final Button deleteButton = new Button("Elimina");
         private final BookAppointmentController controller;
         private final ObservableList<AvailabilityBean> availabilityList;
-        private final ShowAlert alert;
 
         DeleteButtonCell(BookAppointmentController controller,
                          ObservableList<AvailabilityBean> availabilityList,
                          ShowAlert alert) {
             this.controller = controller;
             this.availabilityList = availabilityList;
-            this.alert = alert;
 
             deleteButton.setOnAction(e -> {
                 AvailabilityBean availability = getTableView().getItems().get(getIndex());

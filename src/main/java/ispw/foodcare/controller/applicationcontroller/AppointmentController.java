@@ -12,10 +12,6 @@ public class AppointmentController {
     private final AppointmentDAO appointmentDAO;
 
     /*Costruttore*/
-    public AppointmentController(AppointmentDAO appointmentDAO) {
-        this.appointmentDAO = appointmentDAO;
-    }
-
     public AppointmentController (){
         var s = Session.getInstance();
         this.appointmentDAO = s.getAppointmentDAO();

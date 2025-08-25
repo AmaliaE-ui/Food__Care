@@ -1,10 +1,8 @@
 package ispw.foodcare.cli;
 
-
 import ispw.foodcare.Role;
 import ispw.foodcare.bean.*;
 import ispw.foodcare.controller.applicationcontroller.RegistrationController;
-import ispw.foodcare.exception.AccountAlreadyExistsException;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -19,7 +17,7 @@ public class RegistrationCli {
 
     Scanner scanner = new Scanner(System.in);
 
-    public void register() throws AccountAlreadyExistsException {
+    public void register() {
 
         System.out.println("Registrati come:");
         System.out.println("[1] Paziente");
@@ -34,7 +32,7 @@ public class RegistrationCli {
         }
     }
 
-    public void registraPaziente() throws AccountAlreadyExistsException {
+    public void registraPaziente() {
         PatientBean bean = new PatientBean();
 
         promptValid(scanner, "Nome", bean::setName);
@@ -51,7 +49,7 @@ public class RegistrationCli {
         System.out.println(result ? "✅ Registrazione completata!" : "❌ Errore nella registrazione.");
     }
 
-    public void registraNutrizionista() throws AccountAlreadyExistsException {
+    public void registraNutrizionista() {
         NutritionistBean bean = new NutritionistBean();
         AddressBean address = new AddressBean();
 
@@ -87,12 +85,12 @@ public class RegistrationCli {
         return sc.nextLine();
     }
 
-    /*Metodo per setter che fanno validazione sintattica (IllegalArgumentException)*/
+    /*Metodo per setter che fanno validazione sintattica*/
     private String promptValid(Scanner sc, String label, java.util.function.Consumer<String> setter) {
         while (true) {
             String s = prompt(sc, label);
             try {
-                setter.accept(s);   // esegue il setter che può lanciare IllegalArgumentException
+                setter.accept(s);
                 return s;           // ok: esco
             } catch (IllegalArgumentException ex) {
                 System.out.println("❌ " + ex.getMessage() + " (riprovare)");
@@ -103,10 +101,10 @@ public class RegistrationCli {
     /*Metodo per date*/
     private LocalDate promptDateValid(Scanner sc, String label, java.util.function.Consumer<LocalDate> setter) {
         while (true) {
-            String s = prompt(sc, label);        // riusa il tuo prompt(String)
+            String s = prompt(sc, label);
             try {
-                LocalDate d = LocalDate.parse(s.trim()); // parse ISO (YYYY-MM-DD)
-                setter.accept(d);                        // può lanciare IllegalArgumentException (es. data futura)
+                LocalDate d = LocalDate.parse(s.trim());
+                setter.accept(d);
                 return d;                                // tutto ok → esco
             } catch (java.time.format.DateTimeParseException ex) {
                 System.out.println("❌ Data non valida. Formato richiesto: YYYY-MM-DD (riprovare)");
@@ -115,7 +113,6 @@ public class RegistrationCli {
             }
         }
     }
-
 }
 
 
