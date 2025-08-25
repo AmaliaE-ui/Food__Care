@@ -8,7 +8,9 @@ import java.util.concurrent.*;
 import java.util.logging.Logger;
 
 public final class InMemoryAppointmentSubject implements AppointmentSubject {
+    /*Elenco degli iscritti(listener) per ogni nutrizionista*/
     private final ConcurrentHashMap<String, CopyOnWriteArrayList<AppointmentListener>> map = new ConcurrentHashMap<>();
+
     private static final Logger log = Logger.getLogger(InMemoryAppointmentSubject.class.getName());
 
     /*Iscrizione*/

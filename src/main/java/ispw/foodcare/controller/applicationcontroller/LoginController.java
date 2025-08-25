@@ -10,7 +10,7 @@ public class LoginController {
 
     private final UserDAO userDAO;
 
-    /* Constructor injection*/
+    /* Construttore injection*/
     public LoginController(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
@@ -31,7 +31,7 @@ public class LoginController {
         User user = userDAO.getUserByUsername(username); // il DAO fa il check credenziali
         if (user == null) return null;
 
-        // Verifica password (qui dentro, senza classi esterne)
+        /*Verifica password*/
         if (!password.equals(user.getPassword())) return null;
 
         return Converter.userToBean(user);

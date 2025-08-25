@@ -176,7 +176,7 @@ public class BookAppointmentController {
     }
 
     /*Mapping appuntamento -> disponibilità*/
-    public AvailabilityBean appointmentToAvailabilityBean(AppointmentBean appointmentBean) {
+    private AvailabilityBean appointmentToAvailabilityBean(AppointmentBean appointmentBean) {
         AvailabilityBean availability = new AvailabilityBean();
         availability.setDate(appointmentBean.getDate());
         availability.setStartTime(appointmentBean.getTime());
