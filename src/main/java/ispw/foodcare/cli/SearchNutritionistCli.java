@@ -29,29 +29,26 @@ public class SearchNutritionistCli {
 
             if (city.isEmpty()) {
                 System.out.println("Torno al menu precedente.");
-                return; // back
+                return; // esci dal menu
             }
 
             List<NutritionistBean> results = controller.searchNutritionistsByCity(city);
 
             if (results == null || results.isEmpty()) {
                 System.out.println("⚠ Nessun nutrizionista trovato nella città \"" + city + "\".\n");
-                continue; // ricomincia ciclo ricerca
+                //ciclo riparte
+            } else {
+                printResults(results);
+
+                Integer choice = askForIndexOrBack(results.size());
+                if (choice != null) { // se è null l’utente ha scelto "nuova ricerca"
+                    NutritionistBean selected = results.get(choice - 1);
+                    new NutritionistProfileCli(scanner, selected).show();
+                }
             }
-
-            printResults(results);
-
-            Integer choice = askForIndexOrBack(results.size());
-            if (choice == null) {
-                // back alla ricerca (senza uscire a menu precedente)
-                continue;
-            }
-
-            NutritionistBean selected = results.get(choice - 1);
-            new NutritionistProfileCli(scanner, selected).show();
-            // al ritorno dal profilo, si torna alla lista (ricerca corrente) per eventuale nuova selezione
         }
     }
+
 
     private void printResults(List<NutritionistBean> results) {
         System.out.println("\nRisultati trovati: " + results.size());

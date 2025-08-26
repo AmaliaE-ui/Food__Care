@@ -74,7 +74,7 @@ public class HomePatientCli {
         System.out.println("\n[CLI] -> Visualizzazione storico appuntamenti. - Non implementato");
     }
 
-    private void handleLogout() throws AccountAlreadyExistsException {
+    private void handleLogout() {
         Session.getInstance().logout();
         System.out.println("Logout effettuato. Torna al menu principale.");
         new InitializeCli().initialize();

@@ -30,42 +30,43 @@ public class AppointmentsPatientCli {
                 System.out.println("\nNessun appuntamento prenotato.");
                 System.out.print("Premi ENTER per tornare alla Home…");
                 scanner.nextLine();
-                return; // back to Home
+                return; // torna alla Home
             }
 
             printTable(list);
 
-            System.out.print("\nSeleziona un appuntamento da cancellare (1-" + list.size() + ") "
-                    + "\n[0] Aggiorna \n[a] Indietro");
-            System.out.print("\nSeleziona un'opzione: ");
+            System.out.print(
+                    "\nSeleziona un appuntamento da cancellare (1-" + list.size() + ") " +
+                            "\n[0] Aggiorna \n[a] Indietro" +
+                            "\nSeleziona un'opzione: "
+            );
             String in = scanner.nextLine().trim().toLowerCase();
 
-            if (in.equals("a")) {
+            // indietro
+            if ("a".equals(in)) {
                 return;
             }
-            if (in.equals("0")) {
-                continue;
-            }
 
-            Integer idx = parseIndex(in, list.size());
-            if (idx == null) {
-                System.out.println("Input non valido. Riprova.");
-                continue;
-            }
-
-            AppointmentBean selected = list.get(idx - 1);
-            if (!confirmDeletion(selected)) {
-                continue;
-            }
-
-            try {
-                controller.deleteAppointment(selected);
-                System.out.println("✔ Appuntamento eliminato con successo.");
-            } catch (Exception e) {
-                System.out.println("✖ Errore durante l'eliminazione: " + e.getMessage());
+            // 0 = aggiorna: non fa nulla, rientra nel while
+            if (!"0".equals(in)) {
+                Integer idx = parseIndex(in, list.size());
+                if (idx == null) {
+                    System.out.println("Input non valido. Riprova.");
+                } else {
+                    AppointmentBean selected = list.get(idx - 1);
+                    if (confirmDeletion(selected)) {
+                        try {
+                            controller.deleteAppointment(selected);
+                            System.out.println("✔ Appuntamento eliminato con successo.");
+                        } catch (Exception e) {
+                            System.out.println("✖ Errore durante l'eliminazione: " + e.getMessage());
+                        }
+                    }
+                }
             }
         }
     }
+
 
     private List<AppointmentBean> loadAppointments() {
         List<AppointmentBean> raw = controller.getPatientAppointments(currentUser.getUsername());

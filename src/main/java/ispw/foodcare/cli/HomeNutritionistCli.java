@@ -75,7 +75,7 @@ public class HomeNutritionistCli {
         new AppointmentsNutritionistCli(scanner, currentUser).show();
     }
 
-    private void handleLogout() throws AccountAlreadyExistsException {
+    private void handleLogout() {
         Session.getInstance().logout();
         System.out.println("Logout effettuato.");
         new InitializeCli().initialize();

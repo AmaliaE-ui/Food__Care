@@ -35,10 +35,11 @@ public class ManageAvailabilityCli {
             printTable();
 
             System.out.println("""
-                    \n[1] Aggiungi disponibilità
+                    [1] Aggiungi disponibilità
                     [2] Elimina disponibilità
                     [3] Refresh
-                    [0] Indietro""");
+                    [0] Indietro
+                    """);
             System.out.print("Seleziona un'opzione: ");
             String choice = scanner.nextLine().trim();
 
