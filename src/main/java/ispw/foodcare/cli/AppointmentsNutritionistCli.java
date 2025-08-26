@@ -69,17 +69,6 @@ public class AppointmentsNutritionistCli {
         }
     }
 
-    private void showDetails(AppointmentBean a) {
-        System.out.println("\n--- Dettagli appuntamento ---");
-        System.out.println("Paziente    : " + safe(a.getPatientName()) + " " + safe(a.getPatientSurname()));
-        System.out.println("Data        : " + (a.getDate() != null ? a.getDate().format(DATE_FMT) : ""));
-        System.out.println("Ora         : " + (a.getTime() != null ? a.getTime().format(TIME_FMT) : ""));
-        System.out.println("Note        : " + safe(a.getNotes()));
-        System.out.println("------------------------------");
-        System.out.print("Premi Invio per continuare...");
-        scanner.nextLine();
-    }
-
     private String safe(String s) {
         return s == null ? "" : s;
     }

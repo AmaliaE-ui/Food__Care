@@ -13,6 +13,7 @@ public class SearchNutritionistCli {
     private final Scanner scanner;
     private final BookAppointmentController controller;
     private final UserBean currentUser;
+    private static final String LINE = "---------------------------------------------------";
 
     public SearchNutritionistCli(Scanner scanner, UserBean currentUser) {
         this.scanner = scanner;
@@ -54,10 +55,10 @@ public class SearchNutritionistCli {
 
     private void printResults(List<NutritionistBean> results) {
         System.out.println("\nRisultati trovati: " + results.size());
-        System.out.println("--------------------------------------------------------------------------");
+        System.out.println(LINE);
         System.out.printf("%-4s | %-15s | %-15s | %-15s | %-20s%n",
                 "#", "Nome", "Cognome", "Città", "Specializzazione");
-        System.out.println("--------------------------------------------------------------------------");
+        System.out.println(LINE);
 
         int i = 1;
         for (NutritionistBean n : results) {
@@ -66,7 +67,7 @@ public class SearchNutritionistCli {
             System.out.printf("%-4d | %-15s | %-15s | %-15s | %-20s%n",
                     i++, safe(n.getName()), safe(n.getSurname()), safe(city), safe(spec));
         }
-        System.out.println("--------------------------------------------------------------------------");
+        System.out.println(LINE);
     }
 
     /**

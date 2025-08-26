@@ -1,6 +1,5 @@
 package ispw.foodcare.cli;
 
-import ispw.foodcare.exception.AccountAlreadyExistsException;
 import java.util.Scanner;
 
 public class InitializeCli {
@@ -9,7 +8,7 @@ public class InitializeCli {
     private RegistrationCli regCli = new RegistrationCli();
     private LoginCli logCli=new LoginCli();
 
-    public void initialize() throws AccountAlreadyExistsException {
+    public void initialize() {
 
         while (true) {
             System.out.println("\n--- Benvenuto in FoodCare CLI ---");

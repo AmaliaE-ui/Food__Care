@@ -66,7 +66,6 @@ public class HomeNutritionistCli {
     }
 
     private void handleAvailability() throws AccountAlreadyExistsException {
-
         new ManageAvailabilityCli(scanner,currentUser).show();
 
     }
@@ -80,6 +79,5 @@ public class HomeNutritionistCli {
         Session.getInstance().logout();
         System.out.println("Logout effettuato.");
         new InitializeCli().initialize();
-    };
-
+    }
 }

@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
@@ -18,6 +17,7 @@ public final class NavigationManager {
 
     private NavigationManager() {}
     private static final Logger logger = Logger.getLogger(NavigationManager.class.getName());
+    private static final String ERRORE = "Errore nel cambio scena. FXML: ";
 
     /*SCENE (Stage già noto) */
     public static void switchScene(Stage stage, String fxmlPath, String title) {
@@ -28,7 +28,7 @@ public final class NavigationManager {
             stage.setTitle(title);
             stage.show();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Errore nel cambio scena. FXML: " + fxmlPath, e);
+            logger.log(Level.SEVERE, ERRORE + fxmlPath, e);
         }
     }
 
@@ -42,7 +42,7 @@ public final class NavigationManager {
             stage.setTitle(title);
             stage.show();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Errore nel cambio scena. FXML: " + fxmlPath, e);
+            logger.log(Level.SEVERE, ERRORE + fxmlPath, e);
         }
     }
 
@@ -77,7 +77,7 @@ public final class NavigationManager {
             AnchorPane.setRightAnchor(newContent, 0.0);
 
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Errore nel cambio scena. FXML: " + fxmlPath, e);
+            logger.log(Level.SEVERE, ERRORE + fxmlPath, e);
         }
     }
 }

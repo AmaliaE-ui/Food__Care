@@ -7,13 +7,13 @@ import ispw.foodcare.controller.applicationcontroller.BookAppointmentController;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BookAppointmentCli {
 
     private final Scanner scanner;
     private final NutritionistBean nutritionist;
     private final BookAppointmentController controller;
+    private static final String LINE = "---------------------------------------------------";
 
     public BookAppointmentCli(Scanner scanner, NutritionistBean nutritionist) {
         this.scanner = scanner;
@@ -35,7 +35,7 @@ public class BookAppointmentCli {
             // 2. Filtra date passate
             availabilities = availabilities.stream()
                     .filter(a -> !a.getDate().isBefore(LocalDate.now()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             // 3. Rimuovi slot già prenotati
             availabilities = availabilities.stream()
@@ -43,7 +43,7 @@ public class BookAppointmentCli {
                         List<LocalTime> bookedTimes = controller.getBookedTimes(nutritionist.getUsername(), a.getDate());
                         return !bookedTimes.contains(a.getStartTime());
                     })
-                    .collect(Collectors.toList());
+                    .toList();
 
             if (availabilities.isEmpty()) {
                 System.out.println("⚠ Tutti gli slot futuri sono già prenotati.");
@@ -86,9 +86,9 @@ public class BookAppointmentCli {
 
     private void printAvailabilities(List<AvailabilityBean> availabilities) {
         System.out.println("\nSlot disponibili:");
-        System.out.println("---------------------------------------------------");
+        System.out.println(LINE);
         System.out.printf("%-4s | %-12s | %-5s - %-5s%n", "#", "Data", "Inizio", "Fine");
-        System.out.println("---------------------------------------------------");
+        System.out.println(LINE);
         int i = 1;
         for (AvailabilityBean a : availabilities) {
             System.out.printf("%-4d | %-12s | %-5s - %-5s%n",
@@ -97,7 +97,7 @@ public class BookAppointmentCli {
                     a.getStartTime(),
                     a.getEndTime());
         }
-        System.out.println("---------------------------------------------------");
+        System.out.println(LINE);
     }
 
     private Integer askForIndexOrBack(int size) {
