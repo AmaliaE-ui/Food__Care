@@ -23,28 +23,25 @@ public class AppointmentsPatientCli {
     }
 
     public void show() {
-        while (true) {
+        boolean running = true;
+
+        while (running) {
             List<AppointmentBean> list = loadAppointments();
             if (showEmptyAndReturnIfNoAppointments(list)) {
-                return; // torna alla Home
+                return; // torna alla Home se non ci sono appuntamenti
             }
 
             printTable(list);
 
             String in = askOption(list.size());
-            if (isBack(in)) return;          // [a] indietro
-            if (isRefresh(in)) continue;     // [0] aggiorna
 
-            Integer idx = parseIndex(in, list.size());
-            if (!isValidSelection(idx)) {
-                warnInvalidInput();
-                continue;
+            if (isBack(in)) {
+                running = false;                 // esco dal loop alla prossima iterazione
+            } else if (isRefresh(in)) {
+                // non faccio nulla: si ricaricherà la lista al prossimo giro
+            } else {
+                handleDeletionAttempt(list, in);
             }
-
-            AppointmentBean selected = list.get(idx - 1);
-            if (!confirmDeletion(selected)) continue;
-
-            deleteAppointmentSafely(selected);
         }
     }
 
@@ -113,8 +110,19 @@ public class AppointmentsPatientCli {
     private boolean isBack(String in)    { return "a".equals(in); }
     private boolean isRefresh(String in) { return "0".equals(in); }
 
-    private boolean isValidSelection(Integer idx) { return idx != null; }
     private void warnInvalidInput() { System.out.println("Input non valido. Riprova."); }
+
+    private void handleDeletionAttempt(List<AppointmentBean> list, String in) {
+        Integer idx = parseIndex(in, list.size());
+        if (idx == null) {
+            warnInvalidInput();
+            return;
+        }
+        AppointmentBean selected = list.get(idx - 1);
+        if (confirmDeletion(selected)) {
+            deleteAppointmentSafely(selected);
+        }
+    }
 
     private void deleteAppointmentSafely(AppointmentBean selected) {
         try {
