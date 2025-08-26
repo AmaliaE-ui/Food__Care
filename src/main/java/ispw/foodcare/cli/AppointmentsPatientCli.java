@@ -25,48 +25,30 @@ public class AppointmentsPatientCli {
     public void show() {
         while (true) {
             List<AppointmentBean> list = loadAppointments();
-
-            if (list.isEmpty()) {
-                System.out.println("\nNessun appuntamento prenotato.");
-                System.out.print("Premi ENTER per tornare alla Home…");
-                scanner.nextLine();
+            if (showEmptyAndReturnIfNoAppointments(list)) {
                 return; // torna alla Home
             }
 
             printTable(list);
 
-            System.out.print(
-                    "\nSeleziona un appuntamento da cancellare (1-" + list.size() + ") " +
-                            "\n[0] Aggiorna \n[a] Indietro" +
-                            "\nSeleziona un'opzione: "
-            );
-            String in = scanner.nextLine().trim().toLowerCase();
+            String in = askOption(list.size());
+            if (isBack(in)) return;          // [a] indietro
+            if (isRefresh(in)) continue;     // [0] aggiorna
 
-            // indietro
-            if ("a".equals(in)) {
-                return;
+            Integer idx = parseIndex(in, list.size());
+            if (!isValidSelection(idx)) {
+                warnInvalidInput();
+                continue;
             }
 
-            // 0 = aggiorna: non fa nulla, rientra nel while
-            if (!"0".equals(in)) {
-                Integer idx = parseIndex(in, list.size());
-                if (idx == null) {
-                    System.out.println("Input non valido. Riprova.");
-                } else {
-                    AppointmentBean selected = list.get(idx - 1);
-                    if (confirmDeletion(selected)) {
-                        try {
-                            controller.deleteAppointment(selected);
-                            System.out.println("✔ Appuntamento eliminato con successo.");
-                        } catch (Exception e) {
-                            System.out.println("✖ Errore durante l'eliminazione: " + e.getMessage());
-                        }
-                    }
-                }
-            }
+            AppointmentBean selected = list.get(idx - 1);
+            if (!confirmDeletion(selected)) continue;
+
+            deleteAppointmentSafely(selected);
         }
     }
 
+    /*helper*/
 
     private List<AppointmentBean> loadAppointments() {
         List<AppointmentBean> raw = controller.getPatientAppointments(currentUser.getUsername());
@@ -109,5 +91,37 @@ public class AppointmentsPatientCli {
 
     private String safe(String s) {
         return s == null ? "" : s;
+    }
+
+    private boolean showEmptyAndReturnIfNoAppointments(List<AppointmentBean> list) {
+        if (!list.isEmpty()) return false;
+        System.out.println("\nNessun appuntamento prenotato.");
+        System.out.print("Premi ENTER per tornare alla Home…");
+        scanner.nextLine();
+        return true;
+    }
+
+    private String askOption(int size) {
+        System.out.print(
+                "\nSeleziona un appuntamento da cancellare (1-" + size + ") " +
+                        "\n[0] Aggiorna \n[a] Indietro" +
+                        "\nSeleziona un'opzione: "
+        );
+        return scanner.nextLine().trim().toLowerCase();
+    }
+
+    private boolean isBack(String in)    { return "a".equals(in); }
+    private boolean isRefresh(String in) { return "0".equals(in); }
+
+    private boolean isValidSelection(Integer idx) { return idx != null; }
+    private void warnInvalidInput() { System.out.println("Input non valido. Riprova."); }
+
+    private void deleteAppointmentSafely(AppointmentBean selected) {
+        try {
+            controller.deleteAppointment(selected);
+            System.out.println("✔ Appuntamento eliminato con successo.");
+        } catch (Exception e) {
+            System.out.println("✖ Errore durante l'eliminazione: " + e.getMessage());
+        }
     }
 }
