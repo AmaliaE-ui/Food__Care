@@ -15,7 +15,6 @@ public class LoginController {
         this.userDAO = userDAO;
     }
 
-    /**/
     public LoginController() {
         var s = Session.getInstance();
         this.userDAO = s.getUserDAO();

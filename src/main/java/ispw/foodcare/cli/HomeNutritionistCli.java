@@ -74,7 +74,6 @@ public class HomeNutritionistCli {
     private void handleAppointments() {
         System.out.println("\n=== FoodCare -  Visualizzazione appuntamenti ===");
         new AppointmentsNutritionistCli(scanner, currentUser).show();
-        // Chiama controller, mostra tabella appuntamenti
     }
 
     private void handleLogout() throws AccountAlreadyExistsException {

@@ -13,11 +13,6 @@ public class NutritionistProfileCli {
         this.nutritionist = nutritionist;
     }
 
-    /**
-     * Mostra i dati personali del nutrizionista (equivalente della view profilo in GUI)
-     * e permette di tornare indietro.
-     * In futuro possiamo aggiungere “Prenota appuntamento” qui.
-     */
     public void show() {
         while (true) {
             System.out.println("\n=== Profilo Nutrizionista ===");

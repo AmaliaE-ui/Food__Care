@@ -22,7 +22,7 @@ public class NutritionistDAO {
         this.addressDAO = addressDAO;
     }
 
-    /*Public interface for controller applicativi*/
+    /*Public interface per controller applicativi*/
     public List<Nutritionist> getByCity(String city) {
         if (Session.getInstance().getRam()) {
             return getByCityRam(city);
@@ -39,8 +39,6 @@ public class NutritionistDAO {
     private final List<Nutritionist> nutritionistList = new ArrayList<>();
 
     private List<Nutritionist> getByCityRam(String city) {
-        // Se è la prima chiamata, popolo vuoto per coerenza con la regola:
-        // "nessun dato precaricato"
         return nutritionistList.stream()
                 .filter(n -> n.getAddress() != null &&
                         n.getAddress().getCitta().equalsIgnoreCase(city))

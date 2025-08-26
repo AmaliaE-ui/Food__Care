@@ -3,7 +3,6 @@ package ispw.foodcare.cli;
 import ispw.foodcare.exception.AccountAlreadyExistsException;
 import java.util.Scanner;
 
-
 public class InitializeCli {
 
     Scanner scanner = new Scanner(System.in);

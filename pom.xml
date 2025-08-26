@@ -16,7 +16,7 @@
         <sonar.projectKey>AmaliaE-ui_Food_Care</sonar.projectKey>
         <sonar.organization>amaliae-ui</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.exclusions>**src/main/java/ispw/foodcare/cli/**</sonar.exclusions>
+
     </properties>
 
     <dependencies>

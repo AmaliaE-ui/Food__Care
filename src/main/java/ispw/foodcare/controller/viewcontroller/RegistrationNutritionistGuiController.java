@@ -34,7 +34,7 @@ public class RegistrationNutritionistGuiController {
 
     private final RegistrationController registrationController;
 
-    /*Costruttore vuoto, utilr per FXML*/
+    /*Costruttore vuoto*/
     public RegistrationNutritionistGuiController() {
         var s = Session.getInstance();
         this.registrationController = new RegistrationController(s.getUserDAO());

@@ -25,7 +25,6 @@ public class ManageAvailabilityCli {
         this.currentUser = currentUser;
     }
 
-    /** Entry point CLI */
     public void show() throws AccountAlreadyExistsException {
         // pulizia disponibilità scadute come in initialize()
         controller.deleteExpiredAvailabilities();
@@ -94,7 +93,6 @@ public class ManageAvailabilityCli {
         LocalDate date = askDate();
         if (date == null) return;
 
-        // stessa business rule della GUI: solo giorni feriali
         if (BookAppointmentController.isWeekend(date)) {
             System.out.println("✖ Data non valida: inserire solo giorni lavorativi (lun-ven).");
             return;
@@ -117,7 +115,6 @@ public class ManageAvailabilityCli {
         int inserted = 0;
 
         for (LocalTime slot : chosen) {
-            // evita duplicati come in GUI
             boolean exists = availabilityList.stream()
                     .anyMatch(a -> a.getDate().equals(date) && a.getStartTime().equals(slot));
             if (exists) {
@@ -180,7 +177,6 @@ public class ManageAvailabilityCli {
     }
 
     private List<LocalTime> askSlots(List<LocalTime> fixed) {
-        // stampa elenco numerato
         System.out.println("Seleziona uno o più slot (es. 1,3,5) — invio per annullare:");
         for (int i = 0; i < fixed.size(); i++) {
             System.out.printf("%2d) %s%n", i + 1, fixed.get(i));

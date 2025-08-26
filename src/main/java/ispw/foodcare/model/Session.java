@@ -76,4 +76,10 @@ public class Session {
     public void setAttributes(String key, Object value) { attributes.put(key, value); }
     public Object getAttributes(String key) { return attributes.get(key); }
     public void removeAttribute(String key) { attributes.remove(key); }
+
+    public void logout() {
+        this.currentUser = null;   // sgancia l'utente loggato
+        this.attributes.clear();   // pulisce eventuali dati di sessione
+    }
+
 }

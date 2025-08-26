@@ -1,6 +1,5 @@
 package ispw.foodcare.cli;
 
-
 import ispw.foodcare.bean.AppointmentBean;
 import ispw.foodcare.bean.UserBean;
 import ispw.foodcare.controller.applicationcontroller.AppointmentController;
@@ -41,10 +40,9 @@ public class AppointmentsNutritionistCli {
             String line = scanner.nextLine().trim();
 
             if (line.equals("1")) {
-                return; // torna alla HomeNutritionistCli
+                return;
             }
             if (line.equalsIgnoreCase("0")) {
-                // ricarica il loop
                 continue;
             }
             System.out.println("Comando non riconosciuto.");
@@ -63,7 +61,7 @@ public class AppointmentsNutritionistCli {
             String time = a.getTime() != null ? a.getTime().format(TIME_FMT) : "";
             String notes = safe(a.getNotes());
 
-            // tronco le note per non sballare la tabella
+            // tronco le note per mantenere forma della tabella
             if (notes.length() > 28) notes = notes.substring(0, 27) + "…";
 
             System.out.printf("%-4d | %-15s | %-15s | %-12s | %-6s | %-30s%n",

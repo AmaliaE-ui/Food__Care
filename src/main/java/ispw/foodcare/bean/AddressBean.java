@@ -14,7 +14,6 @@ public class AddressBean {
     public String getVia() { return via; }
     public void setVia(String via) {
         String v = nonBlank(via, "La via non può essere vuota.");
-        // Consenti lettere, cifre, spazio, apostrofo, punto, virgola, trattino
         for (int i = 0; i < v.length(); i++) {
             char c = v.charAt(i);
             if (!Character.isLetter(c) && !Character.isDigit(c) &&

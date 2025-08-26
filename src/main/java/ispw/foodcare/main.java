@@ -24,7 +24,7 @@ public class Main extends Application {
         Scanner scanner = new Scanner(System.in);
         logger.info("Avvio FoodCare");
 
-        /*Istanzio la Sssione*/
+        /*Istanzio la Sessione*/
         Session s = Session.getInstance();
 
         /*Scegli tra CLI o FXML*/

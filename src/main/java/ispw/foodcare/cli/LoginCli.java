@@ -11,7 +11,6 @@ public class LoginCli {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    /*Controller (costruttore con UserDAO)*/
     private final LoginController loginController;
 
     /*Costruttore “default”: prende il DAO dalla Session una volta sola*/
@@ -20,10 +19,6 @@ public class LoginCli {
         this.loginController = new LoginController(s.getUserDAO());
     }
 
-    /*Costruttore per test*/
-    public LoginCli(LoginController loginController) {
-        this.loginController = loginController;
-    }
 
     public void login() {
         System.out.print("Username: ");
@@ -56,7 +51,7 @@ public class LoginCli {
             /*Input vuoti*/
             System.out.println("❌ " + e.getMessage());
         } catch (Exception e) {
-            /*Errori tecnici imprevisti: IO/DAO, ecc.*/
+            /*Errori imprevisti*/
             System.out.println("❌ Errore inatteso durante il login: " + e.getMessage());
         }
     }

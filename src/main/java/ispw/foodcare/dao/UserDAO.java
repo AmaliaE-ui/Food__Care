@@ -12,10 +12,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * DAO unificato per User (Patient, Nutritionist),
- * gestisce automaticamente persistenza in RAM o DB.
- */
 public class UserDAO {
 
     private static final Logger logger = Logger.getLogger(UserDAO.class.getName());

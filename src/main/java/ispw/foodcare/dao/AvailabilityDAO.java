@@ -22,7 +22,7 @@ public class AvailabilityDAO {
     /* injection (usata solo in DB) */
     private final ConnectionProvider cp;
 
-    /* === FS store (JSON) === */
+    /*FS store (JSON)*/
     private final Path dataDir = Paths.get("data");
     private final Path fsFile  = dataDir.resolve("availabilities.json");
     private final ObjectMapper om = new ObjectMapper()
@@ -84,7 +84,6 @@ public class AvailabilityDAO {
 
     public void deleteAvailabilitybydata(LocalDate cutoffDate) {
         if (Session.getInstance().getRam()) {
-            // rimuovi tutto <= cutoffDate
             availabilitiesRam.removeIf(a -> !a.getDate().isAfter(cutoffDate));
         } else if (Session.getInstance().getDB()) {
             try (Connection conn = cp.getConnection();
@@ -108,7 +107,6 @@ public class AvailabilityDAO {
     private final List<Availability> availabilitiesRam = new ArrayList<>();
 
     private void addAvailabilityRam(Availability availability) {
-        // evita duplicati esatti
         availabilitiesRam.removeIf(a -> matches(a, availability));
         availabilitiesRam.add(availability);
     }
@@ -124,7 +122,6 @@ public class AvailabilityDAO {
     }
 
     private void deleteAvailabilityRam(Availability availability) {
-        // prima usavi remove(availability) (identità). Meglio per valori:
         availabilitiesRam.removeIf(a -> matches(a, availability));
     }
 

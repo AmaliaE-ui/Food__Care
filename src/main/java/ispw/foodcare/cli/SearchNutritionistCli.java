@@ -20,13 +20,6 @@ public class SearchNutritionistCli {
         this.currentUser=currentUser;
     }
 
-    /**
-     * Entry point CLI per "Cerca nutrizionista per città".
-     * - Chiede la città
-     * - Chiama BookAppointmentController.searchNutritionistsByCity
-     * - Mostra risultati in tabella
-     * - Permette di selezionare un nutrizionista o tornare indietro
-     */
     public void show() throws AccountAlreadyExistsException {
         while (true) {
             System.out.println("\n=== Cerca nutrizionista per città ===");
@@ -47,7 +40,6 @@ public class SearchNutritionistCli {
 
             printResults(results);
 
-            // selezione riga o back
             Integer choice = askForIndexOrBack(results.size());
             if (choice == null) {
                 // back alla ricerca (senza uscire a menu precedente)

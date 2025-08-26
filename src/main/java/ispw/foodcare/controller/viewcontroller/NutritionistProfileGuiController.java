@@ -62,7 +62,7 @@ public class NutritionistProfileGuiController {
                 "/ispw/foodcare/BookAppointment/bookAppointment.fxml",
                 nameLabel,  // un Node qualsiasi nella scena corrente
                 BookAppointmentGuiController.class,
-                c -> c.setNutritionist(nutritionistBean)   // passi il bean al controller
+                c -> c.setNutritionist(nutritionistBean)   // passo bean al controller
         );
     }
 

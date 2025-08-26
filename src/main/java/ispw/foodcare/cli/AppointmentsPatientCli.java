@@ -41,10 +41,10 @@ public class AppointmentsPatientCli {
             String in = scanner.nextLine().trim().toLowerCase();
 
             if (in.equals("a")) {
-                return; // back to Home
+                return;
             }
             if (in.equals("0")) {
-                continue; // refresh list
+                continue;
             }
 
             Integer idx = parseIndex(in, list.size());
@@ -59,7 +59,7 @@ public class AppointmentsPatientCli {
             }
 
             try {
-                controller.deleteAppointment(selected); // riattiva anche la disponibilità se serve
+                controller.deleteAppointment(selected);
                 System.out.println("✔ Appuntamento eliminato con successo.");
             } catch (Exception e) {
                 System.out.println("✖ Errore durante l'eliminazione: " + e.getMessage());
@@ -69,7 +69,7 @@ public class AppointmentsPatientCli {
 
     private List<AppointmentBean> loadAppointments() {
         List<AppointmentBean> raw = controller.getPatientAppointments(currentUser.getUsername());
-        return new ArrayList<>(raw); // mutabile, indicizzabile
+        return new ArrayList<>(raw);
     }
 
     private void printTable(List<AppointmentBean> list) {
@@ -104,7 +104,6 @@ public class AppointmentsPatientCli {
                 a.getDate().format(DATE_FMT), a.getTime().format(TIME_FMT));
         String c = scanner.nextLine().trim().toLowerCase();
         return c.equals("s") || c.equals("si") || c.equals("sì");
-        // NB: dopo l'eliminazione, il loop ricarica e ristampa la lista aggiornata
     }
 
     private String safe(String s) {

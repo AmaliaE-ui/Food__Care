@@ -2,7 +2,6 @@ package ispw.foodcare.controller.viewcontroller;
 
 import ispw.foodcare.bean.NutritionistBean;
 import ispw.foodcare.bean.UserBean;
-import ispw.foodcare.dao.AppointmentDAO;
 import ispw.foodcare.model.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

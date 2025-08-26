@@ -24,14 +24,9 @@ public class LoginGuiController {
     /*Iniettiamo il controller applicativo*/
     private final LoginController loginController;
 
-    /*Costruttore vuoto usato da FXML: prende il DAO dalla Session UNA volta (composition root minimale)*/
     public LoginGuiController() {
         var s = Session.getInstance();
         this.loginController = new LoginController(s.getUserDAO());
-    }
-    /*costruttore per test*/
-    public LoginGuiController(LoginController loginController) {
-        this.loginController = loginController;
     }
 
     /*Login*/
@@ -61,7 +56,7 @@ public class LoginGuiController {
             loginMessageLabel.setStyle(STYLE_ERROR);
             loginMessageLabel.setText(e.getMessage());
         } catch (Exception e) {
-            /*errori tecnici imprevisti (IO/DAO...)*/
+            /*errori imprevisti*/
             loginMessageLabel.setStyle(STYLE_ERROR);
             loginMessageLabel.setText("Errore durante il login: " + e.getMessage());
         }

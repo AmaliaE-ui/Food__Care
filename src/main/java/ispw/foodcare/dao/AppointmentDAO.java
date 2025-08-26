@@ -19,7 +19,6 @@ public class AppointmentDAO {
 
     private static final Logger logger = Logger.getLogger(AppointmentDAO.class.getName());
 
-    /*injection*/
     private final ConnectionProvider cp;
     private final AvailabilityDAO availabilityDAO;
 
@@ -141,7 +140,7 @@ public class AppointmentDAO {
             toRemove.setStartTime(appointment.getTime());
             toRemove.setEndTime(appointment.getTime().plusMinutes(45));
 
-            /*usa l'AvailabilityDAO iniettato, altrimenti crea un DAO con lo stesso cp*/
+            /*uso l'AvailabilityDAO iniettato, altrimenti creo un DAO con lo stesso cp*/
             AvailabilityDAO availDao = (availabilityDAO != null) ? availabilityDAO : new AvailabilityDAO(cp);
             availDao.deleteAvailability(toRemove);
 
@@ -248,9 +247,7 @@ public class AppointmentDAO {
     }
 
     public List<Appointment> getAppointmentForNutritionistWithUsername(String nutritionistUsername) {
-        // Nota: architetturalmente i DAO dovrebbero restituire Entity, non Bean.
         if(Session.getInstance().getRam()){
-            // Compongo i dati leggendo i pazienti da UserDAO
             var userDAO = Session.getInstance().getUserDAO();
             List<Appointment> list = new ArrayList<>();
             for (Appointment a : appointmentsRam.values()) {
@@ -303,10 +300,10 @@ public class AppointmentDAO {
 
 
 
-    /*Metodi nuovi - Notifiche nuovi appuntamenti*/
+    /*Metodi - Notifiche nuovi appuntamenti*/
     public boolean hasUnviewedAppointmentsForNutritionist(String nutritionistUsername) {
         if (Session.getInstance().getRam()) {
-            // In RAM non gestiamo il flag "is_new": restituisco false.
+            // In RAM restituisco false.
             return false;
         } else if (Session.getInstance().getDB()) {
             try (Connection conn = cp.getConnection();
@@ -329,7 +326,7 @@ public class AppointmentDAO {
 
     public void markAppointmentsAsViewedForNutritionist(String nutritionistUsername) {
         if (Session.getInstance().getRam()) {
-            // No-op in RAM
+            // No operazioni in RAM
         } else if (Session.getInstance().getDB()) {
             try (Connection conn = cp.getConnection();
                  PreparedStatement stmt =

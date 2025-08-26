@@ -26,9 +26,7 @@ public class SearchNutritionistGuiController {
     @FXML private TableColumn<NutritionistBean, String> specializationColumn;
     @FXML private TableColumn<NutritionistBean, Void>   profileColumn;
 
-    /*evita NPE*/
     private final ShowAlert alert = new ShowAlert();
-    /*riuso il controller*/
     private final BookAppointmentController controller = new BookAppointmentController();
 
     @FXML private void initialize() {

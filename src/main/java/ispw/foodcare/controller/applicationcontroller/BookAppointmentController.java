@@ -46,9 +46,6 @@ public class BookAppointmentController {
 
     /*Prenota appuntamento*/
     public void bookAppointment(AppointmentBean appointmentBean){
-        /*String patientUsername = Session.getInstance().getCurrentUser().getUsername(); SE LO TENESSI IL CONTROLLER NON SAREBBE STATELESS
-        *Quindi passo lo username dalla GUI/CLI*/
-
         if(loginController.valLogin(Session.getInstance().getCurrentUser().getUsername(),Session.getInstance().getCurrentUser().getPassword())){
             Appointment appointment = new Appointment(
                 appointmentBean.getPatientUsername(),

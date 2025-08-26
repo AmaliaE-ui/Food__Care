@@ -72,7 +72,6 @@ public class HomePatientCli {
 
     private void handleHistory() {
         System.out.println("\n[CLI] -> Visualizzazione storico appuntamenti. - Non implementato");
-        // Logica simile a handleAppointments, ma con storico, ossia appuntamenti passati
     }
 
     private void handleLogout() throws AccountAlreadyExistsException {

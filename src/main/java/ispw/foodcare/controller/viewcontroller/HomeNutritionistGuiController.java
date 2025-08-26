@@ -8,8 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HomeNutritionistGuiController{
@@ -28,13 +26,11 @@ public class HomeNutritionistGuiController{
     private static final Logger logger = Logger.getLogger(HomeNutritionistGuiController.class.getName());
 
     @FXML public void initialize() {
-        // stato iniziale (covers DB: unseen salvati su tabelle)
         checkAndDisplayNotification();
 
         String me = Session.getInstance().getCurrentUser().getUsername();
         subscription = Session.getInstance().getAppointmentSubject()
                 .subscribe(me, event -> {
-                    // siamo forse su thread non-JavaFX → vai in UI thread???????
                     javafx.application.Platform.runLater(() -> notificationBadge.setVisible(true));
                 });
     }
@@ -58,7 +54,7 @@ public class HomeNutritionistGuiController{
     }
 
     @FXML private void onAppointmentsClick(ActionEvent event) {
-        /*quando apro la lista → segna come "visti" (DB) e togli badge in UI*/
+        /*quando apro la lista → segna come "visti" (DB) e togli badge*/
         appointmentController.markAppointmentsAsViewedForNutritionist(
                 Session.getInstance().getCurrentUser().getUsername()
         );

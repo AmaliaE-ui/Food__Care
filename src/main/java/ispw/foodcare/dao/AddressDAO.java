@@ -6,11 +6,8 @@ import ispw.foodcare.query.QueryAddress;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 public class AddressDAO {
-
-    private static final Logger logger = Logger.getLogger(AddressDAO.class.getName());
 
     private final ConnectionProvider cp;
 
@@ -55,7 +52,7 @@ public class AddressDAO {
         }
     }
 
-    // ----------- PRIVATE DB helpers -----------
+    // Metodi helpers
 
 
     private int insertDB(Address a, Connection conn) throws SQLException {

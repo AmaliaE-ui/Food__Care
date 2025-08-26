@@ -4,8 +4,6 @@ import ispw.foodcare.Role;
 import ispw.foodcare.bean.*;
 import ispw.foodcare.model.*;
 
-/*Classe che converte un oggetto entity in un oggetto Bean*/
-
 public class Converter {
     /*Costruttore privato per evitare istanziazione*/
     private Converter() {}
@@ -115,7 +113,6 @@ public class Converter {
         return user;
     }
 
-    /*Metodi per rendere più chiaro il codice*/
     public static Nutritionist beanToNutritionist(NutritionistBean bean) {
         return (Nutritionist) beanToUser(bean);
     }
