@@ -28,7 +28,7 @@ public final class NavigationManager {
             stage.setTitle(title);
             stage.show();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, ERRORE + fxmlPath, e);
+            logger.log(Level.SEVERE, e, () -> ERRORE + fxmlPath);
         }
     }
 
@@ -42,7 +42,7 @@ public final class NavigationManager {
             stage.setTitle(title);
             stage.show();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, ERRORE + fxmlPath, e);
+            logger.log(Level.SEVERE, e, () -> ERRORE + fxmlPath);
         }
     }
 
@@ -77,7 +77,7 @@ public final class NavigationManager {
             AnchorPane.setRightAnchor(newContent, 0.0);
 
         } catch (IOException e) {
-            logger.log(Level.SEVERE, ERRORE + fxmlPath, e);
+            logger.log(Level.SEVERE, e, () -> ERRORE + fxmlPath);
         }
     }
 }
